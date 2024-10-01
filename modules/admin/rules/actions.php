@@ -138,12 +138,12 @@ class _actions extends \IPS\Node\Controller
     {
         \IPS\Output::i()->output .= \IPS\rules\Application::eventHeader($this->rule->event());
         \IPS\Output::i()->output .= \IPS\rules\Application::ruleHeader($this->rule);
-        \IPS\Output::i()->sidebar['actions']['editrule'] = array(
+        \IPS\Output::i()->sidebar['actions']['editrule'] = [
             'icon' => 'caret-left',
             'link' => \IPS\Http\Url::internal('app=rules&module=rules&controller=rules&do=form&id=' . $this->rule->id),
             'title' => 'rules_manage_rule',
-            'data' => array(),
-        );
+            'data' => [],
+        ];
         parent::form();
         \IPS\Output::i()->title = 'Action: ' . \IPS\Output::i()->title;
     }
@@ -156,15 +156,15 @@ class _actions extends \IPS\Node\Controller
     public function _getRoots()
     {
         $nodeClass = $this->nodeClass;
-        $rows = array();
+        $rows = [];
 
-        $where = array('action_rule_id=?', $this->rule->id);
+        $where = ['action_rule_id=?', $this->rule->id];
 
         if ($this->actionMode !== null) {
-            $where = array('action_rule_id=? AND action_else=?', $this->rule->id, $this->actionMode);
+            $where = ['action_rule_id=? AND action_else=?', $this->rule->id, $this->actionMode];
         }
 
-        foreach ($nodeClass::roots(null, null, array($where)) as $node) {
+        foreach ($nodeClass::roots(null, null, [$where]) as $node) {
             $rows[$node->_id] = $this->_getRow($node);
         }
 
@@ -181,20 +181,20 @@ class _actions extends \IPS\Node\Controller
         $nodeClass = $this->nodeClass;
 
         if ($nodeClass::canAddRoot() and !$this->actionMode) {
-            return array(
-                'add' => array(
+            return [
+                'add' => [
                     'icon' => 'plus',
                     'title' => 'rules_add_action',
-                    'link' => $this->url->setQueryString(array('do' => 'form', 'rule' => $this->rule->id)),
-                    'data' => ($nodeClass::$modalForms ? array(
+                    'link' => $this->url->setQueryString(['do' => 'form', 'rule' => $this->rule->id]),
+                    'data' => ($nodeClass::$modalForms ? [
                         'ipsDialog' => '',
-                        'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('rules_add_action')
-                    ) : array())
-                )
-            );
+                        'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('rules_add_action'),
+                    ] : []),
+                ],
+            ];
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -207,7 +207,7 @@ class _actions extends \IPS\Node\Controller
     protected function _afterSave(\IPS\Node\Model $old = null, \IPS\Node\Model $new, $lastUsedTab = false)
     {
         if (\IPS\Request::i()->isAjax()) {
-            \IPS\Output::i()->json(array());
+            \IPS\Output::i()->json([]);
         } else {
             if ($old == null) {
                 \IPS\Output::i()->redirect(

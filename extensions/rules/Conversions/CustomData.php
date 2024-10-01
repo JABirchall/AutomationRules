@@ -31,8 +31,7 @@ class _CustomData
      */
     public function globalArguments()
     {
-        $globals = array
-        ();
+        $globals = [];
 
         return $globals;
     }
@@ -49,7 +48,7 @@ class _CustomData
      */
     public function conversionMap()
     {
-        $map = array();
+        $map = [];
         $lang = \IPS\Member::loggedIn()->language();
 
         foreach (\IPS\rules\Data::roots(null) as $data) {
@@ -59,13 +58,12 @@ class _CustomData
 
             $lang->words['custom_data_conversion_' . $data->key] = $data->name;
 
-            $map[$objClass]['custom_data_conversion_' . $data->key] = array
-            (
+            $map[$objClass]['custom_data_conversion_' . $data->key] = [
                 'token' => $key,
                 'description' => ucfirst(mb_strtolower($data->name)),
                 'argtype' => $data->type,
                 'class' => $returnObjClass,
-                'nullable' => in_array($data->type, array('object', 'mixed')),
+                'nullable' => in_array($data->type, ['object', 'mixed']),
                 'converter' => function ($object) use ($data) {
                     $data = $object->getRulesData($data->column_name);
 
@@ -83,8 +81,8 @@ class _CustomData
                         default:
                             return $data;
                     }
-                }
-            );
+                },
+            ];
         }
 
         return $map;

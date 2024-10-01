@@ -35,10 +35,10 @@ class _CustomActions
     public function events()
     {
         $lang = \IPS\Member::loggedIn()->language();
-        $events = array();
+        $events = [];
 
         foreach (\IPS\rules\Action\Custom::roots() as $action) {
-            $arguments = array();
+            $arguments = [];
             foreach ($action->children() as $argument) {
                 $argClass = null;
                 if ($argument->type == 'object') {
@@ -50,19 +50,17 @@ class _CustomActions
                 }
 
                 $lang->words['rules_CustomActions_event_custom_action_' . $action->key . '_' . $argument->varname] = $argument->description;
-                $arguments[$argument->varname] = array
-                (
+                $arguments[$argument->varname] = [
                     'argtype' => $argument->type,
                     'class' => $argClass ?: null,
                     'nullable' => !$argument->required,
-                );
+                ];
             }
 
             $lang->words['rules_CustomActions_event_custom_action_' . $action->key] = 'Action triggered: ' . $action->title;
-            $events['custom_action_' . $action->key] = array
-            (
+            $events['custom_action_' . $action->key] = [
                 'arguments' => $arguments,
-            );
+            ];
         }
 
         return $events;
@@ -78,8 +76,7 @@ class _CustomActions
      */
     public function conditions()
     {
-        $conditions = array
-        ();
+        $conditions = [];
 
         return $conditions;
     }
@@ -92,10 +89,10 @@ class _CustomActions
     public function actions()
     {
         $lang = \IPS\Member::loggedIn()->language();
-        $actions = array();
+        $actions = [];
 
         foreach (\IPS\rules\Action\Custom::roots() as $action) {
-            $arguments = array();
+            $arguments = [];
             foreach ($action->children() as $argument) {
                 $argClass = null;
                 if ($argument->type == 'object') {
@@ -107,30 +104,26 @@ class _CustomActions
                 }
 
                 $lang->words['rules_CustomActions_actions_custom_action_' . $action->key . '_' . $argument->varname] = $argument->name;
-                $arguments[$argument->varname] = array
-                (
-                    'argtypes' => array
-                    (
-                        $argument->type => array
-                        (
+                $arguments[$argument->varname] = [
+                    'argtypes' => [
+                        $argument->type => [
                             'description' => $argument->description,
                             'class' => $argClass ?: null,
-                        ),
-                    ),
+                        ],
+                    ],
                     'required' => (bool)$argument->required,
-                );
+                ];
             }
 
             $lang->words['rules_CustomActions_actions_custom_action_' . $action->key] = $action->title;
-            $actions['custom_action_' . $action->key] = array
-            (
+            $actions['custom_action_' . $action->key] = [
                 'callback' => function () use ($action) {
                     $event = \IPS\rules\Event::load('rules', 'CustomActions', 'custom_action_' . $action->key);
-                    call_user_func_array(array($event, 'trigger'), func_get_args());
+                    call_user_func_array([$event, 'trigger'], func_get_args());
                     return "custom action triggered (ID:#{$action->id})";
                 },
                 'arguments' => $arguments,
-            );
+            ];
         }
 
         return $actions;

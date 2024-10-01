@@ -44,7 +44,7 @@ class _Action extends \IPS\Node\Model
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array();
+    protected static $databaseIdFields = [];
 
     /**
      * @brief    [Node] Parent ID Database Column
@@ -85,7 +85,7 @@ class _Action extends \IPS\Node\Model
     /**
      * Get Data
      */
-    public $data = array();
+    public $data = [];
 
     /**
      * Associated Rule
@@ -122,7 +122,7 @@ class _Action extends \IPS\Node\Model
     /**
      * @brief    Actions Cache
      */
-    protected static $actionsCache = array();
+    protected static $actionsCache = [];
 
     /**
      * Init
@@ -140,7 +140,7 @@ class _Action extends \IPS\Node\Model
                 $actions = static::$actionsCache[$this->app][$this->class] = (method_exists(
                     $ext,
                     'actions'
-                ) ? $ext->actions() : array());
+                ) ? $ext->actions() : []);
             }
 
             if (isset ($actions[$this->key])) {
@@ -148,7 +148,7 @@ class _Action extends \IPS\Node\Model
             }
         }
 
-        $this->data = json_decode($this->_data['data'], true) ?: array();
+        $this->data = json_decode($this->_data['data'], true) ?: [];
 
         if ($this->rule_id) {
             try {
@@ -217,21 +217,21 @@ class _Action extends \IPS\Node\Model
     {
         if ($this->schedule_mode != 1) {
             if ($this->schedule_mode == 0) {
-                return array(
+                return [
                     0 => 'ipsBadge ipsBadge_positive',
                     2 => 'Immediately',
-                );
+                ];
             } else {
                 if ($this->schedule_mode == 5) {
-                    return array(
+                    return [
                         0 => 'ipsBadge ipsBadge_positive',
                         2 => 'Defer To Page End',
-                    );
+                    ];
                 } else {
-                    return array(
+                    return [
                         0 => 'ipsBadge ipsBadge_intermediary',
                         2 => '<i class="fa fa-clock-o fa-lg"></i> Schedule',
-                    );
+                    ];
                 }
             }
         }
@@ -258,18 +258,17 @@ class _Action extends \IPS\Node\Model
         $lang = \IPS\Member::loggedIn()->language();
         $form->hiddenValues['action_rule_id'] = $this->rule->id;
 
-        $else_options = array
-        (
+        $else_options = [
             0 => 'rules_action_mode_standard',
             1 => 'rules_action_mode_else',
-        );
+        ];
 
         $form->add(
             new \IPS\Helpers\Form\Radio(
                 'action_else',
                 $this->else,
                 true,
-                array('options' => $else_options),
+                ['options' => $else_options],
                 null,
                 null,
                 null,
@@ -279,43 +278,42 @@ class _Action extends \IPS\Node\Model
 
         \IPS\rules\Application::opform($form, $this, 'actions');
 
-        $scheduling_options = array
-        (
+        $scheduling_options = [
             0 => 'rules_action_execution_now',
             1 => 'rules_action_execution_defer',
             5 => 'rules_action_execution_end',
             2 => 'rules_action_execution_future',
             3 => 'rules_action_execution_date',
             4 => 'rules_action_execution_custom',
-        );
+        ];
 
-        $scheduling_toggles = array
-        (
-            2 => array(
+        $scheduling_toggles = [
+            2 => [
                 'action_schedule_minutes',
                 'action_schedule_hours',
                 'action_schedule_days',
                 'action_schedule_months',
-                'action_schedule_key'
-            ),
-            3 => array('action_schedule_date', 'action_schedule_key'),
-            4 => array('action_schedule_customcode', 'action_schedule_key'),
-        );
+                'action_schedule_key',
+            ],
+            3 => ['action_schedule_date', 'action_schedule_key'],
+            4 => ['action_schedule_customcode', 'action_schedule_key'],
+        ];
 
         $form->add(
             new \IPS\Helpers\Form\Radio(
                 'action_schedule_mode',
                 is_numeric($this->schedule_mode) ? $this->schedule_mode : 1,
                 true,
-                array('options' => $scheduling_options, 'toggles' => $scheduling_toggles)
-            ), 'operation_title'
+                ['options' => $scheduling_options, 'toggles' => $scheduling_toggles]
+            ),
+            'operation_title'
         );
         $form->add(
             new \IPS\Helpers\Form\Number(
                 'action_schedule_minutes',
                 $this->schedule_minutes ?: 0,
                 true,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -328,7 +326,7 @@ class _Action extends \IPS\Node\Model
                 'action_schedule_hours',
                 $this->schedule_hours ?: 0,
                 true,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -341,7 +339,7 @@ class _Action extends \IPS\Node\Model
                 'action_schedule_days',
                 $this->schedule_days ?: 0,
                 true,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -354,7 +352,7 @@ class _Action extends \IPS\Node\Model
                 'action_schedule_months',
                 $this->schedule_months ?: 0,
                 true,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -367,7 +365,7 @@ class _Action extends \IPS\Node\Model
                 'action_schedule_date',
                 \IPS\DateTime::ts($this->schedule_date),
                 false,
-                array('time' => true),
+                ['time' => true],
                 null,
                 null,
                 null,
@@ -380,7 +378,7 @@ class _Action extends \IPS\Node\Model
                 'action_schedule_customcode',
                 $this->schedule_customcode ?: "//<?php\n\nreturn \IPS\DateTime::ts( time() );",
                 false,
-                array('mode' => 'php'),
+                ['mode' => 'php'],
                 null,
                 null,
                 null,
@@ -393,7 +391,7 @@ class _Action extends \IPS\Node\Model
                 'action_schedule_key',
                 $this->schedule_key,
                 false,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -444,7 +442,7 @@ class _Action extends \IPS\Node\Model
             $this,
             'actions',
             $values,
-            array(
+            [
                 'action_rule_id',
                 'action_else',
                 'action_schedule_mode',
@@ -455,8 +453,8 @@ class _Action extends \IPS\Node\Model
                 'action_schedule_date',
                 'action_schedule_customcode',
                 'action_schedule_key',
-                'action_enable_recursion'
-            )
+                'action_enable_recursion',
+            ]
         );
         parent::saveForm($values);
 
@@ -488,7 +486,7 @@ class _Action extends \IPS\Node\Model
             $this->locked = true;
 
             try {
-                call_user_func_array('\IPS\rules\Application::opInvoke', array($this, 'actions', func_get_args()));
+                call_user_func_array('\IPS\rules\Application::opInvoke', [$this, 'actions', func_get_args()]);
             } catch (\Exception $e) {
                 $this->locked = false;
                 throw $e;

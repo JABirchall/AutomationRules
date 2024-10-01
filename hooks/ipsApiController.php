@@ -20,7 +20,7 @@ abstract class rules_hook_ipsApiController extends _HOOK_CLASS_
             foreach (\IPS\rules\Action\Custom::roots(null) as $action) {
                 if ($action->enable_api) {
                     $event = \IPS\rules\Event::load('rules', 'CustomActions', 'custom_action_' . $action->key);
-                    $response = array(array('bool', 'processed', 'TRUE if api request did not result in error'));
+                    $response = [['bool', 'processed', 'TRUE if api request did not result in error']];
 
                     foreach ($event->rules() as $rule) {
                         foreach ($rule->actions() as $_action) {
@@ -29,22 +29,22 @@ abstract class rules_hook_ipsApiController extends _HOOK_CLASS_
                                         $_action->data['configuration']['data']
                                     )) {
                                     $config = $_action->data['configuration']['data'];
-                                    $response[] = array(
+                                    $response[] = [
                                         $config['rules_api_response_type'] ?: 'string',
                                         $config['rules_api_response_key'],
-                                        $config['rules_api_response_description']
-                                    );
+                                        $config['rules_api_response_description'],
+                                    ];
                                 }
                             }
                         }
                     }
 
-                    $details = array(
-                        'apiparam' => array(),
-                        'throws' => array(),
-                        'return' => array(array('array')),
+                    $details = [
+                        'apiparam' => [],
+                        'throws' => [],
+                        'return' => [['array']],
                         'apiresponse' => $response,
-                    );
+                    ];
 
                     foreach ($action->children() as $argument) {
                         switch ($argument->type) {
@@ -60,27 +60,27 @@ abstract class rules_hook_ipsApiController extends _HOOK_CLASS_
                                     }
                                 }
 
-                                $details['apiparam'][] = array($type, $argument->varname, $argument->description);
+                                $details['apiparam'][] = [$type, $argument->varname, $argument->description];
                                 break;
 
                             default:
 
-                                $details['apiparam'][] = array(
+                                $details['apiparam'][] = [
                                     $argument->type,
                                     $argument->varname,
-                                    $argument->description
-                                );
+                                    $argument->description,
+                                ];
                                 break;
                         }
                     }
 
                     foreach (explode(',', $action->api_methods) as $method) {
-                        if (in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
-                            $endpoints['rules/actions/' . $method . $action->_id] = array(
+                        if (in_array($method, ['GET', 'POST', 'PUT', 'DELETE'])) {
+                            $endpoints['rules/actions/' . $method . $action->_id] = [
                                 'title' => $method . ' rules/actions/' . $action->_id . ' (' . $action->title . ')',
                                 'description' => $action->_description,
                                 'details' => $details,
-                            );
+                            ];
                         }
                     }
                 }

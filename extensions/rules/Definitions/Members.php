@@ -30,121 +30,91 @@ class _Members
      */
     public function events()
     {
-        $memberArg = array
-        (
+        $memberArg = [
             'argtype' => 'object',
             'class' => '\IPS\Member',
-        );
+        ];
 
-        $events = array
-        (
-            'memberSync_onLogin' => array
-            (
-                'arguments' => array
-                (
+        $events = [
+            'memberSync_onLogin' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'memberSync_onLogout' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'memberSync_onLogout' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'memberSync_onCreateAccount' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'memberSync_onCreateAccount' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'memberSync_onProfileUpdate' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'memberSync_onProfileUpdate' => [
+                'arguments' => [
                     'member' => $memberArg,
-                    'changed' => array('argtype' => 'array'),
-                ),
-            ),
-            'memberSync_onSetAsSpammer' => array
-            (
-                'arguments' => array
-                (
+                    'changed' => ['argtype' => 'array'],
+                ],
+            ],
+            'memberSync_onSetAsSpammer' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'member_not_spammer' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'member_not_spammer' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'memberSync_onValidate' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'memberSync_onValidate' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'memberSync_onMerge' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'memberSync_onMerge' => [
+                'arguments' => [
                     'member' => $memberArg,
                     'mergedMember' => $memberArg,
-                ),
-            ),
-            'memberSync_onDelete' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'memberSync_onDelete' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'member_banned' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'member_banned' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'member_unbanned' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'member_unbanned' => [
+                'arguments' => [
                     'member' => $memberArg,
-                ),
-            ),
-            'reputation_given' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'reputation_given' => [
+                'arguments' => [
                     'member' => $memberArg,
                     'giver' => $memberArg,
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'reptype' => array('argtype' => 'int'),
-                ),
-            ),
-            'member_warned' => array
-            (
-                'arguments' => array
-                (
-                    'warning' => array('argtype' => 'object', 'class' => '\IPS\core\Warnings\Warning'),
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'reptype' => ['argtype' => 'int'],
+                ],
+            ],
+            'member_warned' => [
+                'arguments' => [
+                    'warning' => ['argtype' => 'object', 'class' => '\IPS\core\Warnings\Warning'],
                     'member' => $memberArg,
                     'moderator' => $memberArg,
-                ),
-            ),
-            'content_recounted' => array
-            (
-                'arguments' => array
-                (
+                ],
+            ],
+            'content_recounted' => [
+                'arguments' => [
                     'member' => $memberArg,
-                    'count' => array('argtype' => 'int'),
-                ),
-            ),
-        );
+                    'count' => ['argtype' => 'int'],
+                ],
+            ],
+        ];
 
         return $events;
     }
@@ -154,16 +124,13 @@ class _Members
      */
     public function conditions()
     {
-        return array
-        (
-            'check_member' => array
-            (
-                'callback' => array($this, 'checkMember'),
-                'configuration' => array
-                (
+        return [
+            'check_member' => [
+                'callback' => [$this, 'checkMember'],
+                'configuration' => [
                     'form' => function ($form, $values) {
-                        $members = array();
-                        $rules_choose_members = isset($values['rules_choose_members']) ? (array)$values['rules_choose_members'] : array();
+                        $members = [];
+                        $rules_choose_members = isset($values['rules_choose_members']) ? (array)$values['rules_choose_members'] : [];
                         foreach ($rules_choose_members as $member_id) {
                             if ($member_id) {
                                 try {
@@ -178,7 +145,7 @@ class _Members
                                 'rules_choose_members',
                                 $members,
                                 true,
-                                array('multiple' => null),
+                                ['multiple' => null],
                                 null,
                                 null,
                                 null,
@@ -187,29 +154,25 @@ class _Members
                         );
                     },
                     'saveValues' => function (&$values) {
-                        $members = array();
-                        $rules_choose_members = isset($values['rules_choose_members']) ? (array)$values['rules_choose_members'] : array();
+                        $members = [];
+                        $rules_choose_members = isset($values['rules_choose_members']) ? (array)$values['rules_choose_members'] : [];
                         foreach ($rules_choose_members as $member) {
                             $members[] = $member->member_id;
                         }
                         $values['rules_choose_members'] = $members;
                     },
-                ),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'member_has_group' => array
-            (
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'member_has_group' => [
+                'configuration' => [
                     'form' => function (&$form, $values, $operation) {
-                        $options = array();
+                        $options = [];
                         foreach (\IPS\Member\Group::groups() as $group) {
                             $options[$group->g_id] = $group->name;
                         }
@@ -219,7 +182,7 @@ class _Members
                                 'rules_Members_member_groups',
                                 isset($values['rules_Members_member_groups']) ? $values['rules_Members_member_groups'] : null,
                                 true,
-                                array('options' => $options),
+                                ['options' => $options],
                                 null,
                                 null,
                                 null,
@@ -227,38 +190,33 @@ class _Members
                             )
                         );
                     },
-                ),
-                'callback' => array($this, 'checkMemberGroup'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'callback' => [$this, 'checkMemberGroup'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'member_status' => array
-            (
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'member_status' => [
+                'configuration' => [
                     'form' => function (&$form, $values, $operation) {
-                        $status_options = array
-                        (
+                        $status_options = [
                             'online' => 'rules_member_online',
                             'validating' => 'rules_member_validating',
                             'spammer' => 'rules_member_spammer',
                             'banned_perm' => 'rules_member_banned_perm',
                             'banned_temp' => 'rules_member_banned_temp',
                             'warnlevel' => 'rules_member_warnlevel',
-                        );
+                        ];
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Members_member_status',
                                 isset($values['rules_Members_member_status']) ? $values['rules_Members_member_status'] : null,
                                 true,
-                                array('options' => $status_options),
+                                ['options' => $status_options],
                                 null,
                                 null,
                                 null,
@@ -266,25 +224,20 @@ class _Members
                             )
                         );
                     },
-                ),
-                'callback' => array($this, 'checkMemberStatus'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'callback' => [$this, 'checkMemberStatus'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'member_attributes' => array
-            (
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'member_attributes' => [
+                'configuration' => [
                     'form' => function (&$form, $values, $operation) {
-                        $attribute_options = array
-                        (
+                        $attribute_options = [
                             'photo' => 'rules_member_attribute_photo',
                             'signature' => 'rules_member_attribute_signature',
                             'followers' => 'rules_member_attribute_followers',
@@ -295,68 +248,64 @@ class _Members
                             'birthdate' => 'rules_member_attribute_birthdate',
                             'last_activity' => 'rules_member_attribute_last_activity',
                             'last_post' => 'rules_member_attribute_last_post',
-                        );
+                        ];
 
-                        $attribute_toggles = array
-                        (
-                            'followers' => array(
+                        $attribute_toggles = [
+                            'followers' => [
                                 'rules_Members_attribute_compare_type_value',
-                                'rules_Members_attribute_compare_value'
-                            ),
-                            'reputation' => array(
+                                'rules_Members_attribute_compare_value',
+                            ],
+                            'reputation' => [
                                 'rules_Members_attribute_compare_type_value',
-                                'rules_Members_attribute_compare_value'
-                            ),
-                            'posts' => array(
+                                'rules_Members_attribute_compare_value',
+                            ],
+                            'posts' => [
                                 'rules_Members_attribute_compare_type_value',
-                                'rules_Members_attribute_compare_value'
-                            ),
-                            'pviews' => array(
+                                'rules_Members_attribute_compare_value',
+                            ],
+                            'pviews' => [
                                 'rules_Members_attribute_compare_type_value',
-                                'rules_Members_attribute_compare_value'
-                            ),
-                            'joined' => array('rules_Members_attribute_compare_type_date'),
-                            'joined' => array('rules_Members_attribute_compare_type_date'),
-                            'birthdate' => array('rules_Members_attribute_compare_type_date'),
-                            'last_activity' => array('rules_Members_attribute_compare_type_date'),
-                            'last_post' => array('rules_Members_attribute_compare_type_date'),
-                        );
+                                'rules_Members_attribute_compare_value',
+                            ],
+                            'joined' => ['rules_Members_attribute_compare_type_date'],
+                            'joined' => ['rules_Members_attribute_compare_type_date'],
+                            'birthdate' => ['rules_Members_attribute_compare_type_date'],
+                            'last_activity' => ['rules_Members_attribute_compare_type_date'],
+                            'last_post' => ['rules_Members_attribute_compare_type_date'],
+                        ];
 
-                        $value_compare_options = array
-                        (
+                        $value_compare_options = [
                             '<' => 'Less than',
                             '>' => 'More than',
                             '=' => 'Equal to',
-                        );
+                        ];
 
-                        $date_compare_options = array
-                        (
+                        $date_compare_options = [
                             '<' => 'Before',
                             '>' => 'After',
                             '=' => 'On',
                             '?' => 'Within the last',
-                        );
+                        ];
 
-                        $date_toggles = array
-                        (
-                            '<' => array('rules_Members_attribute_compare_date'),
-                            '>' => array('rules_Members_attribute_compare_date'),
-                            '=' => array('rules_Members_attribute_compare_date'),
-                            '?' => array(
+                        $date_toggles = [
+                            '<' => ['rules_Members_attribute_compare_date'],
+                            '>' => ['rules_Members_attribute_compare_date'],
+                            '=' => ['rules_Members_attribute_compare_date'],
+                            '?' => [
                                 'rules_Members_attribute_compare_minutes',
                                 'rules_Members_attribute_compare_hours',
                                 'rules_Members_attribute_compare_days',
                                 'rules_Members_attribute_compare_months',
-                                'rules_Members_attribute_compare_years'
-                            ),
-                        );
+                                'rules_Members_attribute_compare_years',
+                            ],
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Members_member_attribute',
                                 isset($values['rules_Members_member_attribute']) ? $values['rules_Members_member_attribute'] : null,
                                 true,
-                                array('options' => $attribute_options, 'toggles' => $attribute_toggles),
+                                ['options' => $attribute_options, 'toggles' => $attribute_toggles],
                                 null,
                                 null,
                                 null,
@@ -368,7 +317,7 @@ class _Members
                                 'rules_Members_attribute_compare_type_value',
                                 isset($values['rules_Members_attribute_compare_type_value']) ? $values['rules_Members_attribute_compare_type_value'] : null,
                                 false,
-                                array('options' => $value_compare_options),
+                                ['options' => $value_compare_options],
                                 null,
                                 null,
                                 null,
@@ -380,7 +329,7 @@ class _Members
                                 'rules_Members_attribute_compare_value',
                                 isset($values['rules_Members_attribute_compare_value']) ? $values['rules_Members_attribute_compare_value'] : 0,
                                 false,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -392,7 +341,7 @@ class _Members
                                 'rules_Members_attribute_compare_type_date',
                                 isset($values['rules_Members_attribute_compare_type_date']) ? $values['rules_Members_attribute_compare_type_date'] : null,
                                 false,
-                                array('options' => $date_compare_options, 'toggles' => $date_toggles),
+                                ['options' => $date_compare_options, 'toggles' => $date_toggles],
                                 null,
                                 null,
                                 null,
@@ -406,7 +355,7 @@ class _Members
                                     $values['rules_Members_attribute_compare_date']
                                 ) : null,
                                 false,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -418,7 +367,7 @@ class _Members
                                 'rules_Members_attribute_compare_minutes',
                                 isset($values['rules_Members_attribute_compare_minutes']) ? $values['rules_Members_attribute_compare_minutes'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -430,7 +379,7 @@ class _Members
                                 'rules_Members_attribute_compare_hours',
                                 isset($values['rules_Members_attribute_compare_hours']) ? $values['rules_Members_attribute_compare_hours'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -442,7 +391,7 @@ class _Members
                                 'rules_Members_attribute_compare_days',
                                 isset($values['rules_Members_attribute_compare_days']) ? $values['rules_Members_attribute_compare_days'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -454,7 +403,7 @@ class _Members
                                 'rules_Members_attribute_compare_months',
                                 isset($values['rules_Members_attribute_compare_months']) ? $values['rules_Members_attribute_compare_months'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -466,7 +415,7 @@ class _Members
                                 'rules_Members_attribute_compare_years',
                                 isset($values['rules_Members_attribute_compare_years']) ? $values['rules_Members_attribute_compare_years'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -479,78 +428,66 @@ class _Members
                             $values['rules_Members_attribute_compare_date'] = $values['rules_Members_attribute_compare_date']->getTimestamp(
                             );
                         }
-                    }
-                ),
-                'callback' => array($this, 'checkMemberAttributes'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                    },
+                ],
+                'callback' => [$this, 'checkMemberAttributes'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'member_following' => array
-            (
-                'callback' => array($this, 'memberFollowing'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                    ],
+                ],
+            ],
+            'member_following' => [
+                'callback' => [$this, 'memberFollowing'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                    'member2' => array
-                    (
+                    ],
+                    'member2' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member2'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'member_ignoring' => array
-            (
-                'callback' => array($this, 'memberIgnoring'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'member_ignoring' => [
+                'callback' => [$this, 'memberIgnoring'],
+                'configuration' => [
                     'form' => function ($form, $values) {
-                        $ignore_options = array
-                        (
+                        $ignore_options = [
                             'topics' => 'Content Posts',
                             'messages' => 'Messages',
                             'signatures' => 'Signatures',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Members_ignore_type',
                                 $values['rules_Members_ignore_type'] ?: 'topics',
                                 true,
-                                array('options' => $ignore_options)
+                                ['options' => $ignore_options]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                    'member2' => array
-                    (
+                    ],
+                    'member2' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member2'),
                         'required' => true,
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -558,20 +495,17 @@ class _Members
      */
     public function actions()
     {
-        $actions = array
-        (
-            'change_primary_group' => array
-            (
-                'callback' => array($this, 'changePrimaryGroup'),
-                'configuration' => array
-                (
+        $actions = [
+            'change_primary_group' => [
+                'callback' => [$this, 'changePrimaryGroup'],
+                'configuration' => [
                     'form' => function ($form, $values, $action) {
                         $form->add(
                             new \IPS\Helpers\Form\Select(
                                 'rules_Members_member_primary_group',
                                 isset($values['rules_Members_member_primary_group']) ? $values['rules_Members_member_primary_group'] : null,
                                 true,
-                                array(
+                                [
                                     'options' => \IPS\Member\Group::groups(
                                         \IPS\Member::loggedIn()->hasAcpRestriction(
                                             'core',
@@ -580,34 +514,30 @@ class _Members
                                         ),
                                         false
                                     ),
-                                    'parse' => 'normal'
-                                )
+                                    'parse' => 'normal',
+                                ]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'add_secondary_groups' => array
-            (
-                'callback' => array($this, 'addSecondaryGroups'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'add_secondary_groups' => [
+                'callback' => [$this, 'addSecondaryGroups'],
+                'configuration' => [
                     'form' => function ($form, $values, $action) {
                         $form->add(
                             new \IPS\Helpers\Form\CheckboxSet(
                                 'rules_Members_member_secondary_groups_add',
                                 isset($values['rules_Members_member_secondary_groups_add']) ? $values['rules_Members_member_secondary_groups_add'] : null,
                                 true,
-                                array(
+                                [
                                     'options' => \IPS\Member\Group::groups(
                                         \IPS\Member::loggedIn()->hasAcpRestriction(
                                             'core',
@@ -617,34 +547,30 @@ class _Members
                                         false
                                     ),
                                     'multiple' => true,
-                                    'parse' => 'normal'
-                                )
+                                    'parse' => 'normal',
+                                ]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'remove_secondary_groups' => array
-            (
-                'callback' => array($this, 'removeSecondaryGroups'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'remove_secondary_groups' => [
+                'callback' => [$this, 'removeSecondaryGroups'],
+                'configuration' => [
                     'form' => function ($form, $values, $action) {
                         $form->add(
                             new \IPS\Helpers\Form\CheckboxSet(
                                 'rules_Members_member_secondary_groups_remove',
                                 isset($values['rules_Members_member_secondary_groups_remove']) ? $values['rules_Members_member_secondary_groups_remove'] : null,
                                 true,
-                                array(
+                                [
                                     'options' => \IPS\Member\Group::groups(
                                         \IPS\Member::loggedIn()->hasAcpRestriction(
                                             'core',
@@ -654,34 +580,30 @@ class _Members
                                         false
                                     ),
                                     'multiple' => true,
-                                    'parse' => 'normal'
-                                )
+                                    'parse' => 'normal',
+                                ]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'set_secondary_groups' => array
-            (
-                'callback' => array($this, 'setSecondaryGroups'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'set_secondary_groups' => [
+                'callback' => [$this, 'setSecondaryGroups'],
+                'configuration' => [
                     'form' => function ($form, $values, $action) {
                         $form->add(
                             new \IPS\Helpers\Form\CheckboxSet(
                                 'rules_Members_member_secondary_groups_set',
                                 isset($values['rules_Members_member_secondary_groups_set']) ? $values['rules_Members_member_secondary_groups_set'] : null,
                                 true,
-                                array(
+                                [
                                     'options' => \IPS\Member\Group::groups(
                                         \IPS\Member::loggedIn()->hasAcpRestriction(
                                             'core',
@@ -691,115 +613,98 @@ class _Members
                                         false
                                     ),
                                     'multiple' => true,
-                                    'parse' => 'normal'
-                                )
+                                    'parse' => 'normal',
+                                ]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'change_member_title' => array
-            (
-                'callback' => array($this, 'changeMemberTitle'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                    ],
+                ],
+            ],
+            'change_member_title' => [
+                'callback' => [$this, 'changeMemberTitle'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                    'title' => array
-                    (
-                        'configuration' => array
-                        (
+                    ],
+                    'title' => [
+                        'configuration' => [
                             'form' => function ($form, $values, $action) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Members_member_title',
                                         isset($values['rules_Members_member_title']) ? $values['rules_Members_member_title'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Members_member_title'
                                     )
                                 );
-                                return array('rules_Members_member_title');
+                                return ['rules_Members_member_title'];
                             },
                             'getArg' => function ($values, $action) {
                                 return $values['rules_Members_member_title'];
-                            }
-                        ),
-                        'argtypes' => array('string'),
+                            },
+                        ],
+                        'argtypes' => ['string'],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'flag_spammer' => array
-            (
-                'callback' => array($this, 'flagAsSpammer'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                    ],
+                ],
+            ],
+            'flag_spammer' => [
+                'callback' => [$this, 'flagAsSpammer'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'unflag_spammer' => array
-            (
-                'callback' => array($this, 'unflagAsSpammer'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                    ],
+                ],
+            ],
+            'unflag_spammer' => [
+                'callback' => [$this, 'unflagAsSpammer'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'ban_member' => array
-            (
-                'callback' => array($this, 'banMember'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'ban_member' => [
+                'callback' => [$this, 'banMember'],
+                'configuration' => [
                     'form' => function ($form, $values, $aciton) {
-                        $ban_options = array
-                        (
+                        $ban_options = [
                             'permanent' => 'rules_ban_permanent',
                             'temporary' => 'rules_ban_temporary',
-                        );
+                        ];
 
-                        $ban_toggles = array
-                        (
-                            'temporary' => array(
+                        $ban_toggles = [
+                            'temporary' => [
                                 'rules_Members_ban_setting_minutes',
                                 'rules_Members_ban_setting_hours',
                                 'rules_Members_ban_setting_days',
-                                'rules_Members_ban_setting_months'
-                            ),
-                        );
+                                'rules_Members_ban_setting_months',
+                            ],
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Members_ban_setting',
                                 isset($values['rules_Members_ban_setting']) ? $values['rules_Members_ban_setting'] : null,
                                 true,
-                                array('options' => $ban_options, 'toggles' => $ban_toggles)
+                                ['options' => $ban_options, 'toggles' => $ban_toggles]
                             )
                         );
                         $form->add(
@@ -807,7 +712,7 @@ class _Members
                                 'rules_Members_ban_setting_minutes',
                                 isset($values['rules_Members_ban_setting_minutes']) ? $values['rules_Members_ban_setting_minutes'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -819,7 +724,7 @@ class _Members
                                 'rules_Members_ban_setting_hours',
                                 isset($values['rules_Members_ban_setting_hours']) ? $values['rules_Members_ban_setting_hours'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -831,7 +736,7 @@ class _Members
                                 'rules_Members_ban_setting_days',
                                 isset($values['rules_Members_ban_setting_days']) ? $values['rules_Members_ban_setting_days'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -843,7 +748,7 @@ class _Members
                                 'rules_Members_ban_setting_months',
                                 isset($values['rules_Members_ban_setting_months']) ? $values['rules_Members_ban_setting_months'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -851,44 +756,36 @@ class _Members
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                ],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'unban_member' => array
-            (
-                'callback' => array($this, 'unbanMember'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                    ],
+                ],
+            ],
+            'unban_member' => [
+                'callback' => [$this, 'unbanMember'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'prune_member' => array
-            (
-                'callback' => array($this, 'pruneMember'),
-                'arguments' => array
-                (
-                    'member' => array
-                    (
+                    ],
+                ],
+            ],
+            'prune_member' => [
+                'callback' => [$this, 'pruneMember'],
+                'arguments' => [
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         return $actions;
     }
@@ -1088,15 +985,15 @@ class _Members
         }
 
         try {
-            $where = array(
-                array(
+            $where = [
+                [
                     'follow_app=? AND follow_area=? AND follow_member_id=? AND follow_rel_id=?',
                     'core',
                     'member',
                     $member->member_id,
-                    $member2->member_id
-                )
-            );
+                    $member2->member_id,
+                ],
+            ];
             \IPS\Db::i()->select('core_follow.*', 'core_follow', $where)->first();
             return true;
         } catch (\UnderflowException $e) {
@@ -1199,7 +1096,7 @@ class _Members
     public function setSecondaryGroups($member, $values)
     {
         if ($member instanceof \IPS\Member) {
-            $member_groups = array();
+            $member_groups = [];
             foreach ((array)$values['rules_Members_member_secondary_groups_set'] as $g_id) {
                 try {
                     $group = \IPS\Member\Group::load($g_id);

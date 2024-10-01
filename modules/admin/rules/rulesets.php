@@ -82,32 +82,32 @@ class _rulesets extends \IPS\Node\Controller
      */
     protected function manage()
     {
-        \IPS\Output::i()->sidebar['actions']['exportall'] = array(
+        \IPS\Output::i()->sidebar['actions']['exportall'] = [
             'icon' => 'download',
             'link' => \IPS\Http\Url::internal('app=rules&module=rules&controller=rulesets&do=exportAll'),
             'title' => 'rules_export_all',
-            'data' => array('confirm' => ''),
-        );
+            'data' => ['confirm' => ''],
+        ];
 
-        \IPS\Output::i()->sidebar['actions']['overview'] = array(
+        \IPS\Output::i()->sidebar['actions']['overview'] = [
             'icon' => 'info',
             'link' => \IPS\Http\Url::internal('app=rules&module=rules&controller=rulesets&do=overview'),
             'title' => 'rules_overview',
-            'data' => array(
+            'data' => [
                 'rules-overview' => true,
                 'ipsDialog' => true,
                 'ipsDialog-size' => 'medium',
-                'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('rules_welcome')
-            ),
-        );
+                'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('rules_welcome'),
+            ],
+        ];
 
-        \IPS\Output::i()->sidebar['actions']['documentation'] = array(
+        \IPS\Output::i()->sidebar['actions']['documentation'] = [
             'icon' => 'file',
             'link' => \IPS\Http\Url::external('http://www.ipsguru.net/documentation/rules'),
             'title' => 'rules_documentation',
             'target' => '_blank',
-            'data' => array(),
-        );
+            'data' => [],
+        ];
 
         /* Suppress "No Results" message since we show two trees back to back and it looks awkward */
         \IPS\Member::loggedIn()->language()->words['no_results'] = '';
@@ -119,11 +119,11 @@ class _rulesets extends \IPS\Node\Controller
         $rules = new \IPS\Helpers\Tree\Tree(
             \IPS\Http\Url::internal("app=rules&module=rules&controller=rules"),
             $rulesClass::$nodeTitle,
-            array($rulesController, '_getRoots'),
-            array($rulesController, '_getRow'),
-            array($rulesController, '_getRowParentId'),
-            array($rulesController, '_getChildren'),
-            array($rulesController, '_getRootButtons')
+            [$rulesController, '_getRoots'],
+            [$rulesController, '_getRow'],
+            [$rulesController, '_getRowParentId'],
+            [$rulesController, '_getChildren'],
+            [$rulesController, '_getRootButtons']
         );
 
         if (!\IPS\Request::i()->isAjax()) {
@@ -179,12 +179,12 @@ class _rulesets extends \IPS\Node\Controller
         $rule = null;
         $parent = null;
 
-        \IPS\Output::i()->sidebar['actions']['manageall'] = array(
+        \IPS\Output::i()->sidebar['actions']['manageall'] = [
             'icon' => 'caret-left',
             'link' => \IPS\Http\Url::internal('app=rules&module=rules&controller=rulesets'),
             'title' => 'rules_manage_all_rules',
-            'data' => array(),
-        );
+            'data' => [],
+        ];
 
         if (\IPS\Request::i()->id) {
             if (\IPS\Request::i()->subnode) {
@@ -229,7 +229,7 @@ class _rulesets extends \IPS\Node\Controller
      */
     public function _getChildren($id)
     {
-        $rows = array();
+        $rows = [];
 
         $nodeClass = $this->nodeClass;
         if (mb_substr($id, 0, 2) == 's.') {
@@ -258,36 +258,35 @@ class _rulesets extends \IPS\Node\Controller
     public function _getRootButtons()
     {
         $nodeClass = $this->nodeClass;
-        $buttons = array();
+        $buttons = [];
 
         if ($nodeClass::canAddRoot()) {
-            $buttons['add'] = array(
+            $buttons['add'] = [
                 'icon' => 'legal',
                 'title' => 'rulesets_add',
                 'link' => $this->url->setQueryString('do', 'form'),
-                'data' => ($nodeClass::$modalForms ? array(
+                'data' => ($nodeClass::$modalForms ? [
                     'ipsDialog' => '',
-                    'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('add')
-                ) : array())
-            );
+                    'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('add'),
+                ] : []),
+            ];
         }
 
-        $buttons['add_rule'] = array(
+        $buttons['add_rule'] = [
             'icon' => 'plus',
             'title' => 'rules_add_rule',
-            'link' => $this->url->setQueryString(array('do' => 'form', 'subnode' => 1)),
-        );
+            'link' => $this->url->setQueryString(['do' => 'form', 'subnode' => 1]),
+        ];
 
-        $buttons['import'] = array
-        (
+        $buttons['import'] = [
             'icon' => 'upload',
             'title' => 'import',
-            'link' => $this->url->setQueryString(array('do' => 'import')),
-            'data' => array(
+            'link' => $this->url->setQueryString(['do' => 'import']),
+            'data' => [
                 'ipsDialog' => '',
-                'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('import')
-            )
-        );
+                'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('import'),
+            ],
+        ];
 
         return $buttons;
     }
@@ -367,7 +366,7 @@ class _rulesets extends \IPS\Node\Controller
     protected function _afterSave(\IPS\Node\Model $old = null, \IPS\Node\Model $new, $lastUsedTab = false)
     {
         if (\IPS\Request::i()->isAjax()) {
-            \IPS\Output::i()->json(array());
+            \IPS\Output::i()->json([]);
         } else {
             if (isset (\IPS\Request::i()->subnode)) {
                 if ($old == null) {
@@ -395,18 +394,18 @@ class _rulesets extends \IPS\Node\Controller
 
         /* Normalise AJAX vs non-AJAX */
         if (isset(\IPS\Request::i()->ajax_order)) {
-            $order = array();
-            $position = array();
+            $order = [];
+            $position = [];
             foreach (\IPS\Request::i()->ajax_order as $id => $parent) {
                 if (!isset($order[$parent])) {
-                    $order[$parent] = array();
+                    $order[$parent] = [];
                     $position[$parent] = 1;
                 }
                 $order[$parent][$id] = $position[$parent]++;
             }
         } /* Non-AJAX way */
         else {
-            $order = array(\IPS\Request::i()->root ?: 'null' => \IPS\Request::i()->order);
+            $order = [\IPS\Request::i()->root ?: 'null' => \IPS\Request::i()->order];
         }
 
         /* Okay, now order */
@@ -415,7 +414,7 @@ class _rulesets extends \IPS\Node\Controller
                 /* Load Node */
                 try {
                     if (mb_substr($id, 0, 2) === 's.') {
-                        $node = call_user_func(array($nodeClass::$subnodeClass, 'load'), mb_substr($id, 2));
+                        $node = call_user_func([$nodeClass::$subnodeClass, 'load'], mb_substr($id, 2));
                         $parentColumn = $node::$parentNodeColumnId;
                     } else {
                         $node = $nodeClass::load($id);
@@ -446,14 +445,14 @@ class _rulesets extends \IPS\Node\Controller
         }
 
         /* Log */
-        \IPS\Session::i()->log('acplog__node_reorder', array($this->title => true), true);
+        \IPS\Session::i()->log('acplog__node_reorder', [$this->title => true], true);
 
         /* If this is an AJAX request, just respond */
         if (\IPS\Request::i()->isAjax()) {
             return;
         } /* Otherwise, redirect */
         else {
-            \IPS\Output::i()->redirect($this->url->setQueryString(array('root' => \IPS\Request::i()->root)));
+            \IPS\Output::i()->redirect($this->url->setQueryString(['root' => \IPS\Request::i()->root]));
         }
         \IPS\Output::i()->sendOutput();
     }
@@ -472,7 +471,7 @@ class _rulesets extends \IPS\Node\Controller
      */
     protected function debugEnable()
     {
-        $rules = array();
+        $rules = [];
 
         if (\IPS\Request::i()->setid) {
             try {
@@ -484,7 +483,7 @@ class _rulesets extends \IPS\Node\Controller
             if (\IPS\Request::i()->id) {
                 try {
                     $rule = \IPS\rules\Rule::load(\IPS\Request::i()->id);
-                    $rules = array($rule);
+                    $rules = [$rule];
                 } catch (\OutOfRangeException $e) {
                 }
             }
@@ -514,7 +513,7 @@ class _rulesets extends \IPS\Node\Controller
      */
     protected function debugDisable()
     {
-        $rules = array();
+        $rules = [];
 
         if (\IPS\Request::i()->setid) {
             try {
@@ -526,7 +525,7 @@ class _rulesets extends \IPS\Node\Controller
             if (\IPS\Request::i()->id) {
                 try {
                     $rule = \IPS\rules\Rule::load(\IPS\Request::i()->id);
-                    $rules = array($rule);
+                    $rules = [$rule];
                 } catch (\OutOfRangeException $e) {
                 }
             }
@@ -557,7 +556,7 @@ class _rulesets extends \IPS\Node\Controller
     protected function viewlog()
     {
         try {
-            $log = \IPS\Db::i()->select('*', 'rules_logs', array('id=?', \IPS\Request::i()->logid))->first();
+            $log = \IPS\Db::i()->select('*', 'rules_logs', ['id=?', \IPS\Request::i()->logid])->first();
         } catch (\UnderflowException $e) {
             \IPS\Output::i()->error('Log Not Found', '2RL01/A', 403);
         }
@@ -574,12 +573,11 @@ class _rulesets extends \IPS\Node\Controller
         $conditions = new \IPS\Helpers\Table\Db(
             'rules_logs',
             $this->url,
-            array('thread=? AND type=? AND rule_id=?', $log['thread'], 'IPS\rules\Condition', $log['rule_id'])
+            ['thread=? AND type=? AND rule_id=?', $log['thread'], 'IPS\rules\Condition', $log['rule_id']]
         );
-        $conditions->include = array('op_id', 'message', 'result');
+        $conditions->include = ['op_id', 'message', 'result'];
         $conditions->langPrefix = 'rules_conditions_table_';
-        $conditions->parsers = array
-        (
+        $conditions->parsers = [
             'op_id' => function ($val) {
                 try {
                     $operation = \IPS\rules\Condition::load($val);
@@ -598,21 +596,20 @@ class _rulesets extends \IPS\Node\Controller
                 }
                 return $val;
             },
-        );
+        ];
         $conditions->sortBy = 'id';
         $conditions->sortDirection = 'asc';
-        $conditions->noSort = array('op_id', 'message', 'result');
+        $conditions->noSort = ['op_id', 'message', 'result'];
         $conditions->limit = 1000;
 
         $actions = new \IPS\Helpers\Table\Db(
             'rules_logs',
             $this->url,
-            array('thread=? AND type=? AND rule_id=?', $log['thread'], 'IPS\rules\Action', $log['rule_id'])
+            ['thread=? AND type=? AND rule_id=?', $log['thread'], 'IPS\rules\Action', $log['rule_id']]
         );
-        $actions->include = array('op_id', 'message', 'result', 'time');
+        $actions->include = ['op_id', 'message', 'result', 'time'];
         $actions->langPrefix = 'rules_actions_table_';
-        $actions->parsers = array
-        (
+        $actions->parsers = [
             'op_id' => function ($val) {
                 try {
                     $operation = \IPS\rules\Action::load($val);
@@ -634,21 +631,20 @@ class _rulesets extends \IPS\Node\Controller
             'time' => function ($val) {
                 return (string)\IPS\DateTime::ts($val);
             },
-        );
+        ];
         $actions->sortBy = 'id';
         $actions->sortDirection = 'asc';
-        $actions->noSort = array('op_id', 'message', 'result');
+        $actions->noSort = ['op_id', 'message', 'result'];
         $actions->limit = 1000;
 
         $subrules = new \IPS\Helpers\Table\Db(
             'rules_logs',
             $this->url,
-            array('thread=? AND op_id=0 AND rule_parent=?', $log['thread'], $log['rule_id'])
+            ['thread=? AND op_id=0 AND rule_parent=?', $log['thread'], $log['rule_id']]
         );
-        $subrules->include = array('rule_id', 'message', 'result');
+        $subrules->include = ['rule_id', 'message', 'result'];
         $subrules->langPrefix = 'rules_subrules_table_';
-        $subrules->parsers = array
-        (
+        $subrules->parsers = [
             'rule_id' => function ($val) {
                 try {
                     $rule = \IPS\rules\Rule::load($val);
@@ -667,34 +663,34 @@ class _rulesets extends \IPS\Node\Controller
                 }
                 return $val;
             },
-        );
+        ];
         $subrules->sortBy = 'id';
         $subrules->sortDirection = 'asc';
         $subrules->rowButtons = function ($row) use ($self) {
-            $buttons = array();
+            $buttons = [];
             try {
                 $rule = \IPS\rules\Rule::load($row['rule_id']);
                 if ($rule->debug) {
-                    $buttons['debug'] = array(
+                    $buttons['debug'] = [
                         'icon' => 'bug',
                         'title' => 'View Debug Console',
                         'id' => "{$row['id']}-view",
                         'link' => $self->url->setQueryString(
-                            array(
+                            [
                                 'controller' => 'rules',
                                 'do' => 'form',
                                 'id' => $row['rule_id'],
-                                'tab' => 'debug_console'
-                            )
+                                'tab' => 'debug_console',
+                            ]
                         ),
-                    );
+                    ];
                 }
             } catch (\OutOfRangeException $e) {
             }
 
             return $buttons;
         };
-        $subrules->noSort = array('rule_id', 'message', 'result');
+        $subrules->noSort = ['rule_id', 'message', 'result'];
         $subrules->limit = 1000;
 
         \IPS\Output::i()->output = \IPS\Theme::i()->getTemplate('views')->logdetails(
@@ -723,7 +719,7 @@ class _rulesets extends \IPS\Node\Controller
             }
 
             \IPS\Output::i()->title = "Overview for rule: " . $rule->title;
-            \IPS\Output::i()->output = \IPS\Theme::i()->getTemplate('views')->rules(array($rule));
+            \IPS\Output::i()->output = \IPS\Theme::i()->getTemplate('views')->rules([$rule]);
         } /**
          * Overview A Whole Ruleset
          */
@@ -806,12 +802,12 @@ class _rulesets extends \IPS\Node\Controller
 
         \IPS\Output::i()->sendOutput(
             $xml->asXML(), 200, 'application/xml',
-            array(
+            [
                 "Content-Disposition" => \IPS\Output::getContentDisposition(
                     'attachment',
                     \IPS\Http\Url::seoTitle($title) . '.xml'
-                )
-            )
+                ),
+            ]
         );
     }
 
@@ -827,8 +823,8 @@ class _rulesets extends \IPS\Node\Controller
         $customActions = $xml->addChild('customActions');
         $customData = $xml->addChild('customData');
 
-        $custom_actions = array();
-        $custom_data = array();
+        $custom_actions = [];
+        $custom_data = [];
 
         foreach (\IPS\rules\Rule\Ruleset::roots(null) as $ruleset) {
             $results = $this->_addRulesetExport($ruleset, $rulesets);
@@ -837,7 +833,7 @@ class _rulesets extends \IPS\Node\Controller
             $custom_data = array_merge($custom_data, $results['custom_data']);
         }
 
-        foreach (\IPS\rules\Rule::roots(null, null, array(array('rule_ruleset_id=0'))) as $rule) {
+        foreach (\IPS\rules\Rule::roots(null, null, [['rule_ruleset_id=0']]) as $rule) {
             $results = $this->_addRuleExport($rule, $rules);
 
             $custom_actions = array_merge($custom_actions, $results['custom_actions']);
@@ -854,12 +850,12 @@ class _rulesets extends \IPS\Node\Controller
 
         \IPS\Output::i()->sendOutput(
             $xml->asXML(), 200, 'application/xml',
-            array(
+            [
                 "Content-Disposition" => \IPS\Output::getContentDisposition(
                     'attachment',
                     \IPS\Http\Url::seoTitle('rules-export-' . \IPS\DateTime::ts(time())) . '.xml'
-                )
-            )
+                ),
+            ]
         );
     }
 
@@ -879,8 +875,8 @@ class _rulesets extends \IPS\Node\Controller
         $rulesetNode->addAttribute('creator', $ruleset->creator);
 
         $rulesetNode->addChild('description', $ruleset->description);
-        $custom_actions = array();
-        $custom_data = array();
+        $custom_actions = [];
+        $custom_data = [];
 
         $rulesNode = $rulesetNode->addChild('rules');
         foreach ($ruleset->children() as $rule) {
@@ -890,11 +886,10 @@ class _rulesets extends \IPS\Node\Controller
             $custom_data = array_merge($custom_data, $results['custom_data']);
         }
 
-        return array
-        (
+        return [
             'custom_actions' => $custom_actions,
             'custom_data' => $custom_data,
-        );
+        ];
     }
 
     /**
@@ -915,8 +910,8 @@ class _rulesets extends \IPS\Node\Controller
         $ruleNode->addAttribute('compare', $rule->base_compare);
         $ruleNode->addAttribute('debug', false);
 
-        $custom_actions = array();
-        $custom_data = array();
+        $custom_actions = [];
+        $custom_data = [];
 
         $conditionsNode = $ruleNode->addChild('conditions');
         foreach ($rule->conditions() as $condition) {
@@ -984,11 +979,10 @@ class _rulesets extends \IPS\Node\Controller
             }
         }
 
-        return array
-        (
+        return [
             'custom_actions' => $custom_actions,
             'custom_data' => $custom_data,
-        );
+        ];
     }
 
     /**
@@ -1001,8 +995,8 @@ class _rulesets extends \IPS\Node\Controller
     {
         $conditionNode = $xml->addChild('condition');
 
-        $custom_actions = array();
-        $custom_data = array();
+        $custom_actions = [];
+        $custom_data = [];
 
         $conditionNode->addAttribute('title', $condition->title);
         $conditionNode->addAttribute('weight', $condition->weight);
@@ -1042,11 +1036,10 @@ class _rulesets extends \IPS\Node\Controller
             }
         }
 
-        return array
-        (
+        return [
             'custom_actions' => $custom_actions,
             'custom_data' => $custom_data,
-        );
+        ];
     }
 
     /**
@@ -1058,8 +1051,8 @@ class _rulesets extends \IPS\Node\Controller
     protected function _addActionExport($action, $xml)
     {
         $actionNode = $xml->addChild('action');
-        $custom_actions = array();
-        $custom_data = array();
+        $custom_actions = [];
+        $custom_data = [];
 
         $actionNode->addAttribute('title', $action->title);
         $actionNode->addAttribute('weight', $action->weight);
@@ -1115,11 +1108,10 @@ class _rulesets extends \IPS\Node\Controller
             }
         }
 
-        return array
-        (
+        return [
             'custom_actions' => $custom_actions,
             'custom_data' => $custom_data,
-        );
+        ];
     }
 
     /**
@@ -1215,7 +1207,7 @@ class _rulesets extends \IPS\Node\Controller
                 'rules_import',
                 null,
                 true,
-                array('allowedFileTypes' => array('xml'), 'temporary' => true)
+                ['allowedFileTypes' => ['xml'], 'temporary' => true]
             )
         );
 

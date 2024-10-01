@@ -61,13 +61,13 @@ class _data extends \IPS\Node\Controller
      */
     protected function manage()
     {
-        \IPS\Output::i()->sidebar['actions']['documentation'] = array(
+        \IPS\Output::i()->sidebar['actions']['documentation'] = [
             'icon' => 'file',
             'link' => \IPS\Http\Url::external('http://www.ipsguru.net/documentation/rules/general/fields'),
             'title' => 'rules_documentation',
             'target' => '_blank',
-            'data' => array(),
-        );
+            'data' => [],
+        ];
 
         if (!\IPS\Request::i()->isAjax()) {
             \IPS\Output::i(

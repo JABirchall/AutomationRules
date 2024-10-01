@@ -52,38 +52,36 @@ class _schedule extends \IPS\Dispatcher\Controller
     {
         $self = $this;
 
-        \IPS\Output::i()->sidebar['actions']['documentation'] = array(
+        \IPS\Output::i()->sidebar['actions']['documentation'] = [
             'icon' => 'file',
             'link' => \IPS\Http\Url::external('http://www.ipsguru.net/documentation/rules/general/scheduling'),
             'title' => 'rules_documentation',
             'target' => '_blank',
-            'data' => array(),
-        );
+            'data' => [],
+        ];
 
         /* Create the table */
         $table = new \IPS\Helpers\Table\Db(
             'rules_scheduled_actions',
             \IPS\Http\Url::internal('app=rules&module=rules&controller=schedule')
         );
-        $table->include = array(
+        $table->include = [
             'schedule_time',
             'schedule_action_id',
             'schedule_thread',
             'schedule_created',
             'schedule_unique_key',
-            'schedule_parent'
-        );
+            'schedule_parent',
+        ];
         $table->langPrefix = 'rules_scheduled_';
 
-        $table->filters = array
-        (
+        $table->filters = [
             'schedule_filter_keyphrases' => 'schedule_unique_key!=\'\'',
             'schedule_filter_manual' => 'schedule_custom_id>0',
             'schedule_filter_automated' => 'schedule_action_id>0',
-        );
+        ];
 
-        $table->parsers = array
-        (
+        $table->parsers = [
             'schedule_time' => function ($val) {
                 return (string)\IPS\DateTime::ts($val);
             },
@@ -173,10 +171,10 @@ class _schedule extends \IPS\Dispatcher\Controller
                                     $total = \IPS\Db::i()->select('COUNT(*)', $bulkClass::$databaseTable)->first();
                                     $completed = \IPS\Db::i()->select(
                                         'COUNT(*)', $bulkClass::$databaseTable,
-                                        array(
+                                        [
                                             $bulkClass::$databasePrefix . $bulkClass::$databaseColumnId . '<=?',
-                                            (int)$action_data['bulk_counter']
-                                        )
+                                            (int)$action_data['bulk_counter'],
+                                        ]
                                     )->first();
 
                                     if ($completed == 0) {
@@ -201,18 +199,18 @@ class _schedule extends \IPS\Dispatcher\Controller
 
                 return $val;
             },
-        );
+        ];
 
         $table->sortBy = \IPS\Request::i()->sortby ?: 'schedule_time';
         $table->sortDirection = \IPS\Request::i()->sortdirection ?: 'asc';
 
         $table->rowButtons = function ($row) use ($self) {
-            $buttons = array();
+            $buttons = [];
             $action = null;
             $rule = null;
 
             $scheduled_action = \IPS\rules\Action\Scheduled::constructFromData($row);
-            $action_data = json_decode($scheduled_action->data, true) ?: array();
+            $action_data = json_decode($scheduled_action->data, true) ?: [];
 
             try {
                 $action = \IPS\rules\Action::load($row['schedule_action_id']);
@@ -220,75 +218,70 @@ class _schedule extends \IPS\Dispatcher\Controller
             } catch (\OutOfRangeException $e) {
             }
 
-            $buttons['edit'] = array
-            (
+            $buttons['edit'] = [
                 'icon' => 'pencil',
                 'title' => 'edit',
-                'link' => $self->url->setQueryString(array('do' => 'edit', 'id' => $row['schedule_id'])),
-            );
+                'link' => $self->url->setQueryString(['do' => 'edit', 'id' => $row['schedule_id']]),
+            ];
 
-            $buttons['execute'] = array
-            (
+            $buttons['execute'] = [
                 'icon' => 'caret-square-o-right',
                 'title' => 'rules_execute',
-                'link' => $self->url->setQueryString(array('do' => 'executeAction', 'id' => $row['schedule_id'])),
-                'data' => array('confirm' => ''),
-            );
+                'link' => $self->url->setQueryString(['do' => 'executeAction', 'id' => $row['schedule_id']]),
+                'data' => ['confirm' => ''],
+            ];
 
             if ($scheduled_action->queued and $scheduled_action->queued < time(
                 ) - \IPS\rules\modules\admin\rules\LOCKED_TIMEOUT) {
-                $buttons['unlock'] = array
-                (
+                $buttons['unlock'] = [
                     'icon' => 'unlock',
                     'title' => 'rules_unlock_action',
-                    'link' => $self->url->setQueryString(array('do' => 'unlockAction', 'id' => $row['schedule_id'])),
-                );
+                    'link' => $self->url->setQueryString(['do' => 'unlockAction', 'id' => $row['schedule_id']]),
+                ];
             }
 
             if ($action_data['bulk_option'] and $action_data['bulk_counter']) {
-                $buttons['reset'] = array
-                (
+                $buttons['reset'] = [
                     'icon' => 'refresh',
                     'title' => 'rules_reset_bulk',
-                    'link' => $self->url->setQueryString(array('do' => 'resetAction', 'id' => $row['schedule_id'])),
-                    'data' => array('confirm' => ''),
-                );
+                    'link' => $self->url->setQueryString(['do' => 'resetAction', 'id' => $row['schedule_id']]),
+                    'data' => ['confirm' => ''],
+                ];
             }
 
-            $buttons['delete'] = array
-            (
+            $buttons['delete'] = [
                 'icon' => 'trash',
                 'title' => 'delete',
-                'link' => $self->url->setQueryString(array('do' => 'delete', 'id' => $row['schedule_id'])),
-                'data' => array('confirm' => ''),
-            );
+                'link' => $self->url->setQueryString(['do' => 'delete', 'id' => $row['schedule_id']]),
+                'data' => ['confirm' => ''],
+            ];
 
             if ($rule) {
                 try {
                     $logid = \IPS\Db::i()->select(
                         'id', 'rules_logs',
-                        array(
+                        [
                             'op_id=0 AND rule_parent=0 AND rule_id=? AND thread=?',
                             $rule->id,
-                            $row['schedule_thread']
-                        )
+                            $row['schedule_thread'],
+                        ]
                     )->first();
-                    $buttons['debug'] = array(
+                    $buttons['debug'] = [
                         'icon' => 'bug',
                         'title' => 'rules_view_debug',
                         'id' => "{$row['schedule_id']}-debug",
                         'link' => \IPS\Http\Url::internal(
                             "app=rules&module=rules&controller=rulesets&do=viewlog"
-                        )->setQueryString(array('logid' => $logid)),
-                        'data' => array('ipsDialog' => ''),
-                    );
+                        )->setQueryString(['logid' => $logid]),
+                        'data' => ['ipsDialog' => ''],
+                    ];
                 } catch (\UnderflowException $e) {
                 }
             }
 
             return $buttons;
         };
-        $table->noSort = array('schedule_action_id', 'schedule_thread');
+        $table->noSort = ['schedule_action_id', 'schedule_thread'];
 
         \IPS\Output::i()->title = \IPS\Member::loggedIn()->language()->addToStack('rules_scheduled_actions');
         \IPS\Output::i()->output = \IPS\Theme::i()->getTemplate('global', 'core')->block('title', (string)$table);
@@ -343,16 +336,15 @@ class _schedule extends \IPS\Dispatcher\Controller
         }
 
 
-        $frequency_options = array
-        (
+        $frequency_options = [
             'once' => 'rules_onetime',
             'repeat' => 'rules_recurring',
-        );
+        ];
 
         $lang = \IPS\Member::loggedIn()->language();
-        $action_data = isset($scheduled_action) ? (json_decode($scheduled_action->data, true) ?: array()) : array();
-        $action_args = array();
-        $action_data_args = isset($action_data['args']) ? (array)$action_data['args'] : array();
+        $action_data = isset($scheduled_action) ? (json_decode($scheduled_action->data, true) ?: []) : [];
+        $action_args = [];
+        $action_data_args = isset($action_data['args']) ? (array)$action_data['args'] : [];
 
         foreach ($action_data_args as $key => $arg) {
             $action_args[$key] = \IPS\rules\Application::restoreArg($arg);
@@ -368,7 +360,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                 'rules_scheduled_date',
                 \IPS\DateTime::ts((isset($scheduled_action) ? $scheduled_action->time : strtotime('now +1 hour'))),
                 true,
-                array('time' => true)
+                ['time' => true]
             )
         );
         $form->add(
@@ -376,18 +368,18 @@ class _schedule extends \IPS\Dispatcher\Controller
                 'rules_schedule_custom_frequency',
                 isset($action_data['frequency']) ? $action_data['frequency'] : null,
                 false,
-                array(
+                [
                     'options' => $frequency_options,
-                    'toggles' => array(
-                        'repeat' => array(
+                    'toggles' => [
+                        'repeat' => [
                             'action_schedule_repeats',
                             'action_schedule_minutes',
                             'action_schedule_hours',
                             'action_schedule_days',
-                            'action_schedule_months'
-                        )
-                    )
-                )
+                            'action_schedule_months',
+                        ],
+                    ],
+                ]
             )
         );
         $form->addHtml(
@@ -400,7 +392,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                 'action_schedule_minutes',
                 isset($action_data['minutes']) ? $action_data['minutes'] : 0,
                 false,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -412,7 +404,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                 'action_schedule_hours',
                 isset($action_data['hours']) ? $action_data['hours'] : 0,
                 false,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -424,7 +416,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                 'action_schedule_days',
                 isset($action_data['days']) ? $action_data['days'] : 0,
                 false,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -436,7 +428,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                 'action_schedule_months',
                 isset($action_data['months']) ? $action_data['months'] : 0,
                 false,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -444,9 +436,9 @@ class _schedule extends \IPS\Dispatcher\Controller
             )
         );
 
-        $argument_inputs = array();
-        $bulk_options = array();
-        $bulk_options_toggles = array();
+        $argument_inputs = [];
+        $bulk_options = [];
+        $bulk_options_toggles = [];
 
         foreach ($customAction->children() as $argument) {
             $form_name = 'custom_argument_' . $argument->id;
@@ -462,7 +454,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                         $form_name,
                         $form_value,
                         $argument->required,
-                        array('min' => null),
+                        ['min' => null],
                         null,
                         null,
                         null,
@@ -474,7 +466,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                         $form_name,
                         $form_value,
                         $argument->required,
-                        array('min' => null, 'decimals' => true),
+                        ['min' => null, 'decimals' => true],
                         null,
                         null,
                         null,
@@ -486,7 +478,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                         $form_name,
                         $form_value,
                         $argument->required,
-                        array(),
+                        [],
                         null,
                         null,
                         null,
@@ -498,7 +490,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                         $form_name,
                         $form_value,
                         $argument->required,
-                        array(),
+                        [],
                         null,
                         null,
                         null,
@@ -519,7 +511,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                             $form_name,
                             $form_value,
                             $argument->required,
-                            array('class' => $objectClass, 'multiple' => false, 'permissionCheck' => 'view'),
+                            ['class' => $objectClass, 'multiple' => false, 'permissionCheck' => 'view'],
                             null,
                             null,
                             null,
@@ -533,7 +525,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                 $form_name,
                                 $form_value,
                                 $argument->required,
-                                array('multiple' => 1, 'class' => $objectClass),
+                                ['multiple' => 1, 'class' => $objectClass],
                                 null,
                                 null,
                                 null,
@@ -547,7 +539,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                     $form_name,
                                     $form_value,
                                     $argument->required,
-                                    array('multiple' => 1),
+                                    ['multiple' => 1],
                                     null,
                                     null,
                                     null,
@@ -561,7 +553,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                         $form_name,
                                         $form_value,
                                         $argument->required,
-                                        array('time' => true),
+                                        ['time' => true],
                                         null,
                                         null,
                                         null,
@@ -574,7 +566,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                             $form_name,
                                             $form_value,
                                             $argument->required,
-                                            array(),
+                                            [],
                                             null,
                                             null,
                                             null,
@@ -602,7 +594,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                             $form_name,
                             $form_value,
                             $argument->required,
-                            array('class' => $objectClass, 'multiple' => true, 'permissionCheck' => 'view'),
+                            ['class' => $objectClass, 'multiple' => true, 'permissionCheck' => 'view'],
                             null,
                             null,
                             null,
@@ -615,7 +607,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                 $form_name,
                                 $form_value,
                                 $argument->required,
-                                array('multiple' => null, 'class' => $objectClass),
+                                ['multiple' => null, 'class' => $objectClass],
                                 null,
                                 null,
                                 null,
@@ -628,7 +620,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                     $form_name,
                                     $form_value,
                                     $argument->required,
-                                    array('multiple' => null),
+                                    ['multiple' => null],
                                     null,
                                     null,
                                     null,
@@ -641,7 +633,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                         $form_name,
                                         $form_value,
                                         $argument->required,
-                                        array('stackFieldType' => 'Date', 'time' => false),
+                                        ['stackFieldType' => 'Date', 'time' => false],
                                         null,
                                         null,
                                         null,
@@ -654,7 +646,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                             $form_name,
                                             $form_value,
                                             $argument->required,
-                                            array('stackFieldType' => 'Url'),
+                                            ['stackFieldType' => 'Url'],
                                             null,
                                             null,
                                             null,
@@ -667,7 +659,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                                                 $form_name,
                                                 $form_value,
                                                 $argument->required,
-                                                array(),
+                                                [],
                                                 null,
                                                 null,
                                                 null,
@@ -710,10 +702,10 @@ class _schedule extends \IPS\Dispatcher\Controller
                     'rules_schedule_custom_bulk',
                     isset($action_data['bulk_option']) ? $action_data['bulk_option'] : null,
                     false,
-                    array(
-                        'options' => array_merge(array('' => 'None'), $bulk_options),
-                        'toggles' => $bulk_options_toggles
-                    ),
+                    [
+                        'options' => array_merge(['' => 'None'], $bulk_options),
+                        'toggles' => $bulk_options_toggles,
+                    ],
                     null,
                     "<div data-controller='rules.admin.ui.chosen'>",
                     "</div>",
@@ -725,7 +717,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                     'rules_schedule_bulk_limit',
                     isset($action_data['bulk_limit']) ? $action_data['bulk_limit'] : 500,
                     true,
-                    array('min' => 1),
+                    ['min' => 1],
                     null,
                     null,
                     null,
@@ -760,7 +752,7 @@ class _schedule extends \IPS\Dispatcher\Controller
             $action_data['days'] = $values['action_schedule_days'];
             $action_data['months'] = $values['action_schedule_months'];
 
-            $action_args = array();
+            $action_args = [];
             foreach ($customAction->children() as $argument) {
                 if ($values['rules_schedule_custom_bulk'] === 'custom_argument_' . $argument->id) {
                     $action_args['custom_argument_' . $argument->id] = \IPS\rules\Application::storeArg(null);
@@ -805,7 +797,7 @@ class _schedule extends \IPS\Dispatcher\Controller
                 'rules_scheduled_date',
                 \IPS\DateTime::ts($scheduled_action->time),
                 true,
-                array('time' => true)
+                ['time' => true]
             )
         );
 

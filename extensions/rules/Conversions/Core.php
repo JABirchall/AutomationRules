@@ -29,19 +29,16 @@ class _Core
      */
     public function globalArguments()
     {
-        return array
-        (
-            'site_settings' => array
-            (
+        return [
+            'site_settings' => [
                 'token' => 'site',
                 'argtype' => 'object',
                 'class' => '\IPS\Settings',
                 'getArg' => function () {
                     return \IPS\Settings::i();
                 },
-            ),
-            'logged_in_member' => array
-            (
+            ],
+            'logged_in_member' => [
                 'token' => 'user',
                 'description' => 'the currently logged in user',
                 'argtype' => 'object',
@@ -50,9 +47,8 @@ class _Core
                 'getArg' => function () {
                     return \IPS\Member::loggedIn();
                 },
-            ),
-            'current_time' => array
-            (
+            ],
+            'current_time' => [
                 'token' => 'time',
                 'description' => 'the current time',
                 'argtype' => 'object',
@@ -60,9 +56,8 @@ class _Core
                 'getArg' => function () {
                     return \IPS\DateTime::ts(time());
                 },
-            ),
-            'request_url' => array
-            (
+            ],
+            'request_url' => [
                 'token' => 'url',
                 'description' => 'the request url',
                 'argtype' => 'object',
@@ -70,8 +65,8 @@ class _Core
                 'getArg' => function () {
                     return \IPS\Request::i()->url();
                 },
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -83,12 +78,9 @@ class _Core
      */
     public function conversionMap()
     {
-        $map = array
-        (
-            '\IPS\Member' => array
-            (
-                'Name' => array
-                (
+        $map = [
+            '\IPS\Member' => [
+                'Name' => [
                     'token' => 'name',
                     'description' => 'User name',
                     'argtype' => 'string',
@@ -97,73 +89,65 @@ class _Core
                         \IPS\Lang::load(\IPS\Lang::defaultLanguage())->parseOutputForDisplay($name);
                         return $name;
                     },
-                ),
-                'Name Link' => array
-                (
+                ],
+                'Name Link' => [
                     'token' => 'namelink',
                     'description' => 'User name linked to profile',
                     'argtype' => 'string',
                     'converter' => function ($member) {
                         return "<a href='" . $member->url() . "' data-ipsHover data-ipsHover-target='" . $member->url(
-                            )->setQueryString(array('do' => 'hovercard')) . "'>{$member->name}</a>";
+                            )->setQueryString(['do' => 'hovercard']) . "'>{$member->name}</a>";
                     },
-                ),
-                'Email' => array
-                (
+                ],
+                'Email' => [
                     'token' => 'email',
                     'description' => 'User email address',
                     'argtype' => 'string',
                     'converter' => function ($member) {
                         return $member->email;
                     },
-                ),
-                'Member Title' => array
-                (
+                ],
+                'Member Title' => [
                     'token' => 'title',
                     'description' => 'User title',
                     'argtype' => 'string',
                     'converter' => function ($member) {
                         return (string)$member->member_title;
                     },
-                ),
-                'Content Count' => array
-                (
+                ],
+                'Content Count' => [
                     'token' => 'posts',
                     'description' => 'Posts count',
                     'argtype' => 'int',
                     'converter' => function ($member) {
                         return (int)$member->real_member_posts;
                     },
-                ),
-                'Leaderboard Days Won' => array
-                (
+                ],
+                'Leaderboard Days Won' => [
                     'token' => 'leaderboards_won',
                     'description' => 'Number of days won on leaderboard',
                     'argtype' => 'int',
                     'converter' => function ($member) {
                         return (int)$member->getReputationDaysWonCount();
                     },
-                ),
-                'Reputation' => array
-                (
+                ],
+                'Reputation' => [
                     'token' => 'reputation',
                     'description' => 'Reputation points',
                     'argtype' => 'int',
                     'converter' => function ($member) {
                         return (int)$member->pp_reputation_points;
                     },
-                ),
-                'Warn Level' => array
-                (
+                ],
+                'Warn Level' => [
                     'token' => 'warnlevel',
                     'description' => 'Warning level',
                     'argtype' => 'int',
                     'converter' => function ($member) {
                         return (int)$member->warn_level;
                     },
-                ),
-                'Joined Date' => array
-                (
+                ],
+                'Joined Date' => [
                     'token' => 'joined',
                     'description' => 'Joined date',
                     'argtype' => 'object',
@@ -174,9 +158,8 @@ class _Core
                     'tokenValue' => function ($date) {
                         return (string)$date;
                     },
-                ),
-                'Birthday' => array
-                (
+                ],
+                'Birthday' => [
                     'token' => 'birthday',
                     'description' => 'Birthday',
                     'argtype' => 'object',
@@ -188,9 +171,8 @@ class _Core
                     'tokenValue' => function ($date) {
                         return (string)$date;
                     },
-                ),
-                'Age' => array
-                (
+                ],
+                'Age' => [
                     'token' => 'age',
                     'argtype' => 'int',
                     'description' => 'Age',
@@ -198,18 +180,16 @@ class _Core
                     'converter' => function ($member) {
                         return $member->age();
                     },
-                ),
-                'Member ID' => array
-                (
+                ],
+                'Member ID' => [
                     'token' => 'id',
                     'description' => 'The member id',
                     'argtype' => 'int',
                     'converter' => function ($member) {
                         return $member->member_id;
                     },
-                ),
-                'Url' => array
-                (
+                ],
+                'Url' => [
                     'token' => 'url',
                     'description' => 'The url',
                     'tokenValue' => function ($url) {
@@ -220,14 +200,13 @@ class _Core
                     'converter' => function ($member) {
                         return $member->url();
                     },
-                ),
-                'Followers' => array
-                (
+                ],
+                'Followers' => [
                     'argtype' => 'array',
                     'class' => '\IPS\Member',
                     'converter' => function ($member) {
-                        $members = array();
-                        foreach ($member->followers(3, array('immediate', 'daily', 'weekly'), null) as $follower) {
+                        $members = [];
+                        foreach ($member->followers(3, ['immediate', 'daily', 'weekly'], null) as $follower) {
                             try {
                                 $members[] = \IPS\Member::load($follower['follow_member_id']);
                             } catch (\OutOfRangeException $e) {
@@ -235,9 +214,8 @@ class _Core
                         }
                         return $members;
                     },
-                ),
-                'Last Activity' => array
-                (
+                ],
+                'Last Activity' => [
                     'token' => 'lastactivity',
                     'description' => 'Last activity',
                     'argtype' => 'object',
@@ -248,12 +226,10 @@ class _Core
                     'tokenValue' => function ($date) {
                         return (string)$date;
                     },
-                ),
-            ),
-            '\IPS\Content' => array
-            (
-                'Title' => array
-                (
+                ],
+            ],
+            '\IPS\Content' => [
+                'Title' => [
                     'token' => 'title',
                     'description' => 'The content title',
                     'argtype' => 'string',
@@ -265,9 +241,8 @@ class _Core
 
                         return $content->mapped('title');
                     },
-                ),
-                'Content' => array
-                (
+                ],
+                'Content' => [
                     'token' => 'content',
                     'description' => 'The content body',
                     'argtype' => 'string',
@@ -275,34 +250,30 @@ class _Core
                     'converter' => function ($content) {
                         return $content->content();
                     },
-                ),
-                'Created Date' => array
-                (
+                ],
+                'Created Date' => [
                     'token' => 'created',
                     'argtype' => 'object',
                     'class' => '\IPS\DateTime',
                     'converter' => function ($content) {
                         return \IPS\DateTime::ts($content->mapped('date'));
                     },
-                ),
-                'Updated Date' => array
-                (
+                ],
+                'Updated Date' => [
                     'token' => 'updated',
                     'argtype' => 'object',
                     'class' => '\IPS\DateTime',
                     'converter' => function ($content) {
                         return \IPS\DateTime::ts($content->mapped('updated'));
                     },
-                ),
-                'Tags' => array
-                (
+                ],
+                'Tags' => [
                     'argtype' => 'array',
                     'converter' => function ($content) {
                         return (array)$content->tags();
                     },
-                ),
-                'Content ID' => array
-                (
+                ],
+                'Content ID' => [
                     'token' => 'id',
                     'description' => 'The content ID',
                     'argtype' => 'int',
@@ -310,35 +281,31 @@ class _Core
                         $idField = $content::$databaseColumnId;
                         return $content->$idField;
                     },
-                ),
-                'Author' => array
-                (
+                ],
+                'Author' => [
                     'argtype' => 'object',
                     'class' => '\IPS\Member',
                     'converter' => function ($content) {
                         return $content->author();
                     },
-                ),
-                'Author Name' => array
-                (
+                ],
+                'Author Name' => [
                     'token' => 'author:name',
                     'description' => 'The author name',
                     'argtype' => 'string',
                     'converter' => function ($content) {
                         return $content->author()->name;
                     },
-                ),
-                'Author ID' => array
-                (
+                ],
+                'Author ID' => [
                     'token' => 'author:id',
                     'description' => 'The author ID',
                     'argtype' => 'int',
                     'converter' => function ($content) {
                         return $content->author()->member_id;
                     },
-                ),
-                'Url' => array
-                (
+                ],
+                'Url' => [
                     'token' => 'url',
                     'tokenValue' => function ($url) {
                         return (string)$url;
@@ -349,57 +316,51 @@ class _Core
                     'converter' => function ($content) {
                         return $content->url();
                     },
-                ),
-            ),
-            '\IPS\Content\Item' => array
-            (
-                'Container' => array
-                (
+                ],
+            ],
+            '\IPS\Content\Item' => [
+                'Container' => [
                     'argtype' => 'object',
                     'class' => '\IPS\Node\Model',
                     'nullable' => true,
                     'converter' => function ($item) {
                         return $item->containerWrapper();
                     },
-                ),
-                'Comment Count' => array
-                (
+                ],
+                'Comment Count' => [
                     'token' => 'comments',
                     'description' => 'Item comment count',
                     'argtype' => 'int',
                     'converter' => function ($item) {
                         return (int)$item->mapped('num_comments');
                     },
-                ),
-                'Last Post Time' => array
-                (
+                ],
+                'Last Post Time' => [
                     'token' => 'lastpost',
                     'argtype' => 'object',
                     'class' => '\IPS\DateTime',
                     'converter' => function ($item) {
                         return \IPS\DateTime::ts(max($item->mapped('last_comment'), $item->mapped('last_review')));
                     },
-                ),
-                'Views' => array
-                (
+                ],
+                'Views' => [
                     'token' => 'views',
                     'description' => 'Item views count',
                     'argtype' => 'int',
                     'converter' => function ($item) {
                         return (int)$item->mapped('views');
                     },
-                ),
-                'Followers' => array
-                (
+                ],
+                'Followers' => [
                     'argtype' => 'array',
                     'class' => '\IPS\Member',
                     'converter' => function ($item) {
                         try {
-                            $members = array();
+                            $members = [];
                             foreach (
                                 $item->followers(
                                     3,
-                                    array('none', 'immediate', 'daily', 'weekly'),
+                                    ['none', 'immediate', 'daily', 'weekly'],
                                     null
                                 ) as $follower
                             ) {
@@ -410,20 +371,19 @@ class _Core
                             }
                             return $members;
                         } catch (\BadMethodCallException $e) {
-                            return array();
+                            return [];
                         }
                     },
-                ),
-                'Author Followers' => array
-                (
+                ],
+                'Author Followers' => [
                     'argtype' => 'array',
                     'class' => '\IPS\Member',
                     'converter' => function ($item) {
-                        $members = array();
+                        $members = [];
                         foreach (
                             $item->author()->followers(
                                 3,
-                                array('immediate', 'daily', 'weekly'),
+                                ['immediate', 'daily', 'weekly'],
                                 null
                             ) as $follower
                         ) {
@@ -434,37 +394,32 @@ class _Core
                         }
                         return $members;
                     },
-                ),
-                'First Comment' => array
-                (
+                ],
+                'First Comment' => [
                     'argtype' => 'object',
                     'class' => '\IPS\Content\Comment',
                     'converter' => function ($item) {
                         return $this->comments(1, 0, 'date', 'asc', null, false, null, null, true);
                     },
-                ),
-                'Last Comment' => array
-                (
+                ],
+                'Last Comment' => [
                     'argtype' => 'object',
                     'class' => '\IPS\Content\Comment',
                     'converter' => function ($item) {
                         return $this->comments(1, 0, 'date', 'desc', null, false, null, null, true);
                     },
-                ),
-            ),
-            '\IPS\Node\Model' => array
-            (
-                'Parent' => array
-                (
+                ],
+            ],
+            '\IPS\Node\Model' => [
+                'Parent' => [
                     'argtype' => 'object',
                     'class' => '\IPS\Node\Model',
                     'nullable' => true,
                     'converter' => function ($node) {
                         return $node->parent();
                     },
-                ),
-                'Root Parent' => array
-                (
+                ],
+                'Root Parent' => [
                     'argtype' => 'object',
                     'class' => '\IPS\Node\Model',
                     'nullable' => true,
@@ -474,9 +429,8 @@ class _Core
                         }
                         return $parent;
                     },
-                ),
-                'Title' => array
-                (
+                ],
+                'Title' => [
                     'token' => 'title',
                     'description' => 'The node title',
                     'argtype' => 'string',
@@ -485,27 +439,24 @@ class _Core
                         \IPS\Lang::load(\IPS\Lang::defaultLanguage())->parseOutputForDisplay($title);
                         return $title;
                     },
-                ),
-                'Content Count' => array
-                (
+                ],
+                'Content Count' => [
                     'token' => 'items',
                     'description' => 'Total items count',
                     'argtype' => 'int',
                     'converter' => function ($node) {
                         return (int)$node->_items;
                     },
-                ),
-                'Node ID' => array
-                (
+                ],
+                'Node ID' => [
                     'token' => 'id',
                     'description' => 'The node ID',
                     'argtype' => 'int',
                     'converter' => function ($node) {
                         return $node->_id;
                     },
-                ),
-                'Url' => array
-                (
+                ],
+                'Url' => [
                     'token' => 'url',
                     'tokenValue' => function ($url) {
                         return (string)$url;
@@ -516,106 +467,92 @@ class _Core
                     'converter' => function ($node) {
                         return $node->url();
                     },
-                ),
-            ),
-            '\IPS\DateTime' => array
-            (
-                'Date/Time' => array
-                (
+                ],
+            ],
+            '\IPS\DateTime' => [
+                'Date/Time' => [
                     'token' => 'datetime',
                     'description' => 'The formatted date/time',
                     'argtype' => 'string',
                     'converter' => function ($date) {
                         return (string)$date;
                     },
-                ),
-                'Timestamp' => array
-                (
+                ],
+                'Timestamp' => [
                     'token' => 'timestamp',
                     'description' => 'The unix timestamp',
                     'argtype' => 'int',
                     'converter' => function ($date) {
                         return $date->getTimestamp();
                     },
-                ),
-                'Year' => array
-                (
+                ],
+                'Year' => [
                     'token' => 'year',
                     'description' => 'The full year',
                     'argtype' => 'int',
                     'converter' => function ($date) {
                         return $date->format('Y');
                     },
-                ),
-                'Month' => array
-                (
+                ],
+                'Month' => [
                     'token' => 'month',
                     'description' => 'The month number',
                     'argtype' => 'int',
                     'converter' => function ($date) {
                         return $date->format('n');
                     },
-                ),
-                'Day' => array
-                (
+                ],
+                'Day' => [
                     'token' => 'day',
                     'description' => 'The day of the month',
                     'argtype' => 'int',
                     'converter' => function ($date) {
                         return $date->format('j');
                     },
-                ),
-                'Hour' => array
-                (
+                ],
+                'Hour' => [
                     'token' => 'hour',
                     'description' => 'The hour of day',
                     'argtype' => 'int',
                     'converter' => function ($date) {
                         return $date->format('G');
                     },
-                ),
-                'Minute' => array
-                (
+                ],
+                'Minute' => [
                     'token' => 'minute',
                     'description' => 'The minute of hour',
                     'argtype' => 'int',
                     'converter' => function ($date) {
                         return $date->format('i');
                     },
-                ),
-            ),
-            '\IPS\Http\Url' => array
-            (
-                'Url' => array
-                (
+                ],
+            ],
+            '\IPS\Http\Url' => [
+                'Url' => [
                     'token' => 'url',
                     'description' => 'The url address',
                     'argtype' => 'string',
                     'converter' => function ($url) {
                         return (string)$url;
                     },
-                ),
-                'Params' => array
-                (
+                ],
+                'Params' => [
                     'argtype' => 'array',
                     'converter' => function ($url) {
                         return $url->queryString;
                     },
-                ),
-            ),
-            '\IPS\Settings' => array
-            (
-                'Site Name' => array
-                (
+                ],
+            ],
+            '\IPS\Settings' => [
+                'Site Name' => [
                     'token' => 'name',
                     'description' => 'The site name',
                     'argtype' => 'string',
                     'converter' => function ($settings) {
                         return $settings->board_name;
                     },
-                ),
-                'Site Url' => array
-                (
+                ],
+                'Site Url' => [
                     'token' => 'url',
                     'description' => 'The site url',
                     'argtype' => 'object',
@@ -626,9 +563,9 @@ class _Core
                     'tokenValue' => function ($url) {
                         return (string)$url;
                     },
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $lang = \IPS\Member::loggedIn()->language();
 
@@ -655,14 +592,13 @@ class _Core
                             ) : $nodeClass::$nodeTitle)
                         );
                         $node_type = rtrim($nodeTitle, "s");
-                        $map['\\' . ltrim($contentItemClass, '\\')][$node_type] = array
-                        (
+                        $map['\\' . ltrim($contentItemClass, '\\')][$node_type] = [
                             'argtype' => 'object',
                             'class' => '\\' . ltrim($nodeClass, '\\'),
                             'converter' => function ($item) {
                                 return $item->container();
                             },
-                        );
+                        ];
                     }
 
                     /**
@@ -670,14 +606,13 @@ class _Core
                      */
                     if (isset ($contentItemClass::$commentClass)) {
                         $commentClass = $contentItemClass::$commentClass;
-                        $map['\\' . ltrim($commentClass, '\\')][$contentTitle] = array
-                        (
+                        $map['\\' . ltrim($commentClass, '\\')][$contentTitle] = [
                             'argtype' => 'object',
                             'class' => '\\' . ltrim($contentItemClass, '\\'),
                             'converter' => function ($comment) {
                                 return $comment->item();
                             },
-                        );
+                        ];
                     }
 
                     /**
@@ -685,14 +620,13 @@ class _Core
                      */
                     if (isset ($contentItemClass::$reviewClass)) {
                         $reviewClass = $contentItemClass::$reviewClass;
-                        $map['\\' . ltrim($reviewClass, '\\')][$contentTitle] = array
-                        (
+                        $map['\\' . ltrim($reviewClass, '\\')][$contentTitle] = [
                             'argtype' => 'object',
                             'class' => '\\' . ltrim($contentItemClass, '\\'),
                             'converter' => function ($review) {
                                 return $review->item();
                             },
-                        );
+                        ];
                     }
                 }
             }
@@ -831,7 +765,7 @@ class _Core
                             $argtype = 'array';
                             $converter = function ($member) use ($field_id, $options) {
                                 if ($fieldData = $member->rulesProfileData($field_id)) {
-                                    $values = array();
+                                    $values = [];
                                     $_selections = explode(',', $fieldData);
                                     foreach ($_selections as $_selection) {
                                         $values[$_selection] = $options[$_selection];
@@ -854,8 +788,7 @@ class _Core
                         break;
                 }
 
-                $map['\IPS\Member']['core_pfield_' . $field->id] = array
-                (
+                $map['\IPS\Member']['core_pfield_' . $field->id] = [
                     'token' => $token,
                     'tokenValue' => $tokenValue,
                     'argtype' => $argtype,
@@ -863,7 +796,7 @@ class _Core
                     'description' => $field->_title . ' (profile field)',
                     'converter' => $converter,
                     'nullable' => true,
-                );
+                ];
             }
         }
 

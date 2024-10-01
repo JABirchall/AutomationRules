@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme name="Default" author_name="Invision Power Services, Inc" author_url="https://www.invisioncommunity.com">
- <template template_group="components" template_name="contentDataDisplay" template_data="$item, $content" template_location="front" template_app="rules"><![CDATA[
+    <template template_group="components" template_name="contentDataDisplay" template_data="$item, $content"
+              template_location="front" template_app="rules"><![CDATA[
 {$content|raw}
 <hr class="ipsHr">
 <ul class="ipsDataList ipsDataList_reducedSpacing">
@@ -12,7 +13,8 @@
 {{endforeach}}
 </ul>
 ]]></template>
- <template template_group="components" template_name="eventHeader" template_data="$event, $tokens" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="components" template_name="eventHeader" template_data="$event, $tokens"
+              template_location="admin" template_app="rules"><![CDATA[
 <div class='ipsMessage ipsMessage_info rulesMessage' data-controller="rules.admin.ui.tokens">
 	<span style='font-size:1.8em'>
 		Event: {$event->title()}
@@ -37,7 +39,8 @@
 	</ul>
 		
 </div>]]></template>
- <template template_group="components" template_name="logsTables" template_data="$logs, $activeTab, $id" template_location="front" template_app="rules"><![CDATA[<div style="margin-bottom:20px">
+    <template template_group="components" template_name="logsTables" template_data="$logs, $activeTab, $id"
+              template_location="front" template_app="rules"><![CDATA[<div style="margin-bottom:20px">
 	<div class='ipsTabs ipsClearfix ipsJS_show' id='tabs_{$id}' data-ipsTabBar data-ipsTabBar-contentArea='#ipsTabs_content_{$id}'>
 		<a href='#tabs_{$id}' data-action='expandTabs'><i class='fa fa-caret-down'></i></a>
 		<ul role='tablist'>
@@ -61,11 +64,13 @@
 		{{endforeach}}
 	</div>
 </div>]]></template>
- <template template_group="components" template_name="logTable" template_data="$table, $headers, $rows, $quickSearch" template_location="front" template_app="rules"><![CDATA[<div data-controller="rules.front.ui.table">
+    <template template_group="components" template_name="logTable" template_data="$table, $headers, $rows, $quickSearch"
+              template_location="front" template_app="rules"><![CDATA[<div data-controller="rules.front.ui.table">
     {{$table = str_replace( 'core.global.core.table', 'core.global.core.genericTable', \IPS\Theme::i()->getTemplate( 'tables', 'core', 'admin' )->table( $table, $headers, $rows, $quickSearch ) );}}
 	{$table|raw}
 </div>]]></template>
- <template template_group="components" template_name="memberDataDisplay" template_data="$member" template_location="front" template_app="rules"><![CDATA[
+    <template template_group="components" template_name="memberDataDisplay" template_data="$member"
+              template_location="front" template_app="rules"><![CDATA[
 {{if $dataFields = $member->rulesDataFields()}}
 	<div class='cProfileSidebarBlock ipsPad ipsBox ipsSpacer_bottom'>
 		<h2 class="ipsType_sectionHead ipsType_reset">
@@ -82,7 +87,8 @@
 	</div>
 {{endif}}
 ]]></template>
- <template template_group="components" template_name="missingEvent" template_data="$rule" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="components" template_name="missingEvent" template_data="$rule" template_location="admin"
+              template_app="rules"><![CDATA[
 <div class='ipsMessage ipsMessage_error rulesMessage'>
 	{lang="rule_missing_notice"}
 	<ul>
@@ -91,7 +97,8 @@
 	  <li>Event Key: {$rule->event_key}</li>
 	</ul>
 </div>]]></template>
- <template template_group="components" template_name="nodeDataDisplay" template_data="$node, $content" template_location="front" template_app="rules"><![CDATA[
+    <template template_group="components" template_name="nodeDataDisplay" template_data="$node, $content"
+              template_location="front" template_app="rules"><![CDATA[
 {$content|raw}
 <hr class="ipsHr">
 <ul class="ipsDataList ipsDataList_reducedSpacing">
@@ -103,19 +110,22 @@
 {{endforeach}}
 </ul>
 ]]></template>
- <template template_group="components" template_name="ruleChild" template_data="$rule" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="components" template_name="ruleChild" template_data="$rule" template_location="admin"
+              template_app="rules"><![CDATA[
 <div class='ipsMessage ipsMessage_warning rulesMessage'>
 	This rule will be evaluated only if the conditions of it's 
 	<a data-ipstooltip title='{$rule->title}' href='{url="app=rules&module=rules&controller=rules&do=form&id={$rule->id}&tab=conditions"}'>parent rule</a> 
 	are also met.
 </div>]]></template>
- <template template_group="components" template_name="ruleHeader" template_data="$rule" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="components" template_name="ruleHeader" template_data="$rule" template_location="admin"
+              template_app="rules"><![CDATA[
 <div class='ipsMessage ipsMessage_success rulesMessage'>
 	<span style='font-size:1.3em'>
 		Rule: <a href='{url="app=rules&module=rules&controller=rules&do=form&id={$rule->id}"}'>{$rule->title}</a>
 	</span>
 </div>]]></template>
- <template template_group="help" template_name="overview" template_data="" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="help" template_name="overview" template_data="" template_location="admin"
+              template_app="rules"><![CDATA[
 <div class="ipsPad" style="font-size:1.1em; line-height:1.4em; max-height:800px; overflow-y:scroll;">
 	
 	<h3>Rules Overview</h3>
@@ -162,7 +172,8 @@
 	<p>Actions that have been scheduled will appear in the &ldquo;Scheduled Actions&rdquo; portion of your ACP in the Rules management section. You can see a list of all upcoming scheduled actions, modify the scheduled action date, delete scheduled actions, or execute specific actions immediately instead of waiting for their scheduled date to arrive.</p>
 
 </div>	]]></template>
- <template template_group="views" template_name="actions" template_data="$actions" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="views" template_name="actions" template_data="$actions" template_location="admin"
+              template_app="rules"><![CDATA[
 {{if $actions}}	
 <ul style="margin-top:3px">
 	{{foreach $actions as $action}}
@@ -172,7 +183,8 @@
 	{{endforeach}}
 </ul>
 {{endif}}]]></template>
- <template template_group="views" template_name="conditions" template_data="$conditions" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="views" template_name="conditions" template_data="$conditions" template_location="admin"
+              template_app="rules"><![CDATA[
 {{if $conditions}}	
 <ul style="margin-top:3px">
 	{{foreach $conditions as $condition}}
@@ -189,7 +201,9 @@
 {{endif}}
 	
 ]]></template>
- <template template_group="views" template_name="logdetails" template_data="$log, $event, $rule, $conditions, $actions, $subrules" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="views" template_name="logdetails"
+              template_data="$log, $event, $rule, $conditions, $actions, $subrules" template_location="admin"
+              template_app="rules"><![CDATA[
 <div class='ipsPad'>
 
 	<div class='ipsMessage ipsMessage_info' style='margin-right:30px; padding-right:20px;'>Event: <strong>{$event->title()}</strong> <span style='float:right'>{expression="\IPS\DateTime::ts( $log[ 'time' ] )"}</span></div>
@@ -211,7 +225,8 @@
 	{$subrules|raw}
 	
 </div>]]></template>
- <template template_group="views" template_name="rules" template_data="$rules, $top=TRUE" template_location="admin" template_app="rules"><![CDATA[
+    <template template_group="views" template_name="rules" template_data="$rules, $top=TRUE" template_location="admin"
+              template_app="rules"><![CDATA[
 {{foreach $rules as $rule}}
 <div class="ipsPad">
 	<div class="ipsCode" style="white-space:normal">
@@ -252,470 +267,483 @@
 </div>
 {{endforeach}}
 ]]></template>
- <css css_location="admin" css_app="rules" css_attributes="" css_path="." css_name="chosen.css">/*!
-Chosen, a Select Box Enhancer for jQuery and Prototype
-by Patrick Filler for Harvest, http://getharvest.com
+    <css css_location="admin" css_app="rules" css_attributes="" css_path="." css_name="chosen.css">/*!
+        Chosen, a Select Box Enhancer for jQuery and Prototype
+        by Patrick Filler for Harvest, http://getharvest.com
 
-Version 1.4.1
-Full source at https://github.com/harvesthq/chosen
-Copyright (c) 2011-2015 Harvest http://getharvest.com
+        Version 1.4.1
+        Full source at https://github.com/harvesthq/chosen
+        Copyright (c) 2011-2015 Harvest http://getharvest.com
 
-MIT License, https://github.com/harvesthq/chosen/blob/master/LICENSE.md
-This file is generated by `grunt build`, do not edit it by hand.
-*/
+        MIT License, https://github.com/harvesthq/chosen/blob/master/LICENSE.md
+        This file is generated by `grunt build`, do not edit it by hand.
+        */
 
-/* @group Base */
-.chosen-container {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 13px;
-  zoom: 1;
-  *display: inline;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  min-width:350px;
-}
-.chosen-container * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.chosen-container .chosen-drop {
-  position: absolute;
-  top: 100%;
-  left: -9999px;
-  z-index: 1010;
-  width: 100%;
-  border: 1px solid #aaa;
-  border-top: 0;
-  background: #fff;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-}
-.chosen-container.chosen-with-drop .chosen-drop {
-  left: 0;
-}
-.chosen-container a {
-  cursor: pointer;
-}
-.chosen-container .search-choice .group-name, .chosen-container .chosen-single .group-name {
-  margin-right: 4px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-weight: normal;
-  color: #999999;
-}
-.chosen-container .search-choice .group-name:after, .chosen-container .chosen-single .group-name:after {
-  content: &quot;:&quot;;
-  padding-left: 2px;
-  vertical-align: top;
-}
+        /* @group Base */
+        .chosen-container {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 13px;
+        zoom: 1;
+        *display: inline;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        min-width:350px;
+        }
+        .chosen-container * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        }
+        .chosen-container .chosen-drop {
+        position: absolute;
+        top: 100%;
+        left: -9999px;
+        z-index: 1010;
+        width: 100%;
+        border: 1px solid #aaa;
+        border-top: 0;
+        background: #fff;
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+        }
+        .chosen-container.chosen-with-drop .chosen-drop {
+        left: 0;
+        }
+        .chosen-container a {
+        cursor: pointer;
+        }
+        .chosen-container .search-choice .group-name, .chosen-container .chosen-single .group-name {
+        margin-right: 4px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-weight: normal;
+        color: #999999;
+        }
+        .chosen-container .search-choice .group-name:after, .chosen-container .chosen-single .group-name:after {
+        content: &quot;:&quot;;
+        padding-left: 2px;
+        vertical-align: top;
+        }
 
-/* @end */
-/* @group Single Chosen */
-.chosen-container-single .chosen-single {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  padding: 0 0 0 11px;
-  height: 33px;
-  border: 1px solid #aaa;
-  border-radius: 3px;
-  background-color: #fff;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #ffffff), color-stop(50%, #f6f6f6), color-stop(52%, #eeeeee), color-stop(100%, #f4f4f4));
-  background: -webkit-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
-  background: -moz-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
-  background: -o-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
-  background: linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
-  background-clip: padding-box;
-  color: #444;
-  text-decoration: none;
-  white-space: nowrap;
-  line-height: 31px;
-}
-.chosen-container-single .chosen-default {
-  color: #999;
-}
-.chosen-container-single .chosen-single span {
-  display: block;
-  overflow: hidden;
-  margin-right: 26px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.chosen-container-single .chosen-single-with-deselect span {
-  margin-right: 38px;
-}
-.chosen-container-single .chosen-single abbr {
-  position: absolute;
-  top: 6px;
-  right: 26px;
-  display: block;
-  width: 12px;
-  height: 12px;
-  background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} ) -42px 1px no-repeat;
-  font-size: 1px;
-}
-.chosen-container-single .chosen-single abbr:hover {
-  background-position: -42px -10px;
-}
-.chosen-container-single.chosen-disabled .chosen-single abbr:hover {
-  background-position: -42px -10px;
-}
-.chosen-container-single .chosen-single div {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  width: 18px;
-  height: 100%;
-}
-.chosen-container-single .chosen-single div b {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} ) no-repeat 0px 6px;
-}
-.chosen-container-single .chosen-search {
-  position: relative;
-  z-index: 1010;
-  margin: 0;
-  padding: 3px 4px;
-  white-space: nowrap;
-}
-.chosen-container-single .chosen-search input[type=&quot;text&quot;] {
-  margin: 1px 0;
-  padding: 4px 20px 4px 5px;
-  width: 100%;
-  height: auto;
-  outline: 0;
-  border: 1px solid #aaa;
-  background: white url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} ) no-repeat 100% -20px;
-  background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} ) no-repeat 100% -20px;
-  font-size: 1em;
-  font-family: sans-serif;
-  line-height: normal;
-  border-radius: 0;
-}
-.chosen-container-single .chosen-drop {
-  margin-top: -1px;
-  border-radius: 0 0 4px 4px;
-  background-clip: padding-box;
-}
-.chosen-container-single.chosen-container-single-nosearch .chosen-search {
-  position: absolute;
-  left: -9999px;
-}
+        /* @end */
+        /* @group Single Chosen */
+        .chosen-container-single .chosen-single {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        padding: 0 0 0 11px;
+        height: 33px;
+        border: 1px solid #aaa;
+        border-radius: 3px;
+        background-color: #fff;
+        background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #ffffff), color-stop(50%, #f6f6f6),
+        color-stop(52%, #eeeeee), color-stop(100%, #f4f4f4));
+        background: -webkit-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+        background: -moz-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+        background: -o-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+        background: linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+        background-clip: padding-box;
+        color: #444;
+        text-decoration: none;
+        white-space: nowrap;
+        line-height: 31px;
+        }
+        .chosen-container-single .chosen-default {
+        color: #999;
+        }
+        .chosen-container-single .chosen-single span {
+        display: block;
+        overflow: hidden;
+        margin-right: 26px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        }
+        .chosen-container-single .chosen-single-with-deselect span {
+        margin-right: 38px;
+        }
+        .chosen-container-single .chosen-single abbr {
+        position: absolute;
+        top: 6px;
+        right: 26px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} )
+        -42px 1px no-repeat;
+        font-size: 1px;
+        }
+        .chosen-container-single .chosen-single abbr:hover {
+        background-position: -42px -10px;
+        }
+        .chosen-container-single.chosen-disabled .chosen-single abbr:hover {
+        background-position: -42px -10px;
+        }
+        .chosen-container-single .chosen-single div {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 18px;
+        height: 100%;
+        }
+        .chosen-container-single .chosen-single div b {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} )
+        no-repeat 0px 6px;
+        }
+        .chosen-container-single .chosen-search {
+        position: relative;
+        z-index: 1010;
+        margin: 0;
+        padding: 3px 4px;
+        white-space: nowrap;
+        }
+        .chosen-container-single .chosen-search input[type=&quot;text&quot;] {
+        margin: 1px 0;
+        padding: 4px 20px 4px 5px;
+        width: 100%;
+        height: auto;
+        outline: 0;
+        border: 1px solid #aaa;
+        background: white url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;}
+        ) no-repeat 100% -20px;
+        background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} )
+        no-repeat 100% -20px;
+        font-size: 1em;
+        font-family: sans-serif;
+        line-height: normal;
+        border-radius: 0;
+        }
+        .chosen-container-single .chosen-drop {
+        margin-top: -1px;
+        border-radius: 0 0 4px 4px;
+        background-clip: padding-box;
+        }
+        .chosen-container-single.chosen-container-single-nosearch .chosen-search {
+        position: absolute;
+        left: -9999px;
+        }
 
-/* @end */
-/* @group Results */
-.chosen-container .chosen-results {
-  color: #444;
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin: 0 4px 4px 0;
-  padding: 0 0 0 4px;
-  max-height: 400px;
-  -webkit-overflow-scrolling: touch;
-}
-.chosen-container .chosen-results li {
-  display: none;
-  margin: 0;
-  padding: 5px 6px;
-  list-style: none;
-  line-height: 15px;
-  word-wrap: break-word;
-  -webkit-touch-callout: none;
-}
-.chosen-container .chosen-results li.active-result {
-  display: list-item;
-  cursor: pointer;
-}
-.chosen-container .chosen-results li.disabled-result {
-  display: list-item;
-  color: #ccc;
-  cursor: default;
-}
-.chosen-container .chosen-results li.highlighted {
-  background-color: #3875d7;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #3875d7), color-stop(90%, #2a62bc));
-  background-image: -webkit-linear-gradient(#3875d7 20%, #2a62bc 90%);
-  background-image: -moz-linear-gradient(#3875d7 20%, #2a62bc 90%);
-  background-image: -o-linear-gradient(#3875d7 20%, #2a62bc 90%);
-  background-image: linear-gradient(#3875d7 20%, #2a62bc 90%);
-  color: #fff;
-}
-.chosen-container .chosen-results li.no-results {
-  color: #777;
-  display: list-item;
-  background: #f4f4f4;
-}
-.chosen-container .chosen-results li.group-result {
-  display: list-item;
-  font-weight: bold;
-  cursor: pointer;
-  opacity: 0.85;
-}
-.chosen-container .chosen-results li.group-result:hover {
-  opacity:1;
-}
-.chosen-container .chosen-results li.group-option {
-  padding-left: 15px;
-}
-.chosen-collapse .chosen-container .chosen-results li.group-option {
-  display:none;
-}
+        /* @end */
+        /* @group Results */
+        .chosen-container .chosen-results {
+        color: #444;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin: 0 4px 4px 0;
+        padding: 0 0 0 4px;
+        max-height: 400px;
+        -webkit-overflow-scrolling: touch;
+        }
+        .chosen-container .chosen-results li {
+        display: none;
+        margin: 0;
+        padding: 5px 6px;
+        list-style: none;
+        line-height: 15px;
+        word-wrap: break-word;
+        -webkit-touch-callout: none;
+        }
+        .chosen-container .chosen-results li.active-result {
+        display: list-item;
+        cursor: pointer;
+        }
+        .chosen-container .chosen-results li.disabled-result {
+        display: list-item;
+        color: #ccc;
+        cursor: default;
+        }
+        .chosen-container .chosen-results li.highlighted {
+        background-color: #3875d7;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #3875d7), color-stop(90%,
+        #2a62bc));
+        background-image: -webkit-linear-gradient(#3875d7 20%, #2a62bc 90%);
+        background-image: -moz-linear-gradient(#3875d7 20%, #2a62bc 90%);
+        background-image: -o-linear-gradient(#3875d7 20%, #2a62bc 90%);
+        background-image: linear-gradient(#3875d7 20%, #2a62bc 90%);
+        color: #fff;
+        }
+        .chosen-container .chosen-results li.no-results {
+        color: #777;
+        display: list-item;
+        background: #f4f4f4;
+        }
+        .chosen-container .chosen-results li.group-result {
+        display: list-item;
+        font-weight: bold;
+        cursor: pointer;
+        opacity: 0.85;
+        }
+        .chosen-container .chosen-results li.group-result:hover {
+        opacity:1;
+        }
+        .chosen-container .chosen-results li.group-option {
+        padding-left: 15px;
+        }
+        .chosen-collapse .chosen-container .chosen-results li.group-option {
+        display:none;
+        }
 
-.chosen-container .chosen-results li.group-option.active-group,
-.chosen-container .chosen-results li.group-option.search-result {
-  display:block;
-}
-.chosen-container .chosen-results li em {
-  font-style: normal;
-  text-decoration: underline;
-}
+        .chosen-container .chosen-results li.group-option.active-group,
+        .chosen-container .chosen-results li.group-option.search-result {
+        display:block;
+        }
+        .chosen-container .chosen-results li em {
+        font-style: normal;
+        text-decoration: underline;
+        }
 
-/* @end */
-/* @group Multi Chosen */
-.chosen-container-multi .chosen-choices {
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-  padding: 0 5px;
-  width: 100%;
-  height: auto !important;
-  height: 1%;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
-  background-image: -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background-image: -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background-image: -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
-  cursor: text;
-}
-.chosen-container-multi .chosen-choices li {
-  float: left;
-  list-style: none;
-}
-.chosen-container-multi .chosen-choices li.search-field {
-  margin: 0;
-  padding: 0;
-  white-space: nowrap;
-}
-.chosen-container-multi .chosen-choices li.search-field input[type=&quot;text&quot;] {
-  margin: 1px 0;
-  padding: 0;
-  height: 25px;
-  outline: 0;
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none;
-  color: #999;
-  font-size: 100%;
-  font-family: sans-serif;
-  line-height: normal;
-  border-radius: 0;
-}
-.chosen-container-multi .chosen-choices li.search-choice {
-  position: relative;
-  margin: 3px 5px 3px 0;
-  padding: 3px 20px 3px 5px;
-  border: 1px solid #aaa;
-  max-width: 100%;
-  border-radius: 3px;
-  background-color: #eeeeee;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
-  background-image: -webkit-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  background-image: -moz-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  background-image: -o-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  background-size: 100% 19px;
-  background-repeat: repeat-x;
-  background-clip: padding-box;
-  box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
-  color: #333;
-  line-height: 13px;
-  cursor: default;
-}
-.chosen-container-multi .chosen-choices li.search-choice span {
-  word-wrap: break-word;
-}
-.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
-  position: absolute;
-  top: 4px;
-  right: 3px;
-  display: block;
-  width: 12px;
-  height: 12px;
-  background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} ) -42px 1px no-repeat;
-  font-size: 1px;
-}
-.chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
-  background-position: -42px -10px;
-}
-.chosen-container-multi .chosen-choices li.search-choice-disabled {
-  padding-right: 5px;
-  border: 1px solid #ccc;
-  background-color: #e4e4e4;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
-  background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  background-image: -o-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  color: #666;
-}
-.chosen-container-multi .chosen-choices li.search-choice-focus {
-  background: #d4d4d4;
-}
-.chosen-container-multi .chosen-choices li.search-choice-focus .search-choice-close {
-  background-position: -42px -10px;
-}
-.chosen-container-multi .chosen-results {
-  margin: 0;
-  padding: 0;
-}
-.chosen-container-multi .chosen-drop .result-selected {
-  display: list-item;
-  color: #ccc;
-  cursor: default;
-}
+        /* @end */
+        /* @group Multi Chosen */
+        .chosen-container-multi .chosen-choices {
+        position: relative;
+        overflow: hidden;
+        margin: 0;
+        padding: 0 5px;
+        width: 100%;
+        height: auto !important;
+        height: 1%;
+        border: 1px solid #aaa;
+        background-color: #fff;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+        background-image: -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
+        background-image: -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
+        background-image: -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
+        background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
+        cursor: text;
+        }
+        .chosen-container-multi .chosen-choices li {
+        float: left;
+        list-style: none;
+        }
+        .chosen-container-multi .chosen-choices li.search-field {
+        margin: 0;
+        padding: 0;
+        white-space: nowrap;
+        }
+        .chosen-container-multi .chosen-choices li.search-field input[type=&quot;text&quot;] {
+        margin: 1px 0;
+        padding: 0;
+        height: 25px;
+        outline: 0;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none;
+        color: #999;
+        font-size: 100%;
+        font-family: sans-serif;
+        line-height: normal;
+        border-radius: 0;
+        }
+        .chosen-container-multi .chosen-choices li.search-choice {
+        position: relative;
+        margin: 3px 5px 3px 0;
+        padding: 3px 20px 3px 5px;
+        border: 1px solid #aaa;
+        max-width: 100%;
+        border-radius: 3px;
+        background-color: #eeeeee;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0),
+        color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
+        background-image: -webkit-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+        background-image: -moz-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+        background-image: -o-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+        background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+        background-size: 100% 19px;
+        background-repeat: repeat-x;
+        background-clip: padding-box;
+        box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+        color: #333;
+        line-height: 13px;
+        cursor: default;
+        }
+        .chosen-container-multi .chosen-choices li.search-choice span {
+        word-wrap: break-word;
+        }
+        .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+        position: absolute;
+        top: 4px;
+        right: 3px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} )
+        -42px 1px no-repeat;
+        font-size: 1px;
+        }
+        .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
+        background-position: -42px -10px;
+        }
+        .chosen-container-multi .chosen-choices li.search-choice-disabled {
+        padding-right: 5px;
+        border: 1px solid #ccc;
+        background-color: #e4e4e4;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0),
+        color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
+        background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+        background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+        background-image: -o-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+        background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+        color: #666;
+        }
+        .chosen-container-multi .chosen-choices li.search-choice-focus {
+        background: #d4d4d4;
+        }
+        .chosen-container-multi .chosen-choices li.search-choice-focus .search-choice-close {
+        background-position: -42px -10px;
+        }
+        .chosen-container-multi .chosen-results {
+        margin: 0;
+        padding: 0;
+        }
+        .chosen-container-multi .chosen-drop .result-selected {
+        display: list-item;
+        color: #ccc;
+        cursor: default;
+        }
 
-/* @end */
-/* @group Active  */
-.chosen-container-active .chosen-single {
-  border: 1px solid #5897fb;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-.chosen-container-active.chosen-with-drop .chosen-single {
-  border: 1px solid #aaa;
-  -moz-border-radius-bottomright: 0;
-  border-bottom-right-radius: 0;
-  -moz-border-radius-bottomleft: 0;
-  border-bottom-left-radius: 0;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #eeeeee), color-stop(80%, #ffffff));
-  background-image: -webkit-linear-gradient(#eeeeee 20%, #ffffff 80%);
-  background-image: -moz-linear-gradient(#eeeeee 20%, #ffffff 80%);
-  background-image: -o-linear-gradient(#eeeeee 20%, #ffffff 80%);
-  background-image: linear-gradient(#eeeeee 20%, #ffffff 80%);
-  box-shadow: 0 1px 0 #fff inset;
-}
-.chosen-container-active.chosen-with-drop .chosen-single div {
-  border-left: none;
-  background: transparent;
-}
-.chosen-container-active.chosen-with-drop .chosen-single div b {
-  background-position: -18px 6px;
-}
-.chosen-container-active .chosen-choices {
-  border: 1px solid #5897fb;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-.chosen-container-active .chosen-choices li.search-field input[type=&quot;text&quot;] {
-  color: #222 !important;
-}
+        /* @end */
+        /* @group Active */
+        .chosen-container-active .chosen-single {
+        border: 1px solid #5897fb;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        .chosen-container-active.chosen-with-drop .chosen-single {
+        border: 1px solid #aaa;
+        -moz-border-radius-bottomright: 0;
+        border-bottom-right-radius: 0;
+        -moz-border-radius-bottomleft: 0;
+        border-bottom-left-radius: 0;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #eeeeee), color-stop(80%,
+        #ffffff));
+        background-image: -webkit-linear-gradient(#eeeeee 20%, #ffffff 80%);
+        background-image: -moz-linear-gradient(#eeeeee 20%, #ffffff 80%);
+        background-image: -o-linear-gradient(#eeeeee 20%, #ffffff 80%);
+        background-image: linear-gradient(#eeeeee 20%, #ffffff 80%);
+        box-shadow: 0 1px 0 #fff inset;
+        }
+        .chosen-container-active.chosen-with-drop .chosen-single div {
+        border-left: none;
+        background: transparent;
+        }
+        .chosen-container-active.chosen-with-drop .chosen-single div b {
+        background-position: -18px 6px;
+        }
+        .chosen-container-active .chosen-choices {
+        border: 1px solid #5897fb;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        .chosen-container-active .chosen-choices li.search-field input[type=&quot;text&quot;] {
+        color: #222 !important;
+        }
 
-/* @end */
-/* @group Disabled Support */
-.chosen-disabled {
-  opacity: 0.5 !important;
-  cursor: default;
-}
-.chosen-disabled .chosen-single {
-  cursor: default;
-}
-.chosen-disabled .chosen-choices .search-choice .search-choice-close {
-  cursor: default;
-}
+        /* @end */
+        /* @group Disabled Support */
+        .chosen-disabled {
+        opacity: 0.5 !important;
+        cursor: default;
+        }
+        .chosen-disabled .chosen-single {
+        cursor: default;
+        }
+        .chosen-disabled .chosen-choices .search-choice .search-choice-close {
+        cursor: default;
+        }
 
-/* @end */
-/* @group Right to Left */
-.chosen-rtl {
-  text-align: right;
-}
-.chosen-rtl .chosen-single {
-  overflow: visible;
-  padding: 0 8px 0 0;
-}
-.chosen-rtl .chosen-single span {
-  margin-right: 0;
-  margin-left: 26px;
-  direction: rtl;
-}
-.chosen-rtl .chosen-single-with-deselect span {
-  margin-left: 38px;
-}
-.chosen-rtl .chosen-single div {
-  right: auto;
-  left: 3px;
-}
-.chosen-rtl .chosen-single abbr {
-  right: auto;
-  left: 26px;
-}
-.chosen-rtl .chosen-choices li {
-  float: right;
-}
-.chosen-rtl .chosen-choices li.search-field input[type=&quot;text&quot;] {
-  direction: rtl;
-}
-.chosen-rtl .chosen-choices li.search-choice {
-  margin: 3px 5px 3px 0;
-  padding: 3px 5px 3px 19px;
-}
-.chosen-rtl .chosen-choices li.search-choice .search-choice-close {
-  right: auto;
-  left: 4px;
-}
-.chosen-rtl.chosen-container-single-nosearch .chosen-search,
-.chosen-rtl .chosen-drop {
-  left: 9999px;
-}
-.chosen-rtl.chosen-container-single .chosen-results {
-  margin: 0 0 4px 4px;
-  padding: 0 4px 0 0;
-}
-.chosen-rtl .chosen-results li.group-option {
-  padding-right: 15px;
-  padding-left: 0;
-}
-.chosen-rtl.chosen-container-active.chosen-with-drop .chosen-single div {
-  border-right: none;
-}
-.chosen-rtl .chosen-search input[type=&quot;text&quot;] {
-  padding: 4px 5px 4px 20px;
-  background: white url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} ) no-repeat -30px -20px;
-  background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} ) no-repeat -30px -20px;
-  direction: rtl;
-}
-.chosen-rtl.chosen-container-single .chosen-single div b {
-  background-position: 6px 2px;
-}
-.chosen-rtl.chosen-container-single.chosen-with-drop .chosen-single div b {
-  background-position: -12px 2px;
-}
+        /* @end */
+        /* @group Right to Left */
+        .chosen-rtl {
+        text-align: right;
+        }
+        .chosen-rtl .chosen-single {
+        overflow: visible;
+        padding: 0 8px 0 0;
+        }
+        .chosen-rtl .chosen-single span {
+        margin-right: 0;
+        margin-left: 26px;
+        direction: rtl;
+        }
+        .chosen-rtl .chosen-single-with-deselect span {
+        margin-left: 38px;
+        }
+        .chosen-rtl .chosen-single div {
+        right: auto;
+        left: 3px;
+        }
+        .chosen-rtl .chosen-single abbr {
+        right: auto;
+        left: 26px;
+        }
+        .chosen-rtl .chosen-choices li {
+        float: right;
+        }
+        .chosen-rtl .chosen-choices li.search-field input[type=&quot;text&quot;] {
+        direction: rtl;
+        }
+        .chosen-rtl .chosen-choices li.search-choice {
+        margin: 3px 5px 3px 0;
+        padding: 3px 5px 3px 19px;
+        }
+        .chosen-rtl .chosen-choices li.search-choice .search-choice-close {
+        right: auto;
+        left: 4px;
+        }
+        .chosen-rtl.chosen-container-single-nosearch .chosen-search,
+        .chosen-rtl .chosen-drop {
+        left: 9999px;
+        }
+        .chosen-rtl.chosen-container-single .chosen-results {
+        margin: 0 0 4px 4px;
+        padding: 0 4px 0 0;
+        }
+        .chosen-rtl .chosen-results li.group-option {
+        padding-right: 15px;
+        padding-left: 0;
+        }
+        .chosen-rtl.chosen-container-active.chosen-with-drop .chosen-single div {
+        border-right: none;
+        }
+        .chosen-rtl .chosen-search input[type=&quot;text&quot;] {
+        padding: 4px 5px 4px 20px;
+        background: white url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;}
+        ) no-repeat -30px -20px;
+        background: url( {resource=&quot;chosen-sprite.png&quot; app=&quot;rules&quot; location=&quot;admin&quot;} )
+        no-repeat -30px -20px;
+        direction: rtl;
+        }
+        .chosen-rtl.chosen-container-single .chosen-single div b {
+        background-position: 6px 2px;
+        }
+        .chosen-rtl.chosen-container-single.chosen-with-drop .chosen-single div b {
+        background-position: -12px 2px;
+        }
 
-/* @end */
-/* @group Retina compatibility */
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi), only screen and (min-resolution: 1.5dppx) {
-  .chosen-rtl .chosen-search input[type=&quot;text&quot;],
-  .chosen-container-single .chosen-single abbr,
-  .chosen-container-single .chosen-single div b,
-  .chosen-container-single .chosen-search input[type=&quot;text&quot;],
-  .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
-  .chosen-container .chosen-results-scroll-down span,
-  .chosen-container .chosen-results-scroll-up span {
-    background-image: url('chosen-sprite@2x.png') !important;
-    background-size: 52px 37px !important;
-    background-repeat: no-repeat !important;
-  }
-}
-/* @end */
-</css>
- <css css_location="admin" css_app="rules" css_attributes="" css_path="." css_name="rules.css"><![CDATA[ .ipsMessage.rulesMessage ul {
+        /* @end */
+        /* @group Retina compatibility */
+        @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi), only
+        screen and (min-resolution: 1.5dppx) {
+        .chosen-rtl .chosen-search input[type=&quot;text&quot;],
+        .chosen-container-single .chosen-single abbr,
+        .chosen-container-single .chosen-single div b,
+        .chosen-container-single .chosen-search input[type=&quot;text&quot;],
+        .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
+        .chosen-container .chosen-results-scroll-down span,
+        .chosen-container .chosen-results-scroll-up span {
+        background-image: url('chosen-sprite@2x.png') !important;
+        background-size: 52px 37px !important;
+        background-repeat: no-repeat !important;
+        }
+        }
+        /* @end */
+    </css>
+    <css css_location="admin" css_app="rules" css_attributes="" css_path="." css_name="rules.css"><![CDATA[ .ipsMessage.rulesMessage ul {
 	margin: 10px 0 0 0;
 	padding-left:0;
 	list-style:none;
@@ -749,5 +777,7 @@ This file is generated by `grunt build`, do not edit it by hand.
 	right: 5px;
 	z-index:99;
  }]]></css>
- <resource name="chosen-sprite.png" app="rules" location="admin" path="/">iVBORw0KGgoAAAANSUhEUgAAADQAAAAlCAQAAACn+wJeAAAAB3RJTUUH3wMPFAUpFJUJWQAAAAlwSFlzAAAewQAAHsEBw2lUUwAAAARnQU1BAACxjwv8YQUAAANtSURBVHja5ZZbSFRBGMf/s6uurq6RdDN7c30prWxJKyyolaGnAsF8sLKXHgJf6qFWC7pRLtEVBCsIjILs3TJOrmAXQWPX1bbN8FiQZlcqQdcuutN3juvaXtwsznnqW4Yzc+ab+TH/7zvfLIMu5gRacMThVvtFOIcygz4guLAVLqeNMOshoQRNRn04pUPYgQxUlL7HDczDR+xic1nWnWCucDbxSki8DAgwfIbd4U0oXXcY8oN+gAlINoVH0y2+OR7hgIoRqHZ4gTig3szp3u/bpSiYNNM6WEzU/xNGjc15FcNQr8TK8Ey0CLlxxkFuHB7xiahVJHASCNH7+oHJA0uS+rI41GbBSCTcCHZTy4LktBn6EMDTKrkJ6FQxvqoxvAi5h7cSZmC+yeOxfoHHSqj55vD8LHZcxXDHTdgpRlm4aFj1JEgS+CrkhgXZCuYbgljti1qWjWxzl8c6gWRMEMrcpbxJFF1w3CdMF8XKTah2lJMoA0PuHCVYuXiJSfKxybl5katksBgf5OXib4ySIZBnkxl+YoBOxmiLwMoYry5PjqAUWH05c+mq6yl0Zo8VT/v+FlQwHihaIycRKglr5MCKgvFIlz7es9ZAmPzb1n2f3lr35F9PpWXefJIngXK8hdtC/SL+kC8MTfgtA/33xEC/3xJvWWxm3hMxmRkJcnHBvyoovp6egrvClcFvXD6ptOlxJyv+bateROrZm7zyZ0LQFjQjjfJuPy6oJYiHP9jvk1NtyrqXpkQsjA5bYgwgtZF6o4S4Ru0zuOSdU637N+N7cUWtDZXSLfWb1wkzVRumiiqX3DrdRzyqBHGbXhdfqARJMyVIL+WUEiRRCZJCJUgnzv9gc/vPwEKX8qytUGgCmpudgnEZ3QXDJ4LxZjXLOuch4zsMYtDsrYubYRr9r3PWo1aMsDr4sY2V21+5eqI9NJGubjNrE4+DJYeVfiEklhq01r7XQTpWJiCqD6v9mm4KVoZhQ7SPNjGyQIz6wyNFtlRdQGKIsczt4WEFJfyHmFNrATqdZ3iO0WDlx7sLhGE/O4sPY9kn9ThRbT92Yh5rXtxnHGbnac8l6ZeifTRK71af/Q7S2SKMiausAxtRbF/ouqu5dNFWd5Qdo8g14GDNqMYnijRXu32cbWLrWEdr//Q7nS6+mjNCosebmTe/ALfhPBKbNSUSAAAAAElFTkSuQmCC</resource>
+    <resource name="chosen-sprite.png" app="rules" location="admin" path="/">
+        iVBORw0KGgoAAAANSUhEUgAAADQAAAAlCAQAAACn+wJeAAAAB3RJTUUH3wMPFAUpFJUJWQAAAAlwSFlzAAAewQAAHsEBw2lUUwAAAARnQU1BAACxjwv8YQUAAANtSURBVHja5ZZbSFRBGMf/s6uurq6RdDN7c30prWxJKyyolaGnAsF8sLKXHgJf6qFWC7pRLtEVBCsIjILs3TJOrmAXQWPX1bbN8FiQZlcqQdcuutN3juvaXtwsznnqW4Yzc+ab+TH/7zvfLIMu5gRacMThVvtFOIcygz4guLAVLqeNMOshoQRNRn04pUPYgQxUlL7HDczDR+xic1nWnWCucDbxSki8DAgwfIbd4U0oXXcY8oN+gAlINoVH0y2+OR7hgIoRqHZ4gTig3szp3u/bpSiYNNM6WEzU/xNGjc15FcNQr8TK8Ey0CLlxxkFuHB7xiahVJHASCNH7+oHJA0uS+rI41GbBSCTcCHZTy4LktBn6EMDTKrkJ6FQxvqoxvAi5h7cSZmC+yeOxfoHHSqj55vD8LHZcxXDHTdgpRlm4aFj1JEgS+CrkhgXZCuYbgljti1qWjWxzl8c6gWRMEMrcpbxJFF1w3CdMF8XKTah2lJMoA0PuHCVYuXiJSfKxybl5katksBgf5OXib4ySIZBnkxl+YoBOxmiLwMoYry5PjqAUWH05c+mq6yl0Zo8VT/v+FlQwHihaIycRKglr5MCKgvFIlz7es9ZAmPzb1n2f3lr35F9PpWXefJIngXK8hdtC/SL+kC8MTfgtA/33xEC/3xJvWWxm3hMxmRkJcnHBvyoovp6egrvClcFvXD6ptOlxJyv+bateROrZm7zyZ0LQFjQjjfJuPy6oJYiHP9jvk1NtyrqXpkQsjA5bYgwgtZF6o4S4Ru0zuOSdU637N+N7cUWtDZXSLfWb1wkzVRumiiqX3DrdRzyqBHGbXhdfqARJMyVIL+WUEiRRCZJCJUgnzv9gc/vPwEKX8qytUGgCmpudgnEZ3QXDJ4LxZjXLOuch4zsMYtDsrYubYRr9r3PWo1aMsDr4sY2V21+5eqI9NJGubjNrE4+DJYeVfiEklhq01r7XQTpWJiCqD6v9mm4KVoZhQ7SPNjGyQIz6wyNFtlRdQGKIsczt4WEFJfyHmFNrATqdZ3iO0WDlx7sLhGE/O4sPY9kn9ThRbT92Yh5rXtxnHGbnac8l6ZeifTRK71af/Q7S2SKMiausAxtRbF/ouqu5dNFWd5Qdo8g14GDNqMYnijRXu32cbWLrWEdr//Q7nS6+mjNCosebmTe/ALfhPBKbNSUSAAAAAElFTkSuQmCC
+    </resource>
 </theme>

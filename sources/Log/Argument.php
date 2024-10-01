@@ -40,7 +40,7 @@ class _Argument extends \IPS\rules\Action\Argument implements \IPS\Node\Permissi
     /**
      * @brief    Original Data
      */
-    public $originalData = array();
+    public $originalData = [];
 
     /**
      * @brief    [Node] App for permission index
@@ -55,10 +55,9 @@ class _Argument extends \IPS\rules\Action\Argument implements \IPS\Node\Permissi
     /**
      * @brief    The map of permission columns
      */
-    public static $permissionMap = array
-    (
+    public static $permissionMap = [
         'view' => 'view',
-    );
+    ];
 
     /**
      * @brief    [Node] Prefix string that is automatically prepended to permission matrix language strings
@@ -68,7 +67,7 @@ class _Argument extends \IPS\rules\Action\Argument implements \IPS\Node\Permissi
     /**
      * @brief    Reserved variable names
      */
-    public static $reservedWords = array('entity', 'message');
+    public static $reservedWords = ['entity', 'message'];
 
     /**
      * @brief    Indicates if machine name needs to be unique to the argument class
@@ -103,7 +102,7 @@ class _Argument extends \IPS\rules\Action\Argument implements \IPS\Node\Permissi
              */
             if
             (
-                in_array($this->type, array('object', 'array')) and
+                in_array($this->type, ['object', 'array']) and
                 (
                     $this->originalData['type'] != $this->type or
                     $this->originalData['class'] != $this->class or

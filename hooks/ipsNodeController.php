@@ -17,18 +17,18 @@ class rules_hook_ipsNodeController extends _HOOK_CLASS_
             /* Rules Custom Data */
             if (\IPS\Db::i()->select(
                 'COUNT(*)', 'rules_data',
-                array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $node::rulesDataClass())
+                ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $node::rulesDataClass()]
             )->first()) {
                 $form->addTab('rules_node_data_tab');
                 foreach (
                     \IPS\Db::i()->select(
                         '*', 'rules_data',
-                        array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $node::rulesDataClass())
+                        ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $node::rulesDataClass()]
                     ) as $row
                 ) {
                     $data_field = \IPS\rules\Data::constructFromData($row);
 
-                    $configuration = json_decode($data_field->configuration, true) ?: array();
+                    $configuration = json_decode($data_field->configuration, true) ?: [];
                     $nodeClass = get_class($node);
                     $containers = 'containers-' . str_replace('\\', '-', $nodeClass);
 
@@ -55,7 +55,7 @@ class rules_hook_ipsNodeController extends _HOOK_CLASS_
                     \IPS\rules\Log\Custom::roots(
                         'view',
                         null,
-                        array(array('custom_log_class=? AND custom_log_enabled=1', $node::rulesDataClass()))
+                        [['custom_log_class=? AND custom_log_enabled=1', $node::rulesDataClass()]]
                     ) as $log
                 ) {
                     $tab_title = 'custom_log_' . $log->id;

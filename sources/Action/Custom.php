@@ -44,7 +44,7 @@ class _Custom extends \IPS\Node\Model
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array('custom_action_key');
+    protected static $databaseIdFields = ['custom_action_key'];
 
     /**
      * @brief    [Node] Parent ID Database Column
@@ -114,7 +114,7 @@ class _Custom extends \IPS\Node\Model
     /**
      * Get Data
      */
-    public $data = array();
+    public $data = [];
 
     /**
      * [Node] Get whether or not this node is enabled
@@ -159,7 +159,7 @@ class _Custom extends \IPS\Node\Model
      */
     public function trigger($args)
     {
-        $arguments = array();
+        $arguments = [];
         foreach ($this->children() as $argument) {
             if (isset($args[$argument->varname])) {
                 $arguments[] = $args[$argument->varname];
@@ -168,7 +168,7 @@ class _Custom extends \IPS\Node\Model
             }
         }
 
-        call_user_func_array(array($this->event(), 'trigger'), $arguments);
+        call_user_func_array([$this->event(), 'trigger'], $arguments);
     }
 
     /**
@@ -193,15 +193,14 @@ class _Custom extends \IPS\Node\Model
     {
         $buttons = parent::getButtons($url, $subnode);
 
-        $buttons['schedule'] = array
-        (
+        $buttons['schedule'] = [
             'icon' => 'clock-o',
             'title' => 'rules_schedule_custom_now',
             'link' => \IPS\Http\Url::internal(
                 "app=rules&module=rules&controller=schedule&do=newSchedule"
-            )->setQueryString(array('custom_id' => $this->id)),
-            'data' => array(),
-        );
+            )->setQueryString(['custom_id' => $this->id]),
+            'data' => [],
+        ];
 
         return $buttons;
     }
@@ -214,10 +213,10 @@ class _Custom extends \IPS\Node\Model
     protected function get__badge()
     {
         if (0) {
-            return array(
+            return [
                 0 => 'ipsBadge ipsBadge_intermediary',
                 1 => 'badge text',
-            );
+            ];
         }
 
         return null;
@@ -240,7 +239,7 @@ class _Custom extends \IPS\Node\Model
                 'custom_action_enable_api',
                 $this->enable_api,
                 false,
-                array('togglesOn' => array('custom_action_api_methods')),
+                ['togglesOn' => ['custom_action_api_methods']],
                 null,
                 null,
                 null,
@@ -250,9 +249,9 @@ class _Custom extends \IPS\Node\Model
         $form->add(
             new \IPS\Helpers\Form\CheckboxSet(
                 'custom_action_api_methods',
-                $this->api_methods ? explode(',', $this->api_methods) : array(),
+                $this->api_methods ? explode(',', $this->api_methods) : [],
                 true,
-                array('options' => array('GET' => 'GET', 'POST' => 'POST', 'PUT' => 'PUT', 'DELETE' => 'DELETE')),
+                ['options' => ['GET' => 'GET', 'POST' => 'POST', 'PUT' => 'PUT', 'DELETE' => 'DELETE']],
                 null,
                 null,
                 null,

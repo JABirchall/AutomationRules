@@ -44,7 +44,7 @@ class _Condition extends \IPS\Node\Model
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array();
+    protected static $databaseIdFields = [];
 
     /**
      * @brief    [Node] Parent ID Database Column
@@ -85,7 +85,7 @@ class _Condition extends \IPS\Node\Model
     /**
      * Get Data
      */
-    public $data = array();
+    public $data = [];
 
     /**
      * Associated Rule
@@ -122,7 +122,7 @@ class _Condition extends \IPS\Node\Model
     /**
      * @brief    Conditions Cache
      */
-    protected static $conditionsCache = array();
+    protected static $conditionsCache = [];
 
     /**
      * Init
@@ -140,7 +140,7 @@ class _Condition extends \IPS\Node\Model
                 $conditions = static::$conditionsCache[$this->app][$this->class] = (method_exists(
                     $ext,
                     'conditions'
-                ) ? $ext->conditions() : array());
+                ) ? $ext->conditions() : []);
             }
 
             if (isset ($conditions[$this->key])) {
@@ -148,7 +148,7 @@ class _Condition extends \IPS\Node\Model
             }
         }
 
-        $this->data = json_decode($this->_data['data'], true) ?: array();
+        $this->data = json_decode($this->_data['data'], true) ?: [];
 
         if ($this->rule_id) {
             try {
@@ -215,10 +215,10 @@ class _Condition extends \IPS\Node\Model
     protected function get__badge()
     {
         if ($this->hasChildren()) {
-            return array(
+            return [
                 0 => 'ipsBadge ipsBadge_warning',
                 1 => $this->compareMode() == 'or' ? 'or_group_badge' : 'and_group_badge',
-            );
+            ];
         }
 
         return null;
@@ -247,18 +247,17 @@ class _Condition extends \IPS\Node\Model
         $form->add(new \IPS\Helpers\Form\YesNo('condition_not', $this->not, false), 'operation_title');
 
         if ($this->id and $this->hasChildren()) {
-            $compare_options = array
-            (
+            $compare_options = [
                 'and' => 'AND',
                 'or' => 'OR',
-            );
+            ];
 
             $form->add(
                 new \IPS\Helpers\Form\Radio(
                     'condition_group_compare',
                     $this->group_compare ?: 'and',
                     false,
-                    array('options' => $compare_options),
+                    ['options' => $compare_options],
                     null,
                     null,
                     null,
@@ -288,7 +287,7 @@ class _Condition extends \IPS\Node\Model
             $this,
             'conditions',
             $values,
-            array('condition_rule_id', 'condition_group_compare', 'condition_not', 'condition_enable_recursion')
+            ['condition_rule_id', 'condition_group_compare', 'condition_not', 'condition_enable_recursion']
         );
         parent::saveForm($values);
 
@@ -330,7 +329,7 @@ class _Condition extends \IPS\Node\Model
             try {
                 $result = call_user_func_array(
                     '\IPS\rules\Application::opInvoke',
-                    array($this, 'conditions', func_get_args())
+                    [$this, 'conditions', func_get_args()]
                 );
             } catch (\Exception $e) {
                 $this->locked = false;
@@ -361,7 +360,7 @@ class _Condition extends \IPS\Node\Model
                 foreach ($this->children() as $condition) {
                     if ($condition->enabled) {
                         $conditionsCount++;
-                        $_result = call_user_func_array(array($condition, 'invoke'), func_get_args());
+                        $_result = call_user_func_array([$condition, 'invoke'], func_get_args());
 
                         if ($_result and $compareMode == 'or') {
                             $result = true;

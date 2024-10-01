@@ -32,28 +32,28 @@ class _logs extends \IPS\Dispatcher\Controller
      */
     protected function manage()
     {
-        \IPS\Output::i()->sidebar['actions']['flush'] = array(
+        \IPS\Output::i()->sidebar['actions']['flush'] = [
             'icon' => 'trash',
             'link' => \IPS\Http\Url::internal('app=rules&module=rules&controller=logs&do=flushlogs'),
             'title' => 'rules_flush_logs',
-            'data' => array(
+            'data' => [
                 'confirm' => '',
-                'confirmMessage' => 'This will delete system logs only. All other logs will remain.'
-            ),
-        );
+                'confirmMessage' => 'This will delete system logs only. All other logs will remain.',
+            ],
+        ];
 
-        \IPS\Output::i()->sidebar['actions']['prune'] = array(
+        \IPS\Output::i()->sidebar['actions']['prune'] = [
             'icon' => 'cut',
             'link' => \IPS\Http\Url::internal('app=rules&module=rules&controller=logs&do=prunelogs'),
             'title' => 'rules_prune_logs',
-            'data' => array(
+            'data' => [
                 'confirm' => '',
-                'confirmMessage' => 'This will prune all custom logs according to their log settings.'
-            ),
-        );
+                'confirmMessage' => 'This will prune all custom logs according to their log settings.',
+            ],
+        ];
 
         $tab = \IPS\Request::i()->tab ?: 'system';
-        $tabs = array('system' => \IPS\Member::loggedIn()->language()->addToStack('rules_system_log'));
+        $tabs = ['system' => \IPS\Member::loggedIn()->language()->addToStack('rules_system_log')];
 
         foreach (\IPS\rules\Log\Custom::roots() as $log) {
             $tabs['log_' . $log->id] = $log->title;
@@ -96,12 +96,11 @@ class _logs extends \IPS\Dispatcher\Controller
         $table = new \IPS\Helpers\Table\Db(
             'rules_logs',
             \IPS\Http\Url::internal('app=rules&module=rules&controller=logs'),
-            array('error>0 OR ( op_id=0 AND rule_parent=0 )')
+            ['error>0 OR ( op_id=0 AND rule_parent=0 )']
         );
-        $table->include = array('type', 'app', 'key', 'message', 'result', 'time');
+        $table->include = ['type', 'app', 'key', 'message', 'result', 'time'];
         $table->langPrefix = 'rules_logs_table_';
-        $table->parsers = array
-        (
+        $table->parsers = [
             'app' => function ($val, $row) {
                 $event = \IPS\rules\Event::load($row['app'], $row['class'], $row['key'], true);
                 return $event->title();
@@ -126,25 +125,25 @@ class _logs extends \IPS\Dispatcher\Controller
             'result' => function ($val) {
                 return json_decode($val);
             },
-        );
+        ];
         $table->sortBy = \IPS\Request::i()->sortby ?: 'id';
         $table->sortDirection = \IPS\Request::i()->sortdirection ?: 'desc';
         $table->rowButtons = function ($row) use ($controllerUrl) {
-            $buttons = array();
+            $buttons = [];
 
             if ($row['rule_id']) {
-                $buttons['view'] = array(
+                $buttons['view'] = [
                     'icon' => 'search',
                     'title' => 'View Log Info',
                     'id' => "{$row['id']}-view",
-                    'link' => $controllerUrl->setQueryString(array('logid' => $row['id'])),
-                    'data' => array('ipsDialog' => ''),
-                );
+                    'link' => $controllerUrl->setQueryString(['logid' => $row['id']]),
+                    'data' => ['ipsDialog' => ''],
+                ];
             }
 
             return $buttons;
         };
-        $table->noSort = array('id', 'key', 'type', 'message', 'result');
+        $table->noSort = ['id', 'key', 'type', 'message', 'result'];
 
         return $table;
     }

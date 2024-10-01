@@ -50,7 +50,7 @@ class _ProfileLogs
             \IPS\rules\Log\Custom::roots(
                 'view',
                 null,
-                array(array('custom_log_class=? AND custom_log_enabled=1', \IPS\Member::rulesDataClass()))
+                [['custom_log_class=? AND custom_log_enabled=1', \IPS\Member::rulesDataClass()]]
             ) as $log
         ) {
             if ($log->logCount($this->member)) {

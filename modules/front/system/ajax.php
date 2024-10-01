@@ -41,27 +41,26 @@ class _ajax extends \IPS\Dispatcher\Controller
      */
     public function findContent()
     {
-        $results = array();
+        $results = [];
         $input = mb_strtolower(\IPS\Request::i()->input);
         $contentClass = str_replace('-', '\\', \IPS\Request::i()->class);
 
         if (!is_subclass_of($contentClass, '\IPS\Content\Item')) {
-            \IPS\Output::i()->json(array());
+            \IPS\Output::i()->json([]);
         }
 
         $idField = $contentClass::$databaseColumnId;
         $sqlTitle = $contentClass::$databaseTable . '.' . $contentClass::$databasePrefix . $contentClass::$databaseColumnMap['title'];
 
-        $where = array("{$sqlTitle} LIKE ?", '%' . $input . '%');
+        $where = ["{$sqlTitle} LIKE ?", '%' . $input . '%'];
 
-        foreach ($contentClass::getItemsWithPermission(array($where), null, 20) as $content) {
-            $results[] = array
-            (
+        foreach ($contentClass::getItemsWithPermission([$where], null, 20) as $content) {
+            $results[] = [
                 'value' => 'ID:' . $content->$idField . ' - ' . $content->mapped('title'),
                 'name' => $content->mapped('title'),
                 'extra' => 'ID:' . $content->$idField . ' / Author: ' . $content->author()->name,
                 'photo' => $content->author()->photo,
-            );
+            ];
         }
 
         \IPS\Output::i()->json($results);

@@ -44,7 +44,7 @@ class _Argument extends \IPS\Node\Model
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array();
+    protected static $databaseIdFields = [];
 
     /**
      * @brief    [Node] Parent ID Database Column
@@ -64,7 +64,7 @@ class _Argument extends \IPS\Node\Model
     /**
      * @brief    Reserved variable names
      */
-    public static $reservedWords = array();
+    public static $reservedWords = [];
 
     /**
      * @brief    Indicates if machine name needs to be unique to the argument class
@@ -129,7 +129,7 @@ class _Argument extends \IPS\Node\Model
     /**
      * Get Data
      */
-    public $data = array();
+    public $data = [];
 
     /**
      * [Node] Get whether or not this node is enabled
@@ -173,10 +173,10 @@ class _Argument extends \IPS\Node\Model
      */
     protected function get__badge()
     {
-        return array(
+        return [
             0 => 'ipsBadge ipsBadge_positive',
             1 => $this->type,
-        );
+        ];
 
         return null;
     }
@@ -208,7 +208,7 @@ class _Argument extends \IPS\Node\Model
         $wrap_chosen_prefix = "<div data-controller='rules.admin.ui.chosen'>";
         $wrap_chosen_suffix = "</div>";
 
-        $form->add(new \IPS\Helpers\Form\Text('argument_name', $this->name, true, array()));
+        $form->add(new \IPS\Helpers\Form\Text('argument_name', $this->name, true, []));
 
         if ($this->id) {
             $reservedWords = static::$reservedWords;
@@ -220,7 +220,7 @@ class _Argument extends \IPS\Node\Model
                     'argument_varname',
                     $this->varname,
                     true,
-                    array(),
+                    [],
                     function ($val) use ($self, $reservedWords, $uniqueToClass, $databaseTable) {
                         $val = str_replace(' ', '_', $val);
                         $val = preg_replace('/[^A-Za-z0-9_]/', '', $val);
@@ -248,12 +248,12 @@ class _Argument extends \IPS\Node\Model
                         /* Check uniqueness to parent */
                         if (\IPS\Db::i()->select(
                             'COUNT(*)', $databaseTable,
-                            array(
+                            [
                                 'argument_varname=? AND argument_parent_id=? AND argument_id!=?',
                                 $val,
                                 $parent_id,
-                                $this_id
-                            )
+                                $this_id,
+                            ]
                         )->first()) {
                             throw new \InvalidArgumentException('argument_not_unique');
                         }
@@ -261,12 +261,12 @@ class _Argument extends \IPS\Node\Model
                         /* Check uniqueness to class */
                         if ($uniqueToClass and \IPS\Db::i()->select(
                                 'COUNT(*)', $databaseTable,
-                                array(
+                                [
                                     'argument_varname=? AND argument_class=? AND argument_id!=?',
                                     $val,
                                     $self->class,
-                                    $this_id
-                                )
+                                    $this_id,
+                                ]
                             )->first()) {
                             throw new \InvalidArgumentException('argument_not_unique_to_class');
                         }
@@ -277,8 +277,7 @@ class _Argument extends \IPS\Node\Model
 
         $form->add(new \IPS\Helpers\Form\Text('argument_description', $this->description, true));
 
-        $argument_types = array
-        (
+        $argument_types = [
             'object' => 'Object',
             'int' => 'Integer',
             'string' => 'String',
@@ -286,15 +285,13 @@ class _Argument extends \IPS\Node\Model
             'float' => 'Decimal / Float',
             'bool' => 'TRUE / FALSE',
             'mixed' => 'Mixed Values',
-        );
+        ];
 
         /**
          * Basic Object Classes
          */
-        $object_classes = array
-        (
-            'General' => array
-            (
+        $object_classes = [
+            'General' => [
                 '' => 'Arbitrary',
                 '-IPS-Member' => 'Any Member ( IPS\Member )',
                 '-IPS-Content' => 'Any Content ( IPS\Content )',
@@ -306,15 +303,15 @@ class _Argument extends \IPS\Node\Model
                 '-IPS-Node-Model' => 'Content Container ( IPS\Node\Model )',
                 '-IPS-Patterns-ActiveRecord' => 'Any Active Record ( IPS\Patterns\ActiveRecord )',
                 'custom' => 'Custom Object Class',
-            ),
-        );
+            ],
+        ];
 
         /**
          * Add additional content types
          */
         foreach (\IPS\Application::allExtensions('core', 'ContentRouter') as $router) {
             $appname = '';
-            $_object_classes = array();
+            $_object_classes = [];
             foreach ($router->classes as $contentItemClass) {
                 if (is_subclass_of($contentItemClass, '\IPS\Content\Item')) {
                     /* Set Appname */
@@ -347,10 +344,10 @@ class _Argument extends \IPS\Node\Model
                 'argument_type',
                 $this->type,
                 true,
-                array(
+                [
                     'options' => $argument_types,
-                    'toggles' => array('object' => array('argument_class'), 'array' => array('argument_class'))
-                ),
+                    'toggles' => ['object' => ['argument_class'], 'array' => ['argument_class']],
+                ],
                 null,
                 $wrap_chosen_prefix,
                 $wrap_chosen_suffix
@@ -361,7 +358,7 @@ class _Argument extends \IPS\Node\Model
                 'argument_class',
                 $this->class,
                 false,
-                array('options' => $object_classes, 'toggles' => array('custom' => array('argument_custom_class'))),
+                ['options' => $object_classes, 'toggles' => ['custom' => ['argument_custom_class']]],
                 null,
                 $wrap_chosen_prefix,
                 $wrap_chosen_suffix,
@@ -369,7 +366,7 @@ class _Argument extends \IPS\Node\Model
             )
         );
         $form->add(
-            new \IPS\Helpers\Form\Text('argument_custom_class', $this->custom_class, false, array(), function ($val) {
+            new \IPS\Helpers\Form\Text('argument_custom_class', $this->custom_class, false, [], function ($val) {
                 if ($val) {
                     if (!class_exists($val)) {
                         throw new \InvalidArgumentException('Class does not exist');
@@ -422,7 +419,7 @@ class _Argument extends \IPS\Node\Model
 
             while (\IPS\Db::i()->select(
                 'COUNT(*)', static::$databaseTable,
-                array('argument_varname=?' . $uniqueness . ' AND argument_id!=?', $varname . $num, $this_id)
+                ['argument_varname=?' . $uniqueness . ' AND argument_id!=?', $varname . $num, $this_id]
             )->first()) {
                 /* Count up from 1 */
                 $num = $num ? $num + 1 : 1;

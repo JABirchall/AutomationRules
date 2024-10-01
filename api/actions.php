@@ -32,9 +32,9 @@ class _actions extends \IPS\Api\Controller
     {
         $method = (isset($_SERVER['REQUEST_METHOD']) and in_array(
                 mb_strtoupper($_SERVER['REQUEST_METHOD']),
-                array('GET', 'POST', 'PUT', 'DELETE')
+                ['GET', 'POST', 'PUT', 'DELETE']
             )) ? mb_strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
-        $params = array();
+        $params = [];
 
         $action_id = $pathBits[0];
 
@@ -54,7 +54,7 @@ class _actions extends \IPS\Api\Controller
         $shouldLog = $this->apiKey->shouldLog('rules', 'actions', "{$method}{$action_id}");
         $postdata = json_decode(file_get_contents('php://input'), true);
 
-        $arguments = array();
+        $arguments = [];
 
         foreach ($action->children() as $argument) {
             $varname = $argument->varname;
@@ -144,9 +144,9 @@ class _actions extends \IPS\Api\Controller
         }
 
         $event = \IPS\rules\Event::load('rules', 'CustomActions', 'custom_action_' . $action->key);
-        call_user_func_array(array($event, 'trigger'), $arguments);
+        call_user_func_array([$event, 'trigger'], $arguments);
 
-        return new \IPS\Api\Response(200, array_merge(array('processed' => true), $event->apiResponse));
+        return new \IPS\Api\Response(200, array_merge(['processed' => true], $event->apiResponse));
     }
 
     /**
@@ -158,7 +158,7 @@ class _actions extends \IPS\Api\Controller
      */
     protected function _getEndpoint($pathBits)
     {
-        return array('endpoint' => 'index', 'params' => array($database));
+        return ['endpoint' => 'index', 'params' => [$database]];
     }
 
 }

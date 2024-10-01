@@ -30,10 +30,9 @@ class _Content extends \IPS\Helpers\Form\Text
      * );
      * @encode
      */
-    public $childDefaultOptions = array
-    (
+    public $childDefaultOptions = [
         'multiple' => 1,
-    );
+    ];
 
 
     /**
@@ -47,8 +46,7 @@ class _Content extends \IPS\Helpers\Form\Text
     {
         $args = func_get_args();
 
-        $this->defaultOptions['autocomplete'] = array
-        (
+        $this->defaultOptions['autocomplete'] = [
             'source' => 'app=rules&module=system&controller=ajax&class=' . str_replace(
                     '\\',
                     '-',
@@ -59,7 +57,7 @@ class _Content extends \IPS\Helpers\Form\Text
             'minAjaxLength' => 3,
             'forceLower' => false,
             'prefix' => false,
-        );
+        ];
 
         if (isset($args[3]) and array_key_exists('multiple', $args[3]) and $args[3]['multiple'] > 0) {
             $this->defaultOptions['autocomplete']['maxItems'] = $args[3]['multiple'];
@@ -82,7 +80,7 @@ class _Content extends \IPS\Helpers\Form\Text
         $idField = $contentClass::$databaseColumnId;
 
         if (is_array($this->value)) {
-            $value = array();
+            $value = [];
             foreach ($this->value as $v) {
                 if ($v instanceof \IPS\Content\Item) {
                     $value[] = 'ID:' . $v->$idField . ' - ' . $v->mapped('title');
@@ -120,7 +118,7 @@ class _Content extends \IPS\Helpers\Form\Text
             // IPS 4.1.17.1 and below use comma delimiter on autocomplete fields. Higher versions use a new line break.
             $delimiter = \IPS\Application::getAvailableVersion('core') < 101079 ? "," : "\n";
 
-            $return = array();
+            $return = [];
             $contentClass = $this->options['class'];
             $idField = $contentClass::$databaseColumnId;
             $matches = null;
@@ -197,7 +195,7 @@ class _Content extends \IPS\Helpers\Form\Text
     public static function stringValue($value)
     {
         if (is_array($value)) {
-            $values = array();
+            $values = [];
             foreach ($value as $v) {
                 if ($v instanceof \IPS\Content) {
                     $values[] = $v->activeid;

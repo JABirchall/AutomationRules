@@ -74,13 +74,13 @@ class _Token
     protected function tokenValue()
     {
         if ($this->argument !== null) {
-            $tokenValues = array();
+            $tokenValues = [];
             $input_arg = $this->argument;
             $converter = $this->converter;
 
             /* Create array so single args and array args can be processed in the same way */
             if (!is_array($input_arg)) {
-                $input_arg = array($input_arg);
+                $input_arg = [$input_arg];
             }
 
             foreach ($input_arg as $_input_arg) {

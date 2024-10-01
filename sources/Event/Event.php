@@ -45,12 +45,12 @@ class _Event
     /**
      * @brief    Deferred Action Stack
      */
-    public $actionStack = array();
+    public $actionStack = [];
 
     /**
      * Multiton Cache
      */
-    public static $multitons = array();
+    public static $multitons = [];
 
     /**
      * Placeholder Flag
@@ -60,7 +60,7 @@ class _Event
     /**
      * API Response Params
      */
-    public $apiResponse = array();
+    public $apiResponse = [];
 
     /**
      * Event Loader
@@ -93,7 +93,7 @@ class _Event
     /**
      * Events Cache
      */
-    protected static $eventsCache = array();
+    protected static $eventsCache = [];
 
     /**
      * Constructor
@@ -114,7 +114,7 @@ class _Event
                 $events = static::$eventsCache[$app][$class];
             } else {
                 $ext = new $extClass;
-                $events = static::$eventsCache[$app][$class] = method_exists($ext, 'events') ? $ext->events() : array();
+                $events = static::$eventsCache[$app][$class] = method_exists($ext, 'events') ? $ext->events() : [];
             }
 
             if (isset ($events[$key])) {
@@ -172,7 +172,7 @@ class _Event
             foreach ($this->rules() as $rule) {
                 if (!$rule->ruleset() or $rule->ruleset()->enabled) {
                     if ($rule->enabled) {
-                        $result = call_user_func_array(array($rule, 'invoke'), func_get_args());
+                        $result = call_user_func_array([$rule, 'invoke'], func_get_args());
 
                         if ($rule->debug) {
                             \IPS\rules\Application::rulesLog($this, $rule, null, $result, 'Rule evaluated');
@@ -205,7 +205,7 @@ class _Event
              */
             if ($this->thread === $this->rootThread) {
                 $actions = $this->actionStack;
-                $this->actionStack = array();
+                $this->actionStack = [];
                 $this->executeDeferred($actions);
             }
         }
@@ -236,7 +236,7 @@ class _Event
                     $action->definition['callback'],
                     array_merge(
                         $deferred['args'],
-                        array($action->data['configuration']['data'], $deferred['event_args'], $action)
+                        [$action->data['configuration']['data'], $deferred['event_args'], $action]
                     )
                 );
 
@@ -300,23 +300,23 @@ class _Event
             return $this->rulesCache = \IPS\rules\Rule::roots(
                 null,
                 null,
-                array(
-                    array(
+                [
+                    [
                         'rule_event_app=? AND rule_event_class=? AND rule_event_key=?',
                         $this->app,
                         $this->class,
-                        $this->key
-                    )
-                )
+                        $this->key,
+                    ],
+                ]
             );
         } catch (\Exception $e) {
             /* Uninstalled */
-            return $this->rulesCache = array();
+            return $this->rulesCache = [];
         }
     }
 
     /* hasRules Cache */
-    public static $hasRules = array();
+    public static $hasRules = [];
 
     /**
      * Check if rules are attached to an event
@@ -337,14 +337,14 @@ class _Event
             return static::$hasRules[$app][$class][$key][(int)$enabled] = (bool)\IPS\rules\Rule::roots(
                 null,
                 null,
-                array(
-                    array(
+                [
+                    [
                         'rule_event_app=? AND rule_event_class=? AND rule_event_key=? AND rule_enabled=1',
                         $app,
                         $class,
-                        $key
-                    )
-                )
+                        $key,
+                    ],
+                ]
             );
         } catch (\Exception $e) {
             /* Uninstalled */

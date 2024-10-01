@@ -36,7 +36,7 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
                         'member_title',
                         $this->member->member_title,
                         false,
-                        array('maxLength' => 64)
+                        ['maxLength' => 64]
                     )
                 );
             }
@@ -44,15 +44,15 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
             $form->add(
                 new \IPS\Helpers\Form\Custom(
                     'bday',
-                    array(
+                    [
                         'year' => $this->member->bday_year,
                         'month' => $this->member->bday_month,
-                        'day' => $this->member->bday_day
-                    ),
+                        'day' => $this->member->bday_day,
+                    ],
                     false,
-                    array(
+                    [
                         'getHtml' => function ($element) {
-                            return strtr(\IPS\Member::loggedIn()->language()->preferredDateFormat(), array(
+                            return strtr(\IPS\Member::loggedIn()->language()->preferredDateFormat(), [
                                 'dd' => \IPS\Theme::i()->getTemplate('members', 'core', 'global')->bdayForm_day(
                                     $element->name,
                                     $element->value,
@@ -73,9 +73,9 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
                                     $element->value,
                                     $element->error
                                 ),
-                            ));
-                        }
-                    )
+                            ]);
+                        },
+                    ]
                 )
             );
             if (\IPS\Settings::i()->profile_comments and $this->member->canAccessModule(
@@ -90,10 +90,10 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
             try {
                 $values = \IPS\Db::i()->select(
                     '*', 'core_pfields_content',
-                    array('member_id=?', $this->member->member_id)
+                    ['member_id=?', $this->member->member_id]
                 )->first();
             } catch (\UnderflowException $e) {
-                $values = array();
+                $values = [];
             }
 
             foreach (
@@ -114,7 +114,7 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
             foreach (
                 \IPS\Db::i()->select(
                     '*', 'rules_data',
-                    array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', \IPS\Member::rulesDataClass())
+                    ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', \IPS\Member::rulesDataClass()]
                 ) as $row
             ) {
                 if ($row['data_use_mode'] == 'public' or \IPS\Member::loggedIn()->modPermission(
@@ -141,12 +141,12 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
                         'signature',
                         $this->member->signature,
                         false,
-                        array(
+                        [
                             'app' => 'core',
                             'key' => 'Signatures',
                             'autoSaveKey' => "frontsig-" . $this->member->member_id,
-                            'attachIds' => array($this->member->member_id)
-                        )
+                            'attachIds' => [$this->member->member_id],
+                        ]
                     )
                 );
 
@@ -223,15 +223,15 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
                 try {
                     $profileFields = \IPS\Db::i()->select(
                         '*', 'core_pfields_content',
-                        array('member_id=?', $this->member->member_id)
+                        ['member_id=?', $this->member->member_id]
                     )->first();
                 } catch (\UnderflowException $e) {
-                    $profileFields = array();
+                    $profileFields = [];
                 }
 
                 /* If the row only contains one column (eg. member_id) then the result of the query is a string, we do not want this */
                 if (!is_array($profileFields)) {
-                    $profileFields = array();
+                    $profileFields = [];
                 }
 
                 $profileFields['member_id'] = $this->member->member_id;
@@ -259,10 +259,10 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
                 foreach (
                     \IPS\Db::i()->select(
                         '*', 'rules_data',
-                        array(
+                        [
                             'data_class=? AND data_use_mode IN ( \'public\', \'admin\' )',
-                            \IPS\Member::rulesDataClass()
-                        )
+                            \IPS\Member::rulesDataClass(),
+                        ]
                     ) as $row
                 ) {
                     if (isset ($values['rules_data_' . $row['data_column_name']])) {
@@ -303,16 +303,16 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
 
             /* Set Session Location */
             \IPS\Session::i()->setLocation(
-                $this->member->url(), array(), 'loc_editing_profile',
-                array($this->member->name => false)
+                $this->member->url(), [], 'loc_editing_profile',
+                [$this->member->name => false]
             );
 
             if (\IPS\Request::i()->isAjax()) {
                 \IPS\Output::i()->output = $form->customTemplate(
-                    array(
-                        call_user_func_array(array(\IPS\Theme::i(), 'getTemplate'), array('forms', 'core')),
-                        'popupTemplate'
-                    )
+                    [
+                        call_user_func_array([\IPS\Theme::i(), 'getTemplate'], ['forms', 'core']),
+                        'popupTemplate',
+                    ]
                 );
             } else {
                 \IPS\Output::i()->output = \IPS\Theme::i()->getTemplate('forms', 'core')->editContentForm(
@@ -322,15 +322,15 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
             }
             \IPS\Output::i()->title = \IPS\Member::loggedIn()->language()->addToStack(
                 'editing_profile', false,
-                array('sprintf' => array($this->member->name))
+                ['sprintf' => [$this->member->name]]
             );
-            \IPS\Output::i()->breadcrumb[] = array(
+            \IPS\Output::i()->breadcrumb[] = [
                 null,
                 \IPS\Member::loggedIn()->language()->addToStack(
                     'editing_profile', false,
-                    array('sprintf' => array($this->member->name))
-                )
-            );
+                    ['sprintf' => [$this->member->name]]
+                ),
+            ];
         } catch (\RuntimeException $e) {
             if (method_exists(get_parent_class(), __FUNCTION__)) {
                 return \call_user_func_array('parent::' . __FUNCTION__, \func_get_args());
@@ -356,7 +356,7 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
             foreach (
                 \IPS\Db::i()->select(
                     '*', 'rules_data',
-                    array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', \IPS\Member::rulesDataClass())
+                    ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', \IPS\Member::rulesDataClass()]
                 ) as $row
             ) {
                 if ($row['data_use_mode'] == 'public' or \IPS\Member::loggedIn()->modPermission(
@@ -400,7 +400,7 @@ class rules_hook_modCoreMembersProfile extends _HOOK_CLASS_
             foreach (
                 \IPS\Db::i()->select(
                     '*', 'rules_data',
-                    array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', \IPS\Member::rulesDataClass())
+                    ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', \IPS\Member::rulesDataClass()]
                 ) as $row
             ) {
                 if (isset ($values['rules_data_' . $row['data_column_name']])) {

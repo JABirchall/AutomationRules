@@ -34,12 +34,12 @@ class _CustomData
      */
     public function events()
     {
-        $events = array();
+        $events = [];
         $lang = \IPS\Member::loggedIn()->language();
 
         foreach (\IPS\rules\Data::roots(null) as $data_field) {
             $event_id = 'updated_' . $data_field->key;
-            $data_class = in_array($data_field->type, array('object', 'array')) ? str_replace(
+            $data_class = in_array($data_field->type, ['object', 'array']) ? str_replace(
                 '-',
                 '\\',
                 $data_field->type_class
@@ -51,22 +51,18 @@ class _CustomData
                     $data_field->name
                 ) . ' value';
 
-            $events[$event_id] = array
-            (
-                'arguments' => array
-                (
-                    'entity' => array
-                    (
+            $events[$event_id] = [
+                'arguments' => [
+                    'entity' => [
                         'argtype' => 'object',
                         'class' => str_replace('-', '\\', $data_field->class),
-                    ),
-                    'value' => array
-                    (
+                    ],
+                    'value' => [
                         'argtype' => $data_field->type,
                         'class' => $data_class,
-                    ),
-                ),
-            );
+                    ],
+                ],
+            ];
         }
 
         return $events;
@@ -82,7 +78,7 @@ class _CustomData
      */
     public function conditions()
     {
-        $conditions = array();
+        $conditions = [];
         return $conditions;
     }
 
@@ -93,12 +89,12 @@ class _CustomData
      */
     public function actions()
     {
-        $actions = array();
+        $actions = [];
         $lang = \IPS\Member::loggedIn()->language();
 
         foreach (\IPS\rules\Data::roots(null) as $data_field) {
             $action_id = 'set_' . $data_field->key;
-            $data_class = in_array($data_field->type, array('object', 'array')) ? str_replace(
+            $data_class = in_array($data_field->type, ['object', 'array']) ? str_replace(
                 '-',
                 '\\',
                 $data_field->type_class
@@ -108,30 +104,27 @@ class _CustomData
             $lang->words['rules_CustomData_actions_' . $action_id . '_entity'] = $data_field->entityTitle();
             $lang->words['rules_CustomData_actions_' . $action_id . '_value'] = 'The Update Value';
 
-            $actions[$action_id] = array
-            (
-                'configuration' => array
-                (
+            $actions[$action_id] = [
+                'configuration' => [
                     'form' => function ($form, $values) use ($data_field) {
                         switch ($data_field->type) {
                             case 'int':
                             case 'float':
 
-                                $numeric_options = array
-                                (
+                                $numeric_options = [
                                     'add' => 'Add to the existing value',
                                     'subtract' => 'Subtract from the existing value',
                                     'multiply' => 'Multiply the existing value',
                                     'divide' => 'Divide the existing value',
                                     'set' => 'Explicitly set the existing value',
-                                );
+                                ];
 
                                 $form->add(
                                     new \IPS\Helpers\Form\Radio(
                                         'rules_numeric_math_operation',
                                         $values['rules_numeric_math_operation'] ?: 'add',
                                         true,
-                                        array('options' => $numeric_options),
+                                        ['options' => $numeric_options],
                                         null,
                                         null,
                                         null,
@@ -143,19 +136,18 @@ class _CustomData
 
                             case 'array':
 
-                                $array_options = array
-                                (
+                                $array_options = [
                                     'add' => 'Add value to the existing array values',
                                     'remove' => 'Remove value from the existing array values',
                                     'set' => 'Explicitly set the existing array values',
-                                );
+                                ];
 
                                 $form->add(
                                     new \IPS\Helpers\Form\Radio(
                                         'rules_array_operation',
                                         $values['rules_array_operation'] ?: 'add',
                                         true,
-                                        array('options' => $array_options),
+                                        ['options' => $array_options],
                                         null,
                                         null,
                                         null,
@@ -165,38 +157,30 @@ class _CustomData
                                 $added[] = 'rules_array_operation';
                                 break;
                         }
-                    }
-                ),
-                'arguments' => array
-                (
-                    'entity' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    },
+                ],
+                'arguments' => [
+                    'entity' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => $data_field->entityTitle(),
                                 'class' => str_replace('-', '\\', $data_field->class),
-                            ),
-                        ),
-                    ),
-                    'value' => array
-                    (
+                            ],
+                        ],
+                    ],
+                    'value' => [
                         'default' => 'manual',
-                        'argtypes' => array
-                        (
-                            $data_field->type => array
-                            (
+                        'argtypes' => [
+                            $data_field->type => [
                                 'description' => $data_field->description,
                                 'class' => $data_class,
 
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => $data_field->required,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values) use ($data_field) {
-                                $added = array();
+                                $added = [];
 
                                 foreach ($data_field->formElements(null, $values) as $name => $element) {
                                     $form->add($element);
@@ -208,9 +192,9 @@ class _CustomData
                             'getArg' => function ($values) use ($data_field) {
                                 return $data_field->valueFromForm($values);
                             },
-                        ),
-                    ),
-                ),
+                        ],
+                    ],
+                ],
                 'callback' => function ($entity, $value, $values) use ($data_field) {
                     $key = $data_field->column_name;
                     $entity_class = ltrim(str_replace('-', '\\', $data_field->class), '\\');
@@ -273,7 +257,7 @@ class _CustomData
 
                                     /* Add it if it doesn't */
                                     if (!$exists) {
-                                        $entity->setRulesData($key, array_merge($array, array($value)));
+                                        $entity->setRulesData($key, array_merge($array, [$value]));
                                         return "value added to array";
                                     }
 
@@ -303,7 +287,7 @@ class _CustomData
                     $entity->setRulesData($key, $value);
                     return "value set for " . $data_field->name;
                 },
-            );
+            ];
         }
 
         return $actions;

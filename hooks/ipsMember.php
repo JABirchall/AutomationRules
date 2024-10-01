@@ -16,7 +16,7 @@ class rules_hook_ipsMember extends _HOOK_CLASS_
                  * Rules may trigger core system functions that use \IPS\Member::loggedIn(), (i.e \IPS\Content\Item::setTags )
                  * This prevents the script from crashing in API mode because the parent method attempts to start a session.
                  */
-                if ((!isset($_SERVER['SERVER_SOFTWARE']) && (in_array(php_sapi_name(), array('cli', 'cgi', 'cgi-fcgi')
+                if ((!isset($_SERVER['SERVER_SOFTWARE']) && (in_array(php_sapi_name(), ['cli', 'cgi', 'cgi-fcgi']
                         ) || (is_numeric($_SERVER['argc']) && $_SERVER['argc'] > 0)))) {
                     static::$loggedInMember = static::load(null);
                 }
@@ -39,11 +39,11 @@ class rules_hook_ipsMember extends _HOOK_CLASS_
      * @param array $params Additional parameters to pass
      * @return    void
      */
-    public function memberSync($method, $params = array())
+    public function memberSync($method, $params = [])
     {
         try {
             $event = \IPS\rules\Event::load('rules', 'Members', 'memberSync_' . $method);
-            call_user_func_array(array($event, 'trigger'), array_merge(array($this), $params));
+            call_user_func_array([$event, 'trigger'], array_merge([$this], $params));
 
             return call_user_func_array('parent::memberSync', func_get_args());
         } catch (\RuntimeException $e) {
@@ -168,7 +168,7 @@ class rules_hook_ipsMember extends _HOOK_CLASS_
     /**
      * @brief    Member Profile Data Caching
      */
-    public static $rulesProfileDataCache = array();
+    public static $rulesProfileDataCache = [];
 
     /**
      * Get Stored Profile Data
@@ -187,10 +187,10 @@ class rules_hook_ipsMember extends _HOOK_CLASS_
                 try {
                     static::$rulesProfileDataCache[$this->member_id] = \IPS\Db::i()->select(
                         '*', 'core_pfields_content',
-                        array('member_id = ?', $this->member_id)
+                        ['member_id = ?', $this->member_id]
                     )->first();
                 } catch (\UnderflowException $e) {
-                    static::$rulesProfileDataCache[$this->member_id] = array();
+                    static::$rulesProfileDataCache[$this->member_id] = [];
                 }
             }
 

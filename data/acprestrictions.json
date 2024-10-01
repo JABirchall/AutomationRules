@@ -1,11 +1,11 @@
 {
+  "rules": {
     "rules": {
-        "rules": {
-            "rules_manage": "rules_manage"
-        },
-        "logs": {
-            "logs_manage": "logs_manage"
-        }
+      "rules_manage": "rules_manage"
     },
-    "logs": []
+    "logs": {
+      "logs_manage": "logs_manage"
+    }
+  },
+  "logs": []
 }

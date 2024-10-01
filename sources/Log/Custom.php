@@ -44,7 +44,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array('custom_log_key');
+    protected static $databaseIdFields = ['custom_log_key'];
 
     /**
      * @brief    [Node] Parent ID Database Column
@@ -74,11 +74,10 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
     /**
      * @brief    The map of permission columns
      */
-    public static $permissionMap = array
-    (
+    public static $permissionMap = [
         'view' => 'view',
         'delete' => 2,
-    );
+    ];
 
     /**
      * @brief    [Node] Prefix string that is automatically prepended to permission matrix language strings
@@ -138,7 +137,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
     /**
      * Get Data
      */
-    public $data = array();
+    public $data = [];
 
     /**
      * [Node] Get whether or not this node is enabled
@@ -191,29 +190,27 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
         $delete = $buttons['delete'];
         unset($buttons['delete']);
 
-        $buttons['view'] = array
-        (
+        $buttons['view'] = [
             'icon' => 'eye',
             'title' => 'rules_view_custom_log',
             'link' => \IPS\Http\Url::internal("app=rules&module=rules&controller=logs")->setQueryString(
-                array('tab' => 'log_' . $this->id)
+                ['tab' => 'log_' . $this->id]
             ),
-            'data' => array(),
-        );
+            'data' => [],
+        ];
 
         if ($this->can('delete')) {
-            $buttons['flush'] = array
-            (
+            $buttons['flush'] = [
                 'icon' => 'trash',
                 'title' => 'rules_flush_custom_log',
                 'link' => \IPS\Http\Url::internal(
                     "app=rules&module=rules&controller=customlogs&do=flush"
-                )->setQueryString(array('log_id' => $this->id))->csrf(),
-                'data' => array(
+                )->setQueryString(['log_id' => $this->id])->csrf(),
+                'data' => [
                     'confirm' => '',
-                    'confirmMessage' => \IPS\Member::loggedIn()->language()->addToStack('rules_flush_confirm')
-                ),
-            );
+                    'confirmMessage' => \IPS\Member::loggedIn()->language()->addToStack('rules_flush_confirm'),
+                ],
+            ];
         }
 
         if ($this->canDelete()) {
@@ -238,11 +235,11 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
      */
     protected function get__badge()
     {
-        return array(
+        return [
             0 => 'ipsBadge ipsBadge_neutral',
-            1 => \IPS\Db::i()->select('COUNT(*)', static::getTableName($this->class), array('log_id=?', $this->id)
+            1 => \IPS\Db::i()->select('COUNT(*)', static::getTableName($this->class), ['log_id=?', $this->id]
             )->first(),
-        );
+        ];
     }
 
     /**
@@ -260,11 +257,10 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
         /**
          * Basic Object Classes
          */
-        $object_classes = array
-        (// None
-        );
-        $object_classes_toggles = array();
-        $object_classes_containers = array();
+        $object_classes = [// None
+        ];
+        $object_classes_toggles = [];
+        $object_classes_containers = [];
 
         $core_key = $lang->get('__app_core');
 
@@ -273,7 +269,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
          */
         foreach (\IPS\Application::allExtensions('core', 'ContentRouter') as $router) {
             $appname = '';
-            $_object_classes = array();
+            $_object_classes = [];
             foreach ($router->classes as $contentItemClass) {
                 if (is_subclass_of($contentItemClass, '\IPS\Content\Item')) {
                     /* Set Appname */
@@ -308,7 +304,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                                 )]
                             ) ? $configuration['containers-' . str_replace('\\', '-', $nodeClass)] : 0,
                             false,
-                            array('class' => $nodeClass, 'multiple' => true, 'subnodes' => false, 'zeroVal' => 'All'),
+                            ['class' => $nodeClass, 'multiple' => true, 'subnodes' => false, 'zeroVal' => 'All'],
                             null,
                             null,
                             null,
@@ -318,12 +314,12 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                             '\\',
                             '-',
                             $contentItemClass
-                        )] = array('containers-' . str_replace('\\', '-', $nodeClass));
+                        )] = ['containers-' . str_replace('\\', '-', $nodeClass)];
                         $object_classes_toggles['-' . str_replace(
                             '\\',
                             '-',
                             $nodeClass
-                        )] = array('containers-' . str_replace('\\', '-', $nodeClass));
+                        )] = ['containers-' . str_replace('\\', '-', $nodeClass)];
                     }
                 }
             }
@@ -331,13 +327,11 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
             $object_classes[$appname] = $_object_classes;
         }
 
-        $data_classes = array
-        (
-            $core_key => array
-            (
+        $data_classes = [
+            $core_key => [
                 '-IPS-Member' => 'Member ( IPS\Member )',
-            ),
-        );
+            ],
+        ];
 
         $data_classes = array_replace_recursive($data_classes, $object_classes);
 
@@ -347,11 +341,11 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'custom_log_class',
                 $this->class ?: '-IPS-Member',
                 false,
-                array(
+                [
                     'options' => $data_classes,
                     'disabled' => $this->class !== null,
-                    'toggles' => $object_classes_toggles
-                ),
+                    'toggles' => $object_classes_toggles,
+                ],
                 null,
                 $wrap_chosen_prefix,
                 $wrap_chosen_suffix,
@@ -362,11 +356,11 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
 
         $form->addHeader('custom_log_options');
 
-        $sort_options = array('id' => 'custom_log_logtime');
+        $sort_options = ['id' => 'custom_log_logtime'];
 
         if ($this->id) {
             foreach ($this->children() as $data) {
-                if (in_array($data->type, array('int', 'float', 'string'))) {
+                if (in_array($data->type, ['int', 'float', 'string'])) {
                     $sort_options[$data->varname] = $data->name;
                 }
             }
@@ -377,7 +371,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'custom_log_sortby',
                 $this->sortby ?: 'id',
                 true,
-                array('options' => $sort_options),
+                ['options' => $sort_options],
                 null,
                 $wrap_chosen_prefix,
                 $wrap_chosen_suffix
@@ -388,30 +382,30 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'custom_log_sortdir',
                 $this->sortdir ?: 'desc',
                 true,
-                array('options' => array('desc' => 'Descending', 'asc' => 'Ascending')),
+                ['options' => ['desc' => 'Descending', 'asc' => 'Ascending']],
                 null,
                 $wrap_chosen_prefix,
                 $wrap_chosen_suffix
             )
         );
-        $form->add(new \IPS\Helpers\Form\YesNo('custom_log_display_empty', $this->display_empty, true, array()));
+        $form->add(new \IPS\Helpers\Form\YesNo('custom_log_display_empty', $this->display_empty, true, []));
         $form->add(
-            new \IPS\Helpers\Form\Number('custom_log_max_logs', $this->max_logs ?: 0, true, array('unlimited' => 0))
+            new \IPS\Helpers\Form\Number('custom_log_max_logs', $this->max_logs ?: 0, true, ['unlimited' => 0])
         );
         $form->add(
-            new \IPS\Helpers\Form\Number('custom_log_entity_max', $this->entity_max ?: 0, true, array('unlimited' => 0))
+            new \IPS\Helpers\Form\Number('custom_log_entity_max', $this->entity_max ?: 0, true, ['unlimited' => 0])
         );
         $form->add(
-            new \IPS\Helpers\Form\Number('custom_log_max_age', $this->max_age ?: 0, true, array('unlimited' => 0))
+            new \IPS\Helpers\Form\Number('custom_log_max_age', $this->max_age ?: 0, true, ['unlimited' => 0])
         );
-        $form->add(new \IPS\Helpers\Form\Number('custom_log_limit', $this->limit ?: 25, true, array('min' => 1)));
+        $form->add(new \IPS\Helpers\Form\Number('custom_log_limit', $this->limit ?: 25, true, ['min' => 1]));
 
         $form->add(
             new \IPS\Helpers\Form\YesNo(
                 'custom_log_display_time',
                 $this->display_time !== null ? $this->display_time : true,
                 false,
-                array('togglesOn' => array('custom_log_lang_time'))
+                ['togglesOn' => ['custom_log_lang_time']]
             )
         );
         $form->add(
@@ -421,7 +415,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'rules_log_lang_time'
                 ),
                 false,
-                array('placeholder' => \IPS\Member::loggedIn()->language()->get('rules_log_lang_time')),
+                ['placeholder' => \IPS\Member::loggedIn()->language()->get('rules_log_lang_time')],
                 null,
                 null,
                 null,
@@ -435,7 +429,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'rules_log_lang_message'
                 ),
                 false,
-                array('placeholder' => \IPS\Member::loggedIn()->language()->get('rules_log_lang_message')),
+                ['placeholder' => \IPS\Member::loggedIn()->language()->get('rules_log_lang_message')],
                 null,
                 null,
                 null,
@@ -524,13 +518,10 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
     {
         $table_name = static::getTableName($class);
 
-        return array
-        (
+        return [
             'name' => $table_name,
-            'columns' => array
-            (
-                'id' => array
-                (
+            'columns' => [
+                'id' => [
                     'name' => 'id',
                     'type' => 'int',
                     'allow_null' => false,
@@ -541,11 +532,10 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'default' => null,
                     'length' => 20,
                     'unsigned' => false,
-                    'values' => array(),
+                    'values' => [],
                     'zerofill' => false,
-                ),
-                'log_id' => array
-                (
+                ],
+                'log_id' => [
                     'name' => 'log_id',
                     'type' => 'int',
                     'allow_null' => false,
@@ -556,11 +546,10 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'default' => null,
                     'length' => 20,
                     'unsigned' => false,
-                    'values' => array(),
+                    'values' => [],
                     'zerofill' => false,
-                ),
-                'entity_id' => array
-                (
+                ],
+                'entity_id' => [
                     'name' => 'entity_id',
                     'type' => 'int',
                     'allow_null' => false,
@@ -571,11 +560,10 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'default' => 0,
                     'length' => 20,
                     'unsigned' => false,
-                    'values' => array(),
+                    'values' => [],
                     'zerofill' => false,
-                ),
-                'logtime' => array
-                (
+                ],
+                'logtime' => [
                     'name' => 'logtime',
                     'type' => 'int',
                     'allow_null' => false,
@@ -586,11 +574,10 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'default' => null,
                     'length' => 11,
                     'unsigned' => false,
-                    'values' => array(),
+                    'values' => [],
                     'zerofill' => false,
-                ),
-                'message' => array
-                (
+                ],
+                'message' => [
                     'name' => 'message',
                     'type' => 'varchar',
                     'allow_null' => false,
@@ -601,35 +588,31 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'default' => null,
                     'length' => 2048,
                     'unsigned' => false,
-                    'values' => array(),
+                    'values' => [],
                     'zerofill' => false,
-                ),
-            ),
-            'indexes' => array
-            (
-                'PRIMARY' => array
-                (
+                ],
+            ],
+            'indexes' => [
+                'PRIMARY' => [
                     'type' => 'primary',
                     'name' => 'PRIMARY',
-                    'length' => array(null),
-                    'columns' => array('id'),
-                ),
-                'LOG' => array
-                (
+                    'length' => [null],
+                    'columns' => ['id'],
+                ],
+                'LOG' => [
                     'type' => 'key',
                     'name' => 'LOG',
-                    'length' => array(null),
-                    'columns' => array('log_id'),
-                ),
-                'ENTITY' => array
-                (
+                    'length' => [null],
+                    'columns' => ['log_id'],
+                ],
+                'ENTITY' => [
                     'type' => 'key',
                     'name' => 'ENTITY',
-                    'length' => array(null),
-                    'columns' => array('log_id', 'entity_id'),
-                ),
-            ),
-        );
+                    'length' => [null],
+                    'columns' => ['log_id', 'entity_id'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -653,13 +636,12 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
         }
 
         /* Delete existing logs */
-        \IPS\Db::i()->delete($this::getTableName($this->class), array('log_id=?', $this->_id));
+        \IPS\Db::i()->delete($this::getTableName($this->class), ['log_id=?', $this->_id]);
 
         $result = parent::delete();
 
         /* If there are no custom logs left, drop the table too */
-        if (!\IPS\Db::i()->select('COUNT(*)', 'rules_custom_logs', array('custom_log_class=?', $this->class))->first(
-        )) {
+        if (!\IPS\Db::i()->select('COUNT(*)', 'rules_custom_logs', ['custom_log_class=?', $this->class])->first()) {
             try {
                 \IPS\Db::i()->dropTable($this::getTableName($this->class));
             } catch (\IPS\Db\Exception $e) {
@@ -678,7 +660,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
      * @return    bool                Returns TRUE if log is created, FALSE if log is disabled
      * @throws    \InvalidArgumentException
      */
-    public function createEntry($entity, $message, $data = array())
+    public function createEntry($entity, $message, $data = [])
     {
         if (!$this->enabled) {
             return false;
@@ -691,13 +673,12 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
         }
 
         /* Create basic log entry */
-        $logEntry = array
-        (
+        $logEntry = [
             'log_id' => $this->_id,
             'logtime' => time(),
             'entity_id' => $entity->activeid,
             'message' => $message,
-        );
+        ];
 
         /* Attach the custom log data */
         foreach ($data as $key => $value) {
@@ -738,10 +719,10 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
         if ($this->max_logs) {
             try {
                 $cutoff = \IPS\Db::i()->select(
-                    'id', static::getTableName($this->class), array('log_id=?', $this->id),
-                    'id DESC', array($this->max_logs, 1)
+                    'id', static::getTableName($this->class), ['log_id=?', $this->id],
+                    'id DESC', [$this->max_logs, 1]
                 )->first();
-                \IPS\Db::i()->delete(static::getTableName($this->class), array('id<=? AND log_id=?', $cutoff, $this->id)
+                \IPS\Db::i()->delete(static::getTableName($this->class), ['id<=? AND log_id=?', $cutoff, $this->id]
                 );
             } catch (\UnderflowException $e) {
             }
@@ -752,7 +733,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
             $oldTimer = $this->max_age * (60 * 60 * 24);
             \IPS\Db::i()->delete(
                 static::getTableName($this->class),
-                array('log_id=? AND logtime<?', $this->id, $oldTimer)
+                ['log_id=? AND logtime<?', $this->id, $oldTimer]
             );
         }
 
@@ -762,12 +743,12 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                 try {
                     $cutoff = \IPS\Db::i()->select(
                         'id', static::getTableName($this->class),
-                        array('log_id=? AND entity_id=?', $this->id, $entity->activeid), 'id DESC',
-                        array($this->entity_max, 1)
+                        ['log_id=? AND entity_id=?', $this->id, $entity->activeid], 'id DESC',
+                        [$this->entity_max, 1]
                     )->first();
                     \IPS\Db::i()->delete(
                         static::getTableName($this->class),
-                        array('id<=? AND log_id=? AND entity_id=?', $cutoff, $this->id, $entity->activeid)
+                        ['id<=? AND log_id=? AND entity_id=?', $cutoff, $this->id, $entity->activeid]
                     );
                 } catch (\UnderflowException $e) {
                 }
@@ -787,11 +768,11 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
             /* Flush entity logs */
             \IPS\Db::i()->delete(
                 static::getTableName($this->class),
-                array('log_id=? AND entity_id=?', $this->id, $entity->activeid)
+                ['log_id=? AND entity_id=?', $this->id, $entity->activeid]
             );
         } else {
             /* Flush all logs */
-            \IPS\Db::i()->delete(static::getTableName($this->class), array('log_id=?', $this->id));
+            \IPS\Db::i()->delete(static::getTableName($this->class), ['log_id=?', $this->id]);
         }
     }
 
@@ -804,7 +785,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
     {
         return \IPS\Db::i()->select(
             'COUNT(*)', static::getTableName($this->class),
-            array('log_id=? AND entity_id=?', $this->id, $entity->activeid)
+            ['log_id=? AND entity_id=?', $this->id, $entity->activeid]
         )->first();
     }
 
@@ -850,7 +831,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                         if ($this->can('delete') and \IPS\Request::i()->logid) {
                             \IPS\Db::i()->delete(
                                 static::getTableName($this->class),
-                                array('id=?', \IPS\Request::i()->logid)
+                                ['id=?', \IPS\Request::i()->logid]
                             );
                             if (\IPS\Request::i()->isAjax()) {
                                 \IPS\Output::i()->json('OK');
@@ -879,7 +860,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
          */
         if (\IPS\Dispatcher::i()->controllerLocation == 'front') {
             $controllerUrl = \IPS\Http\Url::internal("app=rules&module=logs&controller=logviewer&log={$this->id}")
-                ->setQueryString(array('sortby' => $sortBy, 'sortdirection' => $sortDirection, 'page' => $page));
+                ->setQueryString(['sortby' => $sortBy, 'sortdirection' => $sortDirection, 'page' => $page]);
 
             if ($entity) {
                 $controllerUrl = $controllerUrl->setQueryString('entity', $entity->activeid);
@@ -894,7 +875,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
             }
         } else {
             $controllerUrl = \IPS\Request::i()->url()->setQueryString(
-                array('log' => null, 'logid' => null, 'logdo' => null)
+                ['log' => null, 'logid' => null, 'logdo' => null]
             );
         }
 
@@ -904,33 +885,33 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
             $table = new \IPS\rules\Log\Table(
                 static::getTableName($this->class),
                 $controllerUrl,
-                array('log_id=? AND entity_id=?', $this->id, $entity->activeid)
+                ['log_id=? AND entity_id=?', $this->id, $entity->activeid]
             );
             if ($this->display_time) {
                 $table->include[] = 'logtime';
             }
             $table->include[] = 'message';
-            $table->noSort = array('message');
+            $table->noSort = ['message'];
         } else {
             $table = new \IPS\rules\Log\Table(
                 static::getTableName($this->class),
                 $controllerUrl,
-                array('log_id=?', $this->id)
+                ['log_id=?', $this->id]
             );
             if ($this->display_time) {
                 $table->include[] = 'logtime';
             }
             $table->include[] = 'entity_id';
             $table->include[] = 'message';
-            $table->noSort = array('message', 'entity_id');
+            $table->noSort = ['message', 'entity_id'];
         }
 
         /* If we are setting log params using our proprietary 'logsortby' etc, then the base \IPS\Helpers\Table class overwrites our base url */
         $table->baseUrl = $controllerUrl;
 
         $table->resortKey = 'listResort_log' . $this->id;
-        $table->tableTemplate = array(\IPS\Theme::i()->getTemplate('components', 'rules', 'front'), 'logTable');
-        $table->rowsTemplate = array(\IPS\Theme::i()->getTemplate('tables', 'core', 'admin'), 'rows');
+        $table->tableTemplate = [\IPS\Theme::i()->getTemplate('components', 'rules', 'front'), 'logTable'];
+        $table->rowsTemplate = [\IPS\Theme::i()->getTemplate('tables', 'core', 'admin'), 'rows'];
         $table->langPrefix = 'rules_custom_logs_table_' . $this->id . '_';
         $table->sortBy = $sortBy;
         $table->sortDirection = $sortDirection;
@@ -944,8 +925,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
 
         $logObjClass = str_replace('-', '\\', $this->class);
 
-        $table->parsers = array
-        (
+        $table->parsers = [
             'logtime' => function ($val, $row) {
                 return (string)\IPS\DateTime::ts($val);
             },
@@ -958,7 +938,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
 
                 return $val;
             },
-        );
+        ];
 
         foreach ($this->children() as $data) {
             if ($data->can('view')) {
@@ -988,27 +968,26 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
                     return $val;
                 };
 
-                if (!in_array($data->type, array('int', 'float', 'string'))) {
+                if (!in_array($data->type, ['int', 'float', 'string'])) {
                     $table->noSort[] = 'data_' . $data->varname;
                 }
             }
         }
 
         $table->rowButtons = function ($row) use ($controllerUrl, $self) {
-            $buttons = array();
+            $buttons = [];
 
             if ($self->can('delete')) {
-                $buttons['delete'] = array
-                (
+                $buttons['delete'] = [
                     'icon' => 'trash',
                     'title' => 'delete',
                     'id' => "{$row['id']}-delete",
                     'link' => $controllerUrl->setQueryString(
-                        array('log' => $self->id, 'logdo' => 'delete', 'logid' => $row['id'])
+                        ['log' => $self->id, 'logdo' => 'delete', 'logid' => $row['id']]
                     ),
                     'data' => \IPS\Dispatcher::i(
-                    )->controllerLocation == 'admin' ? array('delete' => '') : array('confirm' => ''),
-                );
+                    )->controllerLocation == 'admin' ? ['delete' => ''] : ['confirm' => ''],
+                ];
             }
 
             return $buttons;
@@ -1026,7 +1005,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
      */
     public static function allLogs($entity, $limit = null)
     {
-        $output = array();
+        $output = [];
         $activeTab = \IPS\Request::i()->logtab ? 'custom_log_' . \IPS\Request::i()->logtab : null;
         $logs = 0;
 
@@ -1034,7 +1013,7 @@ class _Custom extends \IPS\Node\Model implements \IPS\Node\Permissions
             \IPS\rules\Log\Custom::roots(
                 'view',
                 null,
-                array(array('custom_log_class=? AND custom_log_enabled=1', $entity::rulesDataClass()))
+                [['custom_log_class=? AND custom_log_enabled=1', $entity::rulesDataClass()]]
             ) as $log
         ) {
             if ($log->display_empty or $log->logCount($entity)) {

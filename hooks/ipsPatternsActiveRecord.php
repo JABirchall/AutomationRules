@@ -6,7 +6,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
     /**
      * @brief    Cache for Rules Data
      */
-    protected $rulesData = array();
+    protected $rulesData = [];
 
     /**
      * @brief    Cache for Raw Rules Data
@@ -16,7 +16,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
     /**
      * @brief    Track Loaded Data Keys
      */
-    protected $rulesLoadedKeys = array();
+    protected $rulesLoadedKeys = [];
 
     /**
      * @brief    Track if all data has been loaded
@@ -50,24 +50,25 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                 $ids = iterator_to_array(
                     \IPS\Db::i()->select(
                         'entity_id', \IPS\rules\Data::getTableName($class),
-                        array('data_' . $key . '=?', $value)
+                        ['data_' . $key . '=?', $value]
                     )
                 );
                 if (!empty($ids)) {
                     return \IPS\Patterns\ActiveRecordIterator(
                         \IPS\Db::i()->select(
                             '*', static::$databaseTable,
-                            array(\IPS\Db::i()->in(static::$databasePrefix . static::$databaseColumnId, $ids))
-                        ), $class
+                            [\IPS\Db::i()->in(static::$databasePrefix . static::$databaseColumnId, $ids)]
+                        ),
+                        $class
                     );
                 }
-                return array();
+                return [];
             }
 
             try {
                 $id = \IPS\Db::i()->select(
                     'entity_id', \IPS\rules\Data::getTableName($class),
-                    array('data_' . $key . '=?', $value)
+                    ['data_' . $key . '=?', $value]
                 )->first();
                 return $class::load($id);
             } catch (\Exception $e) {
@@ -96,7 +97,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                 \IPS\rules\Event::load('rules', 'System', 'record_updated')->trigger($this, $this->_data, true);
 
                 /* Core doesn't reset changed after saving new item */
-                $this->changed = array();
+                $this->changed = [];
             } else {
                 $changed = $this->changed;
                 $rulesDataChanged = $this->rulesDataChanged;
@@ -169,7 +170,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                 $idField = $this::$databaseColumnId;
                 \IPS\Db::i()->delete(
                     \IPS\rules\Data::getTableName(get_class($this)),
-                    array('entity_id=?', $this->$idField)
+                    ['entity_id=?', $this->$idField]
                 );
             }
 
@@ -214,10 +215,10 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
             try {
                 $this->rulesDataRaw = \IPS\Db::i()->select(
                     '*', \IPS\rules\Data::getTableName(get_class($this)),
-                    array('entity_id=?', $this->$idField)
+                    ['entity_id=?', $this->$idField]
                 )->first();
             } catch (\UnderflowException $e) {
-                $this->rulesDataRaw = array();
+                $this->rulesDataRaw = [];
             }
 
             return $this->rulesDataRaw;
@@ -271,7 +272,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
             $data_class = $this::rulesDataClass();
 
             if (!$this->$idField) {
-                return $key ? null : array();
+                return $key ? null : [];
             }
 
             if (isset($key)) {
@@ -279,7 +280,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                     return $this->rulesData[$key];
                 }
 
-                $where = array('data_class=? AND data_column_name=?', $data_class, $key);
+                $where = ['data_class=? AND data_column_name=?', $data_class, $key];
 
                 /* Prevent subsequent requests for this key in any case */
                 $this->rulesData[$key] = null;
@@ -289,11 +290,11 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                 }
 
                 $this->rulesAllKeysLoaded = true;
-                $where = array('data_class=?', $data_class);
+                $where = ['data_class=?', $data_class];
             }
 
             if ($this::rulesTableExists() and $data = $this->getRulesDataRaw()) {
-                foreach (\IPS\rules\Data::roots(null, null, array($where)) as $data_field) {
+                foreach (\IPS\rules\Data::roots(null, null, [$where]) as $data_field) {
                     if (!isset($this->rulesLoadedKeys[$data_field->column_name]) or $this->rulesLoadedKeys[$data_field->column_name] !== true) {
                         $data_field_data = $data['data_' . $data_field->column_name];
 
@@ -331,7 +332,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                                 $nodeClass = $contentItemClass::$containerNodeClass
                             )
                         ) {
-                            $configuration = json_decode($data_field->configuration, true) ?: array();
+                            $configuration = json_decode($data_field->configuration, true) ?: [];
                             $containers = 'containers-' . str_replace('\\', '-', $nodeClass);
 
                             if (isset($configuration[$containers]) and is_array($configuration[$containers])) {
@@ -418,7 +419,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                                  */
                                 if ($data_field->type_class and $data_field->type_class !== '-IPS-Http-Url') {
                                     $data_field_data = explode(',', $data_field_data);
-                                    $_data_field_data = array();
+                                    $_data_field_data = [];
                                     $objClass = str_replace('-', '\\', $data_field->type_class);
 
                                     foreach ($data_field_data as $_id) {
@@ -465,7 +466,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                                  */
                                 else {
                                     $data_field_data = json_decode($data_field_data, true);
-                                    $_data_field_data = array();
+                                    $_data_field_data = [];
                                     if (is_array($data_field_data)) {
                                         foreach ($data_field_data as $k => $value) {
                                             $result = \IPS\rules\Application::restoreArg($value);
@@ -476,7 +477,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
 
                                         $data_field_data = $_data_field_data;
                                     } else {
-                                        $data_field_data = array();
+                                        $data_field_data = [];
                                     }
                                 }
                                 break;
@@ -619,7 +620,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                 if (\IPS\Db::i()->checkForColumn(\IPS\rules\Data::getTableName(get_class($this)), 'data_' . $key)) {
                     $save_value = null;
                     $data_class = $this::rulesDataClass();
-                    $data_field = \IPS\rules\Data::load($key, 'data_column_name', array('data_class=?', $data_class));
+                    $data_field = \IPS\rules\Data::load($key, 'data_column_name', ['data_class=?', $data_class]);
 
                     /* Only continue if value has changed */
                     $existingValue = $this->getRulesData($key);
@@ -687,8 +688,8 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                                  * Url's should not be saved using comma seperation, so use json encoded format
                                  */
                                 if ($data_field->type_class and $data_field->type_class !== '-IPS-Http-Url') {
-                                    $ids = array();
-                                    $new_value = array();
+                                    $ids = [];
+                                    $new_value = [];
                                     $objClass = ltrim(str_replace('-', '\\', $data_field->type_class), '\\');
 
                                     foreach ($value as $k => $obj) {
@@ -715,8 +716,8 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                                     $save_value = implode(',', array_unique($ids));
                                     $value = $new_value;
                                 } else {
-                                    $save_value = array();
-                                    $new_value = array();
+                                    $save_value = [];
+                                    $new_value = [];
                                     foreach ($value as $k => $v) {
                                         $result = \IPS\rules\Application::storeArg($v);
                                         if ($result !== null) {
@@ -767,22 +768,22 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
                      */
                     if (\IPS\Db::i()->select(
                         'COUNT(*)', \IPS\rules\Data::getTableName(get_class($this)),
-                        array('entity_id=?', $this->$idField)
+                        ['entity_id=?', $this->$idField]
                     )->first()) {
                         \IPS\Db::i()->update(
                             \IPS\rules\Data::getTableName(get_class($this)),
-                            array('data_' . $key => $save_value), array('entity_id=?', $this->$idField)
+                            ['data_' . $key => $save_value], ['entity_id=?', $this->$idField]
                         );
                     } else {
                         \IPS\Db::i()->insert(
                             \IPS\rules\Data::getTableName(get_class($this)),
-                            array('entity_id' => $this->$idField, 'data_' . $key => $save_value)
+                            ['entity_id' => $this->$idField, 'data_' . $key => $save_value]
                         );
                     }
 
                     $this->rulesDataRaw = \IPS\Db::i()->select(
                         '*', \IPS\rules\Data::getTableName(get_class($this)),
-                        array('entity_id=?', $this->$idField)
+                        ['entity_id=?', $this->$idField]
                     )->first();
                     $this->rulesData[$key] = $value;
                     $this->rulesDataChanged = true;
@@ -810,7 +811,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
     /**
      * @brief    Cache for data fields
      */
-    protected static $dataFields = array();
+    protected static $dataFields = [];
 
     /**
      * Get Associated Rules Data Fields
@@ -824,16 +825,16 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
     {
         try {
             $cache_key = $withData ? md5(
-                json_encode(array(static::rulesDataClass(), $perm, $displayOnly, $this->activeid))
-            ) : md5(json_encode(array(static::rulesDataClass(), $perm, $displayOnly)));
+                json_encode([static::rulesDataClass(), $perm, $displayOnly, $this->activeid])
+            ) : md5(json_encode([static::rulesDataClass(), $perm, $displayOnly]));
 
             if (isset(static::$dataFields[$cache_key])) {
                 return static::$dataFields[$cache_key];
             }
 
-            $dataFields = array();
+            $dataFields = [];
             $display_mode = $displayOnly ? " AND data_display_mode='automatic'" : '';
-            $where = array(array('data_class=?' . $display_mode, static::rulesDataClass()));
+            $where = [['data_class=?' . $display_mode, static::rulesDataClass()]];
 
             if ($withData) {
                 foreach (\IPS\rules\Data::roots($perm, null, $where) as $data) {
@@ -863,7 +864,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
     public static function rulesTableExists()
     {
         try {
-            static $tableExists = array();
+            static $tableExists = [];
             $table_name = \IPS\rules\Data::getTableName(get_called_class());
 
             if (!isset ($tableExists[$table_name])) {
@@ -883,7 +884,7 @@ abstract class rules_hook_ipsPatternsActiveRecord extends _HOOK_CLASS_
     /**
      * @brief    Key Exists Cache
      */
-    protected static $keyExists = array();
+    protected static $keyExists = [];
 
     /**
      * Check for existence of data key

@@ -99,12 +99,12 @@ class _rules extends \IPS\Node\Controller
         $rule = null;
         $parent = null;
 
-        \IPS\Output::i()->sidebar['actions']['manageall'] = array(
+        \IPS\Output::i()->sidebar['actions']['manageall'] = [
             'icon' => 'caret-left',
             'link' => \IPS\Http\Url::internal('app=rules&module=rules&controller=rulesets'),
             'title' => 'rules_manage_all_rules',
-            'data' => array(),
-        );
+            'data' => [],
+        ];
 
         if (\IPS\Request::i()->id) {
             $rule = \IPS\rules\Rule::load(\IPS\Request::i()->id);
@@ -138,7 +138,7 @@ class _rules extends \IPS\Node\Controller
     protected function _afterSave(\IPS\Node\Model $old = null, \IPS\Node\Model $new, $lastUsedTab = false)
     {
         if (\IPS\Request::i()->isAjax()) {
-            \IPS\Output::i()->json(array());
+            \IPS\Output::i()->json([]);
         } else {
             if ($old == null) {
                 \IPS\Output::i()->redirect(
@@ -163,8 +163,8 @@ class _rules extends \IPS\Node\Controller
     public function _getRoots()
     {
         $nodeClass = $this->nodeClass;
-        $rows = array();
-        foreach ($nodeClass::roots(null, null, array(array('rule_ruleset_id=0'))) as $node) {
+        $rows = [];
+        foreach ($nodeClass::roots(null, null, [['rule_ruleset_id=0']]) as $node) {
             $rows[$node->_id] = $this->_getRow($node);
         }
 
@@ -181,19 +181,19 @@ class _rules extends \IPS\Node\Controller
         /**
          * Disabled since adding this controller inline with the rulesets controller
          */
-        return array();
+        return [];
 
         $buttons = parent::_getRootButtons();
 
-        $buttons['import'] = array(
+        $buttons['import'] = [
             'icon' => 'upload',
             'title' => 'import',
-            'link' => \IPS\Http\Url::internal($this->url->setQueryString(array('do' => 'import'))),
-            'data' => array(
+            'link' => \IPS\Http\Url::internal($this->url->setQueryString(['do' => 'import'])),
+            'data' => [
                 'ipsDialog' => '',
-                'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('import')
-            )
-        );
+                'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('import'),
+            ],
+        ];
 
         return $buttons;
     }

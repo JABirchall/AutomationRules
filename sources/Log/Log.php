@@ -40,18 +40,18 @@ class _Log extends \IPS\Patterns\ActiveRecord
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array();
+    protected static $databaseIdFields = [];
 
     /**
      * @brief    Bitwise keys
      */
-    protected static $bitOptions = array();
+    protected static $bitOptions = [];
 
     /**
      * @brief    [ActiveRecord] Multiton Store
      * @note    This needs to be declared in any child classes as well, only declaring here for editor code-complete/error-check functionality
      */
-    protected static $multitons = array();
+    protected static $multitons = [];
 
 
 }

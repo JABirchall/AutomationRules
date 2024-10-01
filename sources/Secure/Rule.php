@@ -43,10 +43,10 @@ abstract class _Rule extends \IPS\Node\Model
         if (isset($this->actionCache[$cache_key])) {
             return $this->actionCache[$cache_key];
         }
-        $where = array('action_rule_id=?', $this->id);
+        $where = ['action_rule_id=?', $this->id];
         if ($mode !== null) {
-            $where = array('action_rule_id=? AND action_else=?', $this->id, $mode);
+            $where = ['action_rule_id=? AND action_else=?', $this->id, $mode];
         }
-        return $this->actionCache[$cache_key] = \IPS\rules\Action::roots(null, null, array($where));
+        return $this->actionCache[$cache_key] = \IPS\rules\Action::roots(null, null, [$where]);
     }
 }

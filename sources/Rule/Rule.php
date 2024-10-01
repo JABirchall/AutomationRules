@@ -46,7 +46,7 @@ class _Rule extends \IPS\rules\Secure\Rule
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array();
+    protected static $databaseIdFields = [];
 
     /**
      * @brief    [Node] Parent ID Database Column
@@ -107,15 +107,15 @@ class _Rule extends \IPS\rules\Secure\Rule
 
         $conditions_count = \IPS\Db::i()->select(
             'COUNT(*)', 'rules_conditions',
-            array('condition_rule_id=? AND condition_enabled=1', $this->id)
+            ['condition_rule_id=? AND condition_enabled=1', $this->id]
         )->first();
         $actions_count = \IPS\Db::i()->select(
             'COUNT(*)', 'rules_actions',
-            array('action_rule_id=? AND action_enabled=1 AND action_else=0', $this->id)
+            ['action_rule_id=? AND action_enabled=1 AND action_else=0', $this->id]
         )->first();
         $else_actions_count = \IPS\Db::i()->select(
             'COUNT(*)', 'rules_actions',
-            array('action_rule_id=? AND action_enabled=1 AND action_else=1', $this->id)
+            ['action_rule_id=? AND action_enabled=1 AND action_else=1', $this->id]
         )->first();
 
         $description .= "<i class='fa fa-info'></i> Summary: {$conditions_count} Conditions / {$actions_count} Actions" . ($else_actions_count ? " / {$else_actions_count} Else Actions" : "");
@@ -161,17 +161,17 @@ class _Rule extends \IPS\rules\Secure\Rule
     protected function get__badge()
     {
         if ($this->event()->placeholder) {
-            return array(
+            return [
                 0 => 'ipsBadge ipsBadge_negative',
                 1 => 'rule_event_missing_badge',
-            );
+            ];
         }
 
         if ($this->debug) {
-            return array(
+            return [
                 0 => 'ipsBadge ipsBadge_intermediary',
                 1 => 'debug_on_badge',
-            );
+            ];
         }
 
         return null;
@@ -185,7 +185,7 @@ class _Rule extends \IPS\rules\Secure\Rule
      */
     public function form(&$form)
     {
-        $events = array();
+        $events = [];
         $event_missing = false;
 
         $form->addTab('rules_settings');
@@ -205,12 +205,12 @@ class _Rule extends \IPS\rules\Secure\Rule
             $this->event_app = $parent->event_app;
             $this->event_class = $parent->event_class;
             $this->event_key = $parent->event_key;
-            $form->actionButtons = array(
+            $form->actionButtons = [
                 \IPS\Theme::i()->getTemplate('forms', 'core', 'global')->button(
                     'rules_next',
-                    'submit', null, 'ipsButton ipsButton_primary', array('accesskey' => 's')
-                )
-            );
+                    'submit', null, 'ipsButton ipsButton_primary', ['accesskey' => 's']
+                ),
+            ];
         } /**
          * Root rules can be moved between rule sets
          */
@@ -232,11 +232,11 @@ class _Rule extends \IPS\rules\Secure\Rule
                             'rule_ruleset_id',
                             $ruleset_id,
                             true,
-                            array(
+                            [
                                 'class' => '\IPS\rules\Rule\Ruleset',
                                 'zeroVal' => 'rule_no_ruleset',
-                                'subnodes' => false
-                            )
+                                'subnodes' => false,
+                            ]
                         )
                     );
                 }
@@ -253,12 +253,12 @@ class _Rule extends \IPS\rules\Secure\Rule
          * for all available events for the user to select.
          */
         if (!$this->event_key) {
-            $form->actionButtons = array(
+            $form->actionButtons = [
                 \IPS\Theme::i()->getTemplate('forms', 'core', 'global')->button(
                     'rules_next',
-                    'submit', null, 'ipsButton ipsButton_primary', array('accesskey' => 's')
-                )
-            );
+                    'submit', null, 'ipsButton ipsButton_primary', ['accesskey' => 's']
+                ),
+            ];
             foreach (\IPS\rules\Application::rulesDefinitions() as $definition_key => $definition) {
                 foreach ($definition['events'] as $event_key => $event_data) {
                     $group = (isset($event_data['group']) and $event_data['group']) ? $event_data['group'] : $definition['group'];
@@ -270,7 +270,7 @@ class _Rule extends \IPS\rules\Secure\Rule
                     'rule_event_selection',
                     $this->id ? md5($this->event_app . $this->event_class) . '_' . $this->event_key : null,
                     true,
-                    array('options' => $events, 'noDefault' => true),
+                    ['options' => $events, 'noDefault' => true],
                     null,
                     "<div class='chosen-collapse' data-controller='rules.admin.ui.chosen'>",
                     "</div>",
@@ -285,7 +285,7 @@ class _Rule extends \IPS\rules\Secure\Rule
                 'rule_title',
                 $this->title,
                 true,
-                array('placeholder' => \IPS\Member::loggedIn()->language()->addToStack('rule_title_placeholder'))
+                ['placeholder' => \IPS\Member::loggedIn()->language()->addToStack('rule_title_placeholder')]
             )
         );
 
@@ -305,17 +305,17 @@ class _Rule extends \IPS\rules\Secure\Rule
             $form->addTab('rules_conditions');
             $form->addHeader('rule_conditions');
 
-            $compare_options = array(
+            $compare_options = [
                 'and' => 'AND',
                 'or' => 'OR',
-            );
+            ];
 
             $form->add(
                 new \IPS\Helpers\Form\Radio(
                     'rule_base_compare',
                     $this->base_compare ?: 'and',
                     false,
-                    array('options' => $compare_options),
+                    ['options' => $compare_options],
                     null,
                     null,
                     null,
@@ -341,11 +341,11 @@ class _Rule extends \IPS\rules\Secure\Rule
             $conditions = new \IPS\Helpers\Tree\Tree(
                 \IPS\Http\Url::internal("app=rules&module=rules&controller=conditions&rule={$this->id}"),
                 $conditionClass::$nodeTitle,
-                array($conditionController, '_getRoots'),
-                array($conditionController, '_getRow'),
-                array($conditionController, '_getRowParentId'),
-                array($conditionController, '_getChildren'),
-                array($conditionController, '_getRootButtons')
+                [$conditionController, '_getRoots'],
+                [$conditionController, '_getRow'],
+                [$conditionController, '_getRowParentId'],
+                [$conditionController, '_getChildren'],
+                [$conditionController, '_getRootButtons']
             );
 
             /* Replace form constructs with div's */
@@ -365,11 +365,11 @@ class _Rule extends \IPS\rules\Secure\Rule
             $actions = new \IPS\Helpers\Tree\Tree(
                 \IPS\Http\Url::internal("app=rules&module=rules&controller=actions&rule={$this->id}"),
                 $actionClass::$nodeTitle,
-                array($actionController, '_getRoots'),
-                array($actionController, '_getRow'),
-                array($actionController, '_getRowParentId'),
-                array($actionController, '_getChildren'),
-                array($actionController, '_getRootButtons')
+                [$actionController, '_getRoots'],
+                [$actionController, '_getRow'],
+                [$actionController, '_getRowParentId'],
+                [$actionController, '_getChildren'],
+                [$actionController, '_getRootButtons']
             );
 
             /* Replace form constructs with div's */
@@ -390,11 +390,11 @@ class _Rule extends \IPS\rules\Secure\Rule
             $elseActions = new \IPS\Helpers\Tree\Tree(
                 \IPS\Http\Url::internal("app=rules&module=rules&controller=actions&rule={$this->id}"),
                 $actionClass::$nodeTitle,
-                array($elseActionController, '_getRoots'),
-                array($elseActionController, '_getRow'),
-                array($elseActionController, '_getRowParentId'),
-                array($elseActionController, '_getChildren'),
-                array($elseActionController, '_getRootButtons')
+                [$elseActionController, '_getRoots'],
+                [$elseActionController, '_getRow'],
+                [$elseActionController, '_getRowParentId'],
+                [$elseActionController, '_getChildren'],
+                [$elseActionController, '_getRootButtons']
             );
 
             /* Replace form constructs with div's */
@@ -414,28 +414,28 @@ class _Rule extends \IPS\rules\Secure\Rule
                 $table = new \IPS\Helpers\Table\Db(
                     'rules_logs',
                     \IPS\Http\Url::internal("app=rules&module=rules&controller=rules&do=form&id=" . $this->id),
-                    array('rule_id=? AND op_id=0', $this->id)
+                    ['rule_id=? AND op_id=0', $this->id]
                 );
-                $table->include = array('time', 'message', 'result');
-                $table->parsers = array(
+                $table->include = ['time', 'message', 'result'];
+                $table->parsers = [
                     'time' => function ($val) {
                         return (string)\IPS\DateTime::ts($val);
                     },
                     'result' => function ($val) {
                         return $val;
                     },
-                );
+                ];
                 $table->sortBy = 'time';
                 $table->rowButtons = function ($row) use ($self, $controllerUrl) {
-                    $buttons = array();
+                    $buttons = [];
 
-                    $buttons['view'] = array(
+                    $buttons['view'] = [
                         'icon' => 'search',
                         'title' => 'View Details',
                         'id' => "{$row['id']}-view",
-                        'link' => $controllerUrl->setQueryString(array('logid' => $row['id'])),
-                        'data' => array('ipsDialog' => ''),
-                    );
+                        'link' => $controllerUrl->setQueryString(['logid' => $row['id']]),
+                        'data' => ['ipsDialog' => ''],
+                    ];
 
                     return $buttons;
                 };
@@ -496,92 +496,84 @@ class _Rule extends \IPS\rules\Secure\Rule
         $buttons = parent::getButtons($url, $subnode);
 
         if ($subnode) {
-            $url = $url->setQueryString(array('subnode' => 1));
+            $url = $url->setQueryString(['subnode' => 1]);
         }
 
         if (isset ($buttons['add'])) {
             $buttons['add']['icon'] = 'plus-square-o';
         }
 
-        $_buttons = array
-        (
-            'conditions' => array
-            (
+        $_buttons = [
+            'conditions' => [
                 'icon' => 'pencil',
                 'title' => 'edit_conditions',
-                'link' => $url->setQueryString(array('do' => 'form', 'id' => $this->id, 'tab' => 'conditions')),
-                'data' => (static::$modalForms ? array(
+                'link' => $url->setQueryString(['do' => 'form', 'id' => $this->id, 'tab' => 'conditions']),
+                'data' => (static::$modalForms ? [
                     'ipsDialog' => '',
-                    'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('edit_conditions')
-                ) : array()),
-            ),
-            'actions' => array
-            (
+                    'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('edit_conditions'),
+                ] : []),
+            ],
+            'actions' => [
                 'icon' => 'pencil',
                 'title' => 'edit_actions',
-                'link' => $url->setQueryString(array('do' => 'form', 'id' => $this->id, 'tab' => 'actions')),
-                'data' => (static::$modalForms ? array(
+                'link' => $url->setQueryString(['do' => 'form', 'id' => $this->id, 'tab' => 'actions']),
+                'data' => (static::$modalForms ? [
                     'ipsDialog' => '',
-                    'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('edit_actions')
-                ) : array()),
-            ),
-        );
+                    'ipsDialog-title' => \IPS\Member::loggedIn()->language()->addToStack('edit_actions'),
+                ] : []),
+            ],
+        ];
 
         array_splice($buttons, 2, 0, $_buttons);
 
-        $buttons['export'] = array
-        (
+        $buttons['export'] = [
             'icon' => 'download',
             'title' => $this->hasChildren() ? 'rules_export_rule_group' : 'rules_export_rule',
-            'link' => $url->setQueryString(array('controller' => 'rulesets', 'do' => 'export', 'rule' => $this->id)),
-        );
+            'link' => $url->setQueryString(['controller' => 'rulesets', 'do' => 'export', 'rule' => $this->id]),
+        ];
 
-        $buttons['overview'] = array
-        (
+        $buttons['overview'] = [
             'icon' => 'list',
             'title' => 'rules_view_overview',
             'link' => $url->setQueryString(
-                array('controller' => 'rulesets', 'do' => 'viewOverview', 'rule' => $this->id)
+                ['controller' => 'rulesets', 'do' => 'viewOverview', 'rule' => $this->id]
             ),
-            'data' => array('ipsDialog' => '', 'ipsDialog-title' => 'Rule Overview'),
-        );
+            'data' => ['ipsDialog' => '', 'ipsDialog-title' => 'Rule Overview'],
+        ];
 
         if ($this->debug) {
-            $buttons['debug_disable'] = array
-            (
+            $buttons['debug_disable'] = [
                 'icon' => 'bug',
                 'title' => 'Disable Debugging',
                 'id' => "{$this->id}-debug-disable",
                 'link' => $url->setQueryString(
-                    array('controller' => 'rulesets', 'do' => 'debugDisable', 'id' => $this->id)
+                    ['controller' => 'rulesets', 'do' => 'debugDisable', 'id' => $this->id]
                 ),
-            );
+            ];
 
-            $buttons['debug'] = array
-            (
+            $buttons['debug'] = [
                 'icon' => 'bug',
                 'title' => 'View Debug Console',
                 'id' => "{$this->id}-debug",
                 'link' => $url->setQueryString(
-                    array(
+                    [
                         'controller' => 'rules',
                         'do' => 'form',
                         'id' => $this->id,
                         'tab' => 'debug_console',
-                        'subnode' => null
-                    )
+                        'subnode' => null,
+                    ]
                 ),
-            );
+            ];
         } else {
-            $buttons['debug_enable'] = array
-            (
+            $buttons['debug_enable'] = [
                 'icon' => 'bug',
                 'title' => 'Enable Debugging',
                 'id' => "{$this->id}-debug-enable",
                 'link' => $url->setQueryString(
-                    array('controller' => 'rulesets', 'do' => 'debugEnable', 'id' => $this->id)
+                    ['controller' => 'rulesets', 'do' => 'debugEnable', 'id' => $this->id]
                 ),
-            );
+            ];
         }
 
         return $buttons;
@@ -635,7 +627,7 @@ class _Rule extends \IPS\rules\Secure\Rule
                     foreach ($conditions as $condition) {
                         if ($condition->enabled) {
                             $conditionsCount++;
-                            $result = call_user_func_array(array($condition, 'invoke'), func_get_args());
+                            $result = call_user_func_array([$condition, 'invoke'], func_get_args());
 
                             if ($result and $compareMode == 'or') {
                                 $conditionsValid = true;
@@ -662,7 +654,7 @@ class _Rule extends \IPS\rules\Secure\Rule
                     if ($conditionsValid or $conditionsCount === 0) {
                         foreach ($this->actions(\IPS\rules\ACTION_STANDARD) as $action) {
                             if ($action->enabled) {
-                                call_user_func_array(array($action, 'invoke'), func_get_args());
+                                call_user_func_array([$action, 'invoke'], func_get_args());
                             } else {
                                 if ($this->debug) {
                                     \IPS\rules\Application::rulesLog(
@@ -678,7 +670,7 @@ class _Rule extends \IPS\rules\Secure\Rule
 
                         foreach ($this->children() as $_rule) {
                             if ($_rule->enabled) {
-                                $result = call_user_func_array(array($_rule, 'invoke'), func_get_args());
+                                $result = call_user_func_array([$_rule, 'invoke'], func_get_args());
 
                                 if ($this->debug) {
                                     \IPS\rules\Application::rulesLog(
@@ -709,7 +701,7 @@ class _Rule extends \IPS\rules\Secure\Rule
                         /* Else Actions */
                         foreach ($this->actions(\IPS\rules\ACTION_ELSE) as $action) {
                             if ($action->enabled) {
-                                call_user_func_array(array($action, 'invoke'), func_get_args());
+                                call_user_func_array([$action, 'invoke'], func_get_args());
                             } else {
                                 if ($this->debug) {
                                     \IPS\rules\Application::rulesLog(
@@ -798,14 +790,14 @@ class _Rule extends \IPS\rules\Secure\Rule
         return $this->conditionCache = \IPS\rules\Condition::roots(
             null,
             null,
-            array(array('condition_rule_id=?', $this->id))
+            [['condition_rule_id=?', $this->id]]
         );
     }
 
     /**
      * @brief    Cache for actions
      */
-    protected $actionCache = array();
+    protected $actionCache = [];
 
     /**
      * Retrieve actions assigned to this rule

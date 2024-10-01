@@ -59,7 +59,7 @@ abstract class rules_hook_ipsNodeModel extends _HOOK_CLASS_
             foreach (
                 \IPS\Db::i()->select(
                     '*', 'rules_data',
-                    array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $this::rulesDataClass())
+                    ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $this::rulesDataClass()]
                 ) as $row
             ) {
                 if (isset ($values['rules_data_' . $row['data_column_name']])) {

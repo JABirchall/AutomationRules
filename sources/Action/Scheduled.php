@@ -40,18 +40,18 @@ class _Scheduled extends \IPS\Patterns\ActiveRecord
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array();
+    protected static $databaseIdFields = [];
 
     /**
      * @brief    Bitwise keys
      */
-    protected static $bitOptions = array();
+    protected static $bitOptions = [];
 
     /**
      * @brief    [ActiveRecord] Multiton Store
      * @note    This needs to be declared in any child classes as well, only declaring here for editor code-complete/error-check functionality
      */
-    protected static $multitons = array();
+    protected static $multitons = [];
 
     /**
      * Execute the Scheduled Action
@@ -69,8 +69,8 @@ class _Scheduled extends \IPS\Patterns\ActiveRecord
 
         $action_data = json_decode($this->data, true);
 
-        $args = array();
-        $event_args = array();
+        $args = [];
+        $event_args = [];
 
         /**
          * Standard Scheduled Action
@@ -96,7 +96,7 @@ class _Scheduled extends \IPS\Patterns\ActiveRecord
                     try {
                         $result = call_user_func_array(
                             $action->definition['callback'],
-                            array_merge($args, array($action->data['configuration']['data'], $event_args, $action))
+                            array_merge($args, [$action->data['configuration']['data'], $event_args, $action])
                         );
 
                         if ($rule = $action->rule() and $rule->debug) {
@@ -148,10 +148,10 @@ class _Scheduled extends \IPS\Patterns\ActiveRecord
                                         \IPS\Db::i()->select(
                                             '*',
                                             $bulkClass::$databaseTable,
-                                            array(
+                                            [
                                                 $bulkClass::$databasePrefix . $bulkClass::$databaseColumnId . '>?',
-                                                (int)$action_data['bulk_counter']
-                                            ),
+                                                (int)$action_data['bulk_counter'],
+                                            ],
                                             $bulkClass::$databasePrefix . $bulkClass::$databaseColumnId . ' ASC',
                                             (int)$action_data['bulk_limit'] ?: 100
                                         ),
@@ -169,16 +169,16 @@ class _Scheduled extends \IPS\Patterns\ActiveRecord
                                 $action_data['bulk_counter'] = $record->$idField;
                                 $this->data = json_encode($action_data);
                                 $this->save();
-                                call_user_func_array(array($event, 'trigger'), array_values($args));
+                                call_user_func_array([$event, 'trigger'], array_values($args));
                             }
                         }
 
                         if (\IPS\Db::i()->select(
                                 'COUNT(*)', $bulkClass::$databaseTable,
-                                array(
+                                [
                                     $bulkClass::$databasePrefix . $bulkClass::$databaseColumnId . '>?',
-                                    (int)$action_data['bulk_counter']
-                                )
+                                    (int)$action_data['bulk_counter'],
+                                ]
                             )->first() == 0) {
                             /* Reschedule */
                             $next_run = $this->time;
@@ -205,7 +205,7 @@ class _Scheduled extends \IPS\Patterns\ActiveRecord
                             $deleteWhenDone = false;
                         }
                     } else {
-                        call_user_func_array(array($event, 'trigger'), array_values($args));
+                        call_user_func_array([$event, 'trigger'], array_values($args));
 
                         /* Reschedule */
                         $next_run = $this->time;

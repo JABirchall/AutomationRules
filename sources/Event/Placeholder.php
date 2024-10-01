@@ -63,7 +63,7 @@ class _Placeholder extends \IPS\rules\Event
      */
     public function rules()
     {
-        return array();
+        return [];
     }
 
 }

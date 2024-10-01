@@ -202,12 +202,12 @@ abstract class rules_hook_ipsContentItem extends _HOOK_CLASS_
     public static function rulesFormElements($item = null, \IPS\Node\Model $container = null)
     {
         try {
-            $formElements = array();
+            $formElements = [];
 
             foreach (
                 \IPS\Db::i()->select(
                     '*', 'rules_data',
-                    array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', static::rulesDataClass())
+                    ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', static::rulesDataClass()]
                 ) as $row
             ) {
                 if ($row['data_use_mode'] == 'public' or static::modPermission('edit', null, $container)) {
@@ -217,7 +217,7 @@ abstract class rules_hook_ipsContentItem extends _HOOK_CLASS_
                      * Check if this data only applies in specific containers
                      */
                     if (isset(static::$containerNodeClass) and $nodeClass = static::$containerNodeClass) {
-                        $configuration = json_decode($data_field->configuration, true) ?: array();
+                        $configuration = json_decode($data_field->configuration, true) ?: [];
                         $containers = 'containers-' . str_replace('\\', '-', $nodeClass);
 
                         if (isset($configuration[$containers]) and is_array($configuration[$containers])) {
@@ -286,7 +286,7 @@ abstract class rules_hook_ipsContentItem extends _HOOK_CLASS_
             foreach (
                 \IPS\Db::i()->select(
                     '*', 'rules_data',
-                    array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', static::rulesDataClass())
+                    ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', static::rulesDataClass()]
                 ) as $row
             ) {
                 $data_field = \IPS\rules\Data::constructFromData($row);

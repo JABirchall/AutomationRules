@@ -18,7 +18,7 @@ class rules_hook_ipsOutput extends _HOOK_CLASS_
         $output = '',
         $httpStatusCode = 200,
         $contentType = 'text/html',
-        $httpHeaders = array(),
+        $httpHeaders = [],
         $cacheThisPage = true,
         $pageIsCached = false,
         $parseFileObjects = true

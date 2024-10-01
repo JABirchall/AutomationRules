@@ -36,178 +36,136 @@ class _Content
     {
         $lang = \IPS\Member::loggedIn()->language();
 
-        $content_events = array
-        (
-            'content_created' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                ),
-            ),
-            'content_updated' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'changed' => array('argtype' => 'array'),
-                    'new' => array('argtype' => 'bool'),
-                ),
-            ),
-            'content_approved' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_pinned' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_unpinned' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_featured' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_unfeatured' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_locked' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_unlocked' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_hidden' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                    'reason' => array('argtype' => 'string', 'nullable' => true),
-                ),
-            ),
-            'content_unhidden' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_reported' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'message' => array('argtype' => 'string'),
-                ),
-            ),
-            'content_deleted' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                ),
-            ),
-            'content_author_changed' => array
-            (
-                'arguments' => array
-                (
-                    'content' => array('argtype' => 'object', 'class' => '\IPS\Content'),
-                    'oldMember' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                    'newMember' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_item_published' => array
-            (
-                'arguments' => array
-                (
-                    'item' => array('argtype' => 'object', 'class' => '\IPS\Content\Item'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_item_unpublished' => array
-            (
-                'arguments' => array
-                (
-                    'item' => array('argtype' => 'object', 'class' => '\IPS\Content\Item'),
-                    'member' => array('argtype' => 'object', 'class' => '\IPS\Member'),
-                ),
-            ),
-            'content_item_moved' => array
-            (
-                'arguments' => array
-                (
-                    'item' => array('argtype' => 'object', 'class' => '\IPS\Content\Item'),
-                    'oldContainer' => array('argtype' => 'object', 'class' => '\IPS\Node\Model'),
-                    'container' => array('argtype' => 'object', 'class' => '\IPS\Node\Model'),
-                    'link' => array('argtype' => 'bool'),
-                ),
-            ),
-            'content_item_merging' => array
-            (
-                'arguments' => array
-                (
-                    'item' => array('argtype' => 'object', 'class' => '\IPS\Content\Item'),
-                    'items' => array('argtype' => 'array', 'class' => '\IPS\Content\Item'),
-                ),
-            ),
-            'content_item_tags_set' => array
-            (
-                'arguments' => array
-                (
-                    'item' => array('argtype' => 'object', 'class' => '\IPS\Content\Item'),
-                    'tags' => array('argtype' => 'array'),
-                ),
-            ),
-            'content_item_viewed' => array
-            (
-                'arguments' => array
-                (
-                    'item' => array('argtype' => 'object', 'class' => '\IPS\Content\Item'),
-                ),
-            ),
-        );
+        $content_events = [
+            'content_created' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                ],
+            ],
+            'content_updated' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'changed' => ['argtype' => 'array'],
+                    'new' => ['argtype' => 'bool'],
+                ],
+            ],
+            'content_approved' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_pinned' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_unpinned' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_featured' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_unfeatured' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_locked' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_unlocked' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_hidden' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                    'reason' => ['argtype' => 'string', 'nullable' => true],
+                ],
+            ],
+            'content_unhidden' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_reported' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'message' => ['argtype' => 'string'],
+                ],
+            ],
+            'content_deleted' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                ],
+            ],
+            'content_author_changed' => [
+                'arguments' => [
+                    'content' => ['argtype' => 'object', 'class' => '\IPS\Content'],
+                    'oldMember' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                    'newMember' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_item_published' => [
+                'arguments' => [
+                    'item' => ['argtype' => 'object', 'class' => '\IPS\Content\Item'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_item_unpublished' => [
+                'arguments' => [
+                    'item' => ['argtype' => 'object', 'class' => '\IPS\Content\Item'],
+                    'member' => ['argtype' => 'object', 'class' => '\IPS\Member'],
+                ],
+            ],
+            'content_item_moved' => [
+                'arguments' => [
+                    'item' => ['argtype' => 'object', 'class' => '\IPS\Content\Item'],
+                    'oldContainer' => ['argtype' => 'object', 'class' => '\IPS\Node\Model'],
+                    'container' => ['argtype' => 'object', 'class' => '\IPS\Node\Model'],
+                    'link' => ['argtype' => 'bool'],
+                ],
+            ],
+            'content_item_merging' => [
+                'arguments' => [
+                    'item' => ['argtype' => 'object', 'class' => '\IPS\Content\Item'],
+                    'items' => ['argtype' => 'array', 'class' => '\IPS\Content\Item'],
+                ],
+            ],
+            'content_item_tags_set' => [
+                'arguments' => [
+                    'item' => ['argtype' => 'object', 'class' => '\IPS\Content\Item'],
+                    'tags' => ['argtype' => 'array'],
+                ],
+            ],
+            'content_item_viewed' => [
+                'arguments' => [
+                    'item' => ['argtype' => 'object', 'class' => '\IPS\Content\Item'],
+                ],
+            ],
+        ];
 
-        $app_events = array();
-        $data = array
-        (
+        $app_events = [];
+        $data = [
             'content_events' => $content_events,
             'lang' => $lang,
-        );
+        ];
 
         foreach (\IPS\Application::allExtensions('core', 'ContentRouter') as $router) {
             foreach ($router->classes as $contentItemClass) {
@@ -244,13 +202,12 @@ class _Content
      */
     protected function buildEvents(&$app_events, $contentClass, $contentTitle, $group, $data)
     {
-        $build_data = array_merge($data, array
-        (
+        $build_data = array_merge($data, [
             'class_key' => md5(ltrim($contentClass, '\\')),
             'contentTitle' => $contentTitle,
             'group' => $group,
             'contentClass' => '\\' . ltrim($contentClass, '\\'),
-        ));
+        ]);
 
         $this->buildEvent($app_events, 'content_created', $build_data);
         $this->buildEvent($app_events, 'content_updated', $build_data);
@@ -366,16 +323,13 @@ class _Content
     {
         $lang = \IPS\Member::loggedIn()->language();
 
-        $conditions = array
-        (
-            'content_type' => array
-            (
-                'callback' => array($this, 'contentType'),
-                'configuration' => array
-                (
+        $conditions = [
+            'content_type' => [
+                'callback' => [$this, 'contentType'],
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
                         $lang = \IPS\Member::loggedIn()->language();
-                        $options = array();
+                        $options = [];
 
                         /**
                          * Build list of available content types
@@ -412,46 +366,40 @@ class _Content
                                 'rules_Content_content_types',
                                 $values['rules_Content_content_types'],
                                 true,
-                                array('options' => $options),
+                                ['options' => $options],
                                 null,
                                 null,
                                 null,
                                 'rules_Content_content_types'
                             )
                         );
-                        return array('rules_Content_content_types');
+                        return ['rules_Content_content_types'];
                     },
-                ),
+                ],
 
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'content_status' => array
-            (
-                'callback' => array($this, 'contentStatus'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'content_status' => [
+                'callback' => [$this, 'contentStatus'],
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
                         $lang = \IPS\Member::loggedIn()->language();
-                        $options = array();
+                        $options = [];
 
                         /**
                          * Build list of statuses
                          */
-                        $statuses = array(
+                        $statuses = [
                             'pinned' => 'mod_confirm_pin',
                             'unpinned' => 'mod_confirm_unpin',
                             'featured' => 'mod_confirm_feature',
@@ -462,83 +410,70 @@ class _Content
                             'unlocked' => 'mod_confirm_unlock',
                             'published' => 'Published',
                             'is_poll' => 'Has Poll',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\CheckboxSet(
                                 'rules_Content_content_statuses',
                                 isset($values['rules_Content_content_statuses']) ? $values['rules_Content_content_statuses'] : null,
                                 true,
-                                array('options' => $statuses),
+                                ['options' => $statuses],
                                 null,
                                 null,
                                 null,
                                 'rules_Content_content_statuses'
                             )
                         );
-                        return array('rules_Content_content_statuses');
+                        return ['rules_Content_content_statuses'];
                     },
-                ),
+                ],
 
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'content_author' => array
-            (
-                'callback' => array($this, 'contentAuthor'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'content_author' => [
+                'callback' => [$this, 'contentAuthor'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                    'member' => array
-                    (
+                    ],
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'content_tags' => array
-            (
-                'callback' => array($this, 'hasTags'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'content_tags' => [
+                'callback' => [$this, 'hasTags'],
+                'configuration' => [
                     'form' => function ($form, $values) {
-                        $tag_options = array
-                        (
+                        $tag_options = [
                             'has_any' => 'Any of these tags',
                             'has_all' => 'All of these tags',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Content_check_tags_type',
                                 isset($values['rules_Content_check_tags_type']) ? $values['rules_Content_check_tags_type'] : 'has_any',
                                 true,
-                                array('options' => $tag_options)
+                                ['options' => $tag_options]
                             )
                         );
                         $form->add(
@@ -549,23 +484,18 @@ class _Content
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'item' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                ],
+                'arguments' => [
+                    'item' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content\Item',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                    'tags' => array
-                    (
+                    ],
+                    'tags' => [
                         'default' => 'manual',
                         'argtypes' => \IPS\rules\Application::argPreset('tags'),
                         'configuration' => \IPS\rules\Application::configPreset(
@@ -574,17 +504,14 @@ class _Content
                             true
                         ),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'content_attributes' => array
-            (
-                'callback' => array($this, 'checkContentAttributes'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'content_attributes' => [
+                'callback' => [$this, 'checkContentAttributes'],
+                'configuration' => [
                     'form' => function (&$form, $values, $operation) {
-                        $attribute_options = array
-                        (
+                        $attribute_options = [
                             'comments' => 'rules_content_attribute_comments',
                             'reviews' => 'rules_content_attribute_reviews',
                             'unapproved_comments' => 'rules_content_attribute_unapproved_comments',
@@ -594,74 +521,70 @@ class _Content
                             'created' => 'rules_content_attribute_created',
                             'updated' => 'rules_content_attribute_updated',
                             'last_post' => 'rules_content_attribute_last_post',
-                        );
+                        ];
 
-                        $attribute_toggles = array
-                        (
-                            'comments' => array(
+                        $attribute_toggles = [
+                            'comments' => [
                                 'rules_Content_attribute_compare_type_value',
-                                'rules_Content_attribute_compare_value'
-                            ),
-                            'reviews' => array(
+                                'rules_Content_attribute_compare_value',
+                            ],
+                            'reviews' => [
                                 'rules_Content_attribute_compare_type_value',
-                                'rules_Content_attribute_compare_value'
-                            ),
-                            'unapproved_comments' => array(
+                                'rules_Content_attribute_compare_value',
+                            ],
+                            'unapproved_comments' => [
                                 'rules_Content_attribute_compare_type_value',
-                                'rules_Content_attribute_compare_value'
-                            ),
-                            'unapproved_reviews' => array(
+                                'rules_Content_attribute_compare_value',
+                            ],
+                            'unapproved_reviews' => [
                                 'rules_Content_attribute_compare_type_value',
-                                'rules_Content_attribute_compare_value'
-                            ),
-                            'views' => array(
+                                'rules_Content_attribute_compare_value',
+                            ],
+                            'views' => [
                                 'rules_Content_attribute_compare_type_value',
-                                'rules_Content_attribute_compare_value'
-                            ),
-                            'poll_votes' => array(
+                                'rules_Content_attribute_compare_value',
+                            ],
+                            'poll_votes' => [
                                 'rules_Content_attribute_compare_type_value',
-                                'rules_Content_attribute_compare_value'
-                            ),
-                            'created' => array('rules_Content_attribute_compare_type_date'),
-                            'updated' => array('rules_Content_attribute_compare_type_date'),
-                            'last_post' => array('rules_Content_attribute_compare_type_date'),
-                        );
+                                'rules_Content_attribute_compare_value',
+                            ],
+                            'created' => ['rules_Content_attribute_compare_type_date'],
+                            'updated' => ['rules_Content_attribute_compare_type_date'],
+                            'last_post' => ['rules_Content_attribute_compare_type_date'],
+                        ];
 
-                        $value_compare_options = array
-                        (
+                        $value_compare_options = [
                             '<' => 'Less than',
                             '>' => 'More than',
                             '=' => 'Equal to',
-                        );
+                        ];
 
-                        $date_compare_options = array
-                        (
+                        $date_compare_options = [
                             '<' => 'Before',
                             '>' => 'After',
                             '=' => 'On',
                             '?' => 'Within the last',
-                        );
+                        ];
 
-                        $date_toggles = array
-                        (
-                            '<' => array('rules_Content_attribute_compare_date'),
-                            '>' => array('rules_Content_attribute_compare_date'),
-                            '=' => array('rules_Content_attribute_compare_date'),
-                            '?' => array(
+                        $date_toggles = [
+                            '<' => ['rules_Content_attribute_compare_date'],
+                            '>' => ['rules_Content_attribute_compare_date'],
+                            '=' => ['rules_Content_attribute_compare_date'],
+                            '?' => [
                                 'rules_Content_attribute_compare_minutes',
                                 'rules_Content_attribute_compare_hours',
                                 'rules_Content_attribute_compare_days',
                                 'rules_Content_attribute_compare_months',
-                                'rules_Content_attribute_compare_years'
-                            ),
-                        );
+                                'rules_Content_attribute_compare_years',
+                            ],
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Content_content_attribute',
                                 isset($values['rules_Content_content_attribute']) ? $values['rules_Content_content_attribute'] : null,
                                 true,
-                                array('options' => $attribute_options, 'toggles' => $attribute_toggles),
+                                ['options' => $attribute_options, 'toggles' => $attribute_toggles],
                                 null,
                                 null,
                                 null,
@@ -673,7 +596,7 @@ class _Content
                                 'rules_Content_attribute_compare_type_value',
                                 isset($values['rules_Content_attribute_compare_type_value']) ? $values['rules_Content_attribute_compare_type_value'] : null,
                                 false,
-                                array('options' => $value_compare_options),
+                                ['options' => $value_compare_options],
                                 null,
                                 null,
                                 null,
@@ -685,7 +608,7 @@ class _Content
                                 'rules_Content_attribute_compare_value',
                                 isset($values['rules_Content_attribute_compare_value']) ? $values['rules_Content_attribute_compare_value'] : 0,
                                 false,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -697,7 +620,7 @@ class _Content
                                 'rules_Content_attribute_compare_type_date',
                                 isset($values['rules_Content_attribute_compare_type_date']) ? $values['rules_Content_attribute_compare_type_date'] : null,
                                 false,
-                                array('options' => $date_compare_options, 'toggles' => $date_toggles),
+                                ['options' => $date_compare_options, 'toggles' => $date_toggles],
                                 null,
                                 null,
                                 null,
@@ -711,7 +634,7 @@ class _Content
                                     $values['rules_Content_attribute_compare_date']
                                 ) : null,
                                 false,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -723,7 +646,7 @@ class _Content
                                 'rules_Content_attribute_compare_minutes',
                                 isset($values['rules_Content_attribute_compare_minutes']) ? $values['rules_Content_attribute_compare_minutes'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -735,7 +658,7 @@ class _Content
                                 'rules_Content_attribute_compare_hours',
                                 isset($values['rules_Content_attribute_compare_hours']) ? $values['rules_Content_attribute_compare_hours'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -747,7 +670,7 @@ class _Content
                                 'rules_Content_attribute_compare_days',
                                 isset($values['rules_Content_attribute_compare_days']) ? $values['rules_Content_attribute_compare_days'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -759,7 +682,7 @@ class _Content
                                 'rules_Content_attribute_compare_months',
                                 isset($values['rules_Content_attribute_compare_months']) ? $values['rules_Content_attribute_compare_months'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -771,7 +694,7 @@ class _Content
                                 'rules_Content_attribute_compare_years',
                                 isset($values['rules_Content_attribute_compare_years']) ? $values['rules_Content_attribute_compare_years'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -784,25 +707,21 @@ class _Content
                             $values['rules_Content_attribute_compare_date'] = $values['rules_Content_attribute_compare_date']->getTimestamp(
                             );
                         }
-                    }
-                ),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    },
+                ],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content\Item',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         foreach (\IPS\Application::allExtensions('core', 'ContentRouter') as $router) {
             foreach ($router->classes as $contentItemClass) {
@@ -840,18 +759,14 @@ class _Content
                             $nodeTitle
                         );
 
-                        $conditions['content_container_' . $class_key] = array
-                        (
+                        $conditions['content_container_' . $class_key] = [
                             'group' => $group,
-                            'callback' => array($this, 'contentContainer'),
-                            'arguments' => array
-                            (
-                                'container' => array
-                                (
+                            'callback' => [$this, 'contentContainer'],
+                            'arguments' => [
+                                'container' => [
                                     'default' => 'manual',
                                     'required' => true,
-                                    'configuration' => array
-                                    (
+                                    'configuration' => [
                                         'form' => function ($form, $values) use (
                                             $nodeClass,
                                             $contentItemClass,
@@ -863,14 +778,14 @@ class _Content
                                                     'rules_Content_content_containers_' . $class_key,
                                                     isset($values['rules_Content_content_containers_' . $class_key]) ? $values['rules_Content_content_containers_' . $class_key] : null,
                                                     true,
-                                                    array('class' => $nodeClass, 'multiple' => true),
+                                                    ['class' => $nodeClass, 'multiple' => true],
                                                     null,
                                                     null,
                                                     null,
                                                     'rules_Content_content_containers_' . $class_key
                                                 )
                                             );
-                                            return array('rules_Content_content_containers_' . $class_key);
+                                            return ['rules_Content_content_containers_' . $class_key];
                                         },
                                         'saveValues' => function (&$values) use ($class_key) {
                                             if (is_array($values['rules_Content_content_containers_' . $class_key])) {
@@ -882,27 +797,24 @@ class _Content
                                         'getArg' => function ($values) use ($class_key) {
                                             return $values['rules_Content_content_containers_' . $class_key];
                                         },
-                                    ),
-                                    'argtypes' => array
-                                    (
-                                        'object' => array
-                                        (
+                                    ],
+                                    'argtypes' => [
+                                        'object' => [
                                             'description' => 'A ' . mb_strtolower($contentTitle) . ' ' . mb_strtolower(
                                                     $nodeTitle
                                                 ) . ' node',
                                             'class' => $nodeClass,
                                             'converter' => function ($node) {
-                                                return array($node->_id);
+                                                return [$node->_id];
                                             },
-                                        ),
-                                        'array' => array
-                                        (
+                                        ],
+                                        'array' => [
                                             'description' => 'An array of ' . mb_strtolower(
                                                     $contentTitle
                                                 ) . ' ' . mb_strtolower($nodeTitle) . ' nodes',
                                             'class' => $nodeClass,
                                             'converter' => function ($nodes) {
-                                                $_nodes = array();
+                                                $_nodes = [];
                                                 if (is_array($nodes)) {
                                                     foreach ($nodes as $node) {
                                                         if ($node instanceof \IPS\Node\Model) {
@@ -916,30 +828,27 @@ class _Content
                                                 }
                                                 return $_nodes;
                                             },
-                                        ),
-                                    ),
-                                ),
-                                'content' => array
-                                (
+                                        ],
+                                    ],
+                                ],
+                                'content' => [
                                     'required' => true,
-                                    'argtypes' => array
-                                    (
-                                        'object' => array
-                                        (
+                                    'argtypes' => [
+                                        'object' => [
                                             'description' => $contentTitle . " to check",
                                             'class' => '\\' . ltrim($contentItemClass, '\\'),
-                                        ),
-                                    ),
+                                        ],
+                                    ],
                                     'configuration' => \IPS\rules\Application::configPreset(
                                         'item',
                                         'rules_choose_item',
                                         true,
-                                        array('class' => $contentItemClass)
+                                        ['class' => $contentItemClass]
                                     ),
-                                ),
+                                ],
 
-                            ),
-                        );
+                            ],
+                        ];
 
                         $lang->words['rules_Content_conditions_container_' . $class_key] = sprintf(
                             $lang->get('rules_Content_conditions_container'),
@@ -956,17 +865,13 @@ class _Content
                             $lang->get('rules_Content_content_containers'),
                             $nodeTitle
                         );
-                        $conditions['container_' . $class_key] = array
-                        (
+                        $conditions['container_' . $class_key] = [
                             'group' => $group,
-                            'callback' => array($this, 'checkContainer'),
-                            'arguments' => array
-                            (
-                                'container' => array
-                                (
+                            'callback' => [$this, 'checkContainer'],
+                            'arguments' => [
+                                'container' => [
                                     'required' => true,
-                                    'configuration' => array
-                                    (
+                                    'configuration' => [
                                         'form' => function ($form, $values) use (
                                             $nodeClass,
                                             $contentItemClass,
@@ -978,14 +883,14 @@ class _Content
                                                     'rules_Content_container',
                                                     isset($values['rules_Content_container']) ? $values['rules_Content_container'] : null,
                                                     true,
-                                                    array('class' => $nodeClass, 'multiple' => false),
+                                                    ['class' => $nodeClass, 'multiple' => false],
                                                     null,
                                                     null,
                                                     null,
                                                     'rules_Content_container'
                                                 )
                                             );
-                                            return array('rules_Content_container');
+                                            return ['rules_Content_container'];
                                         },
                                         'saveValues' => function (&$values) use ($nodeClass) {
                                             if (isset($values['rules_Content_container']) and $values['rules_Content_container'] instanceof $nodeClass) {
@@ -995,24 +900,20 @@ class _Content
                                         'getArg' => function ($values) {
                                             return $values['rules_Content_container'];
                                         },
-                                    ),
-                                    'argtypes' => array
-                                    (
-                                        'object' => array
-                                        (
+                                    ],
+                                    'argtypes' => [
+                                        'object' => [
                                             'description' => 'A ' . mb_strtolower($contentTitle) . ' ' . mb_strtolower(
                                                     $nodeTitle
                                                 ) . ' node',
                                             'class' => $nodeClass,
-                                        ),
-                                    ),
-                                ),
-                                'containers' => array
-                                (
+                                        ],
+                                    ],
+                                ],
+                                'containers' => [
                                     'default' => 'manual',
                                     'required' => true,
-                                    'configuration' => array
-                                    (
+                                    'configuration' => [
                                         'form' => function ($form, $values) use (
                                             $nodeClass,
                                             $contentItemClass,
@@ -1024,14 +925,14 @@ class _Content
                                                     'rules_Content_containers_' . $class_key,
                                                     isset($values['rules_Content_containers_' . $class_key]) ? $values['rules_Content_containers_' . $class_key] : null,
                                                     true,
-                                                    array('class' => $nodeClass, 'multiple' => true),
+                                                    ['class' => $nodeClass, 'multiple' => true],
                                                     null,
                                                     null,
                                                     null,
                                                     'rules_Content_containers_' . $class_key
                                                 )
                                             );
-                                            return array('rules_Content_containers_' . $class_key);
+                                            return ['rules_Content_containers_' . $class_key];
                                         },
                                         'saveValues' => function (&$values) use ($class_key) {
                                             if (is_array($values['rules_Content_containers_' . $class_key])) {
@@ -1043,27 +944,24 @@ class _Content
                                         'getArg' => function ($values) use ($class_key) {
                                             return $values['rules_Content_containers_' . $class_key];
                                         },
-                                    ),
-                                    'argtypes' => array
-                                    (
-                                        'object' => array
-                                        (
+                                    ],
+                                    'argtypes' => [
+                                        'object' => [
                                             'description' => 'A ' . mb_strtolower($contentTitle) . ' ' . mb_strtolower(
                                                     $nodeTitle
                                                 ) . ' node',
                                             'class' => $nodeClass,
                                             'converter' => function ($node) {
-                                                return array($node->_id);
+                                                return [$node->_id];
                                             },
-                                        ),
-                                        'array' => array
-                                        (
+                                        ],
+                                        'array' => [
                                             'description' => 'An array of ' . mb_strtolower(
                                                     $contentTitle
                                                 ) . ' ' . mb_strtolower($nodeTitle) . ' nodes',
                                             'class' => $nodeClass,
                                             'converter' => function ($nodes) {
-                                                $_nodes = array();
+                                                $_nodes = [];
                                                 if (is_array($nodes)) {
                                                     foreach ($nodes as $node) {
                                                         if ($node instanceof \IPS\Node\Model) {
@@ -1077,11 +975,11 @@ class _Content
                                                 }
                                                 return $_nodes;
                                             },
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        );
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ];
                     }
                 }
             }
@@ -1100,47 +998,38 @@ class _Content
         $lang = \IPS\Member::loggedIn()->language();
         $self = $this;
 
-        $actions = array
-        (
-            'set_content_tags' => array
-            (
-                'callback' => array($this, 'setTags'),
-                'configuration' => array
-                (
+        $actions = [
+            'set_content_tags' => [
+                'callback' => [$this, 'setTags'],
+                'configuration' => [
                     'form' => function ($form, $values) {
-                        $tag_options = array
-                        (
+                        $tag_options = [
                             'add' => 'Add Tags',
                             'remove' => 'Remove Tags',
                             'set' => 'Set Tags Explicitly',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Content_modify_tags_type',
                                 isset($values['rules_Content_modify_tags_type']) ? $values['rules_Content_modify_tags_type'] : 'add',
                                 true,
-                                array('options' => $tag_options)
+                                ['options' => $tag_options]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                ],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                    'tags' => array
-                    (
+                    ],
+                    'tags' => [
                         'default' => 'manual',
                         'argtypes' => \IPS\rules\Application::argPreset('tags'),
                         'configuration' => \IPS\rules\Application::configPreset(
@@ -1149,245 +1038,190 @@ class _Content
                             true
                         ),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'pin_content' => array
-            (
-                'callback' => array($this, 'pinContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'pin_content' => [
+                'callback' => [$this, 'pinContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'unpin_content' => array
-            (
-                'callback' => array($this, 'unpinContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'unpin_content' => [
+                'callback' => [$this, 'unpinContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'feature_content' => array
-            (
-                'callback' => array($this, 'featureContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'feature_content' => [
+                'callback' => [$this, 'featureContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'unfeature_content' => array
-            (
-                'callback' => array($this, 'unfeatureContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'unfeature_content' => [
+                'callback' => [$this, 'unfeatureContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'lock_content' => array
-            (
-                'callback' => array($this, 'lockContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'lock_content' => [
+                'callback' => [$this, 'lockContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'unlock_content' => array
-            (
-                'callback' => array($this, 'unlockContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'unlock_content' => [
+                'callback' => [$this, 'unlockContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'hide_content' => array
-            (
-                'callback' => array($this, 'hideContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'hide_content' => [
+                'callback' => [$this, 'hideContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                    'member' => array
-                    (
+                    ],
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
 
-                    ),
-                    'reason' => array
-                    (
-                        'argtypes' => array('string' => array('description' => 'The reason for hiding the content')),
+                    ],
+                    'reason' => [
+                        'argtypes' => ['string' => ['description' => 'The reason for hiding the content']],
                         'required' => false,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Content_reason',
                                         isset($values['rules_Content_reason']) ? $values['rules_Content_reason'] : null,
                                         false,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Content_reason'
                                     )
                                 );
-                                return array('rules_Content_reason');
+                                return ['rules_Content_reason'];
                             },
                             'getArg' => function ($values) {
                                 return $values['rules_Content_reason'];
                             },
-                        ),
-                    ),
-                ),
-            ),
-            'unhide_content' => array
-            (
-                'callback' => array($this, 'unhideContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                        ],
+                    ],
+                ],
+            ],
+            'unhide_content' => [
+                'callback' => [$this, 'unhideContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                    'member' => array
-                    (
+                    ],
+                    'member' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => false,
-                    ),
-                ),
-            ),
-            'delete_content' => array
-            (
-                'callback' => array($this, 'deleteContent'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'delete_content' => [
+                'callback' => [$this, 'deleteContent'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'change_author' => array
-            (
-                'callback' => array($this, 'changeAuthor'),
-                'arguments' => array
-                (
-                    'content' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array
-                            (
+                    ],
+                ],
+            ],
+            'change_author' => [
+                'callback' => [$this, 'changeAuthor'],
+                'arguments' => [
+                    'content' => [
+                        'argtypes' => [
+                            'object' => [
                                 'description' => 'Content Object',
                                 'class' => '\IPS\Content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                    'author' => array
-                    (
+                    ],
+                    'author' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
         foreach (\IPS\Application::allExtensions('core', 'ContentRouter') as $router) {
             foreach ($router->classes as $contentItemClass) {
@@ -1473,12 +1307,10 @@ class _Content
                         /**
                          * Move Content
                          */
-                        $actions['move_content_' . $class_key] = array
-                        (
+                        $actions['move_content_' . $class_key] = [
                             'group' => $group,
-                            'callback' => array($this, 'moveContent'),
-                            'configuration' => array
-                            (
+                            'callback' => [$this, 'moveContent'],
+                            'configuration' => [
                                 'form' => function ($form, $values) {
                                     $form->add(
                                         new \IPS\Helpers\Form\YesNo(
@@ -1488,15 +1320,12 @@ class _Content
                                         )
                                     );
                                 },
-                            ),
-                            'arguments' => array
-                            (
-                                'container' => array
-                                (
+                            ],
+                            'arguments' => [
+                                'container' => [
                                     'default' => 'manual',
                                     'required' => true,
-                                    'configuration' => array
-                                    (
+                                    'configuration' => [
                                         'form' => function ($form, $values) use (
                                             $nodeClass,
                                             $contentItemClass,
@@ -1508,18 +1337,18 @@ class _Content
                                                     'rules_Content_content_container_' . $class_key,
                                                     isset($values['rules_Content_content_container_' . $class_key]) ? $values['rules_Content_content_container_' . $class_key] : null,
                                                     true,
-                                                    array(
+                                                    [
                                                         'class' => $nodeClass,
                                                         'multiple' => false,
-                                                        'subnodes' => false
-                                                    ),
+                                                        'subnodes' => false,
+                                                    ],
                                                     null,
                                                     null,
                                                     null,
                                                     'rules_Content_content_container_' . $class_key
                                                 )
                                             );
-                                            return array('rules_Content_content_container_' . $class_key);
+                                            return ['rules_Content_content_container_' . $class_key];
                                         },
                                         'saveValues' => function (&$values) use ($class_key) {
                                             if (isset($values['rules_Content_content_container_' . $class_key]) and $values['rules_Content_content_container_' . $class_key] instanceof \IPS\Node\Model) {
@@ -1536,47 +1365,40 @@ class _Content
                                                 return null;
                                             }
                                         },
-                                    ),
-                                    'argtypes' => array
-                                    (
-                                        'object' => array
-                                        (
+                                    ],
+                                    'argtypes' => [
+                                        'object' => [
                                             'description' => 'A ' . mb_strtolower($contentTitle) . ' ' . mb_strtolower(
                                                     $nodeTitle
                                                 ) . ' node',
                                             'class' => $nodeClass,
-                                        ),
-                                    ),
-                                ),
-                                'item' => array
-                                (
+                                        ],
+                                    ],
+                                ],
+                                'item' => [
                                     'required' => true,
-                                    'argtypes' => array
-                                    (
-                                        'object' => array
-                                        (
+                                    'argtypes' => [
+                                        'object' => [
                                             'description' => $contentTitle . " to move",
                                             'class' => '\\' . ltrim($contentItemClass, '\\'),
-                                        ),
-                                    ),
+                                        ],
+                                    ],
                                     'configuration' => \IPS\rules\Application::configPreset(
                                         'item',
                                         'rules_choose_item',
                                         true,
-                                        array('class' => $contentItemClass)
+                                        ['class' => $contentItemClass]
                                     ),
-                                ),
-                            ),
-                        );
+                                ],
+                            ],
+                        ];
 
                         /**
                          * Create New Content Item
                          */
-                        $actions['create_content_' . $class_key] = array
-                        (
+                        $actions['create_content_' . $class_key] = [
                             'group' => $group,
-                            'configuration' => array
-                            (
+                            'configuration' => [
                                 'form' => function ($form, $values, $operation) use ($lang) {
                                     $form->add(
                                         new \IPS\Helpers\Form\YesNo(
@@ -1597,7 +1419,7 @@ class _Content
                                             'rules_Content_use_created_handler',
                                             isset($values['rules_Content_use_created_handler']) ? $values['rules_Content_use_created_handler'] : false,
                                             false,
-                                            array('togglesOn' => array($form->id . '_rules_Content_created_handler'))
+                                            ['togglesOn' => [$form->id . '_rules_Content_created_handler']]
                                         )
                                     );
 
@@ -1609,11 +1431,11 @@ class _Content
                                             'rules_Content_created_handler',
                                             isset($values['rules_Content_created_handler']) ? $values['rules_Content_created_handler'] : "//<?php\n\n/* custom processing of \$createdContent... */\n\n",
                                             false,
-                                            array('mode' => 'php')
+                                            ['mode' => 'php']
                                         )
                                     );
                                 },
-                            ),
+                            ],
                             'callback' => function ($container, $author, $title, $content, $tags, $values, $arg_map) use
                             (
                                 $nodeClass,
@@ -1675,7 +1497,7 @@ class _Content
                                 /* Save tags */
                                 if (!empty ($tags)) {
                                     /* Set tags through our rules action to account for non-logged in members */
-                                    $self->setTags($item, $tags, array('rules_Content_modify_tags_type' => 'set'));
+                                    $self->setTags($item, $tags, ['rules_Content_modify_tags_type' => 'set']);
                                 }
 
                                 /* Custom PHP Code Handler */
@@ -1686,13 +1508,10 @@ class _Content
 
                                 return "content created";
                             },
-                            'arguments' => array
-                            (
-                                'container' => array
-                                (
+                            'arguments' => [
+                                'container' => [
                                     'required' => true,
-                                    'configuration' => array
-                                    (
+                                    'configuration' => [
                                         'form' => function ($form, $values) use (
                                             $nodeClass,
                                             $contentItemClass,
@@ -1704,18 +1523,18 @@ class _Content
                                                     'rules_Content_content_container_' . $class_key,
                                                     isset($values['rules_Content_content_container_' . $class_key]) ? $values['rules_Content_content_container_' . $class_key] : null,
                                                     true,
-                                                    array(
+                                                    [
                                                         'class' => $nodeClass,
                                                         'multiple' => false,
-                                                        'subnodes' => false
-                                                    ),
+                                                        'subnodes' => false,
+                                                    ],
                                                     null,
                                                     null,
                                                     null,
                                                     'rules_Content_content_container_' . $class_key
                                                 )
                                             );
-                                            return array('rules_Content_content_container_' . $class_key);
+                                            return ['rules_Content_content_container_' . $class_key];
                                         },
                                         'saveValues' => function (&$values) use ($class_key) {
                                             if (isset($values['rules_Content_content_container_' . $class_key]) and $values['rules_Content_content_container_' . $class_key] instanceof \IPS\Node\Model) {
@@ -1732,91 +1551,79 @@ class _Content
                                                 return null;
                                             }
                                         },
-                                    ),
-                                    'argtypes' => array
-                                    (
-                                        'object' => array
-                                        (
+                                    ],
+                                    'argtypes' => [
+                                        'object' => [
                                             'description' => 'A ' . mb_strtolower($contentTitle) . ' ' . mb_strtolower(
                                                     $nodeTitle
                                                 ) . ' node',
                                             'class' => $nodeClass,
-                                        ),
-                                    ),
-                                ),
-                                'author' => array
-                                (
+                                        ],
+                                    ],
+                                ],
+                                'author' => [
                                     'argtypes' => \IPS\rules\Application::argPreset('member'),
                                     'configuration' => \IPS\rules\Application::configPreset(
                                         'member',
                                         'rules_choose_member'
                                     ),
                                     'required' => true,
-                                ),
-                                'title' => array
-                                (
+                                ],
+                                'title' => [
                                     'default' => 'manual',
                                     'required' => true,
-                                    'argtypes' => array
-                                    (
-                                        'string' => array
-                                        (
+                                    'argtypes' => [
+                                        'string' => [
                                             'description' => 'The content title',
-                                        ),
-                                    ),
-                                    'configuration' => array
-                                    (
+                                        ],
+                                    ],
+                                    'configuration' => [
                                         'form' => function ($form, $values) {
                                             $form->add(
                                                 new \IPS\Helpers\Form\Text(
                                                     'rules_Content_content_title',
                                                     isset($values['rules_Content_content_title']) ? $values['rules_Content_content_title'] : null,
                                                     true,
-                                                    array(),
+                                                    [],
                                                     null,
                                                     null,
                                                     null,
                                                     'rules_Content_content_title'
                                                 )
                                             );
-                                            return array('rules_Content_content_title');
+                                            return ['rules_Content_content_title'];
                                         },
                                         'getArg' => function ($values) {
                                             return $values['rules_Content_content_title'];
                                         },
-                                    ),
-                                ),
-                                'content' => array
-                                (
+                                    ],
+                                ],
+                                'content' => [
                                     'default' => 'manual',
                                     'required' => true,
-                                    'argtypes' => array
-                                    (
-                                        'string' => array
-                                        (
+                                    'argtypes' => [
+                                        'string' => [
                                             'description' => 'The content body',
-                                        ),
-                                    ),
-                                    'configuration' => array
-                                    (
+                                        ],
+                                    ],
+                                    'configuration' => [
                                         'form' => function ($form, $values) {
                                             $form->add(
                                                 new \IPS\Helpers\Form\Editor(
                                                     'rules_Content_content_body',
                                                     isset($values['rules_Content_content_body']) ? $values['rules_Content_content_body'] : null,
                                                     true,
-                                                    array('app' => 'rules', 'key' => 'Generic')
+                                                    ['app' => 'rules', 'key' => 'Generic']
                                                 )
                                             );
-                                            return array($form->id . '_rules_Content_content_body');
+                                            return [$form->id . '_rules_Content_content_body'];
                                         },
                                         'getArg' => function ($values) {
                                             return $values['rules_Content_content_body'];
                                         },
-                                    ),
-                                ),
-                                'tags' => array
-                                (
+                                    ],
+                                ],
+                                'tags' => [
                                     'default' => 'manual',
                                     'argtypes' => \IPS\rules\Application::argPreset('tags'),
                                     'configuration' => \IPS\rules\Application::configPreset(
@@ -1825,19 +1632,17 @@ class _Content
                                         false
                                     ),
                                     'required' => false,
-                                ),
-                            ),
-                        );
+                                ],
+                            ],
+                        ];
 
                         if (isset ($contentItemClass::$commentClass)) {
                             /**
                              * Create New Content Comment
                              */
-                            $actions['create_content_comment_' . $class_key] = array
-                            (
+                            $actions['create_content_comment_' . $class_key] = [
                                 'group' => $group,
-                                'configuration' => array
-                                (
+                                'configuration' => [
                                     'form' => function ($form, $values, $operation) use ($lang) {
                                         $form->add(
                                             new \IPS\Helpers\Form\YesNo(
@@ -1858,7 +1663,7 @@ class _Content
                                                 'rules_Content_use_created_handler',
                                                 isset($values['rules_Content_use_created_handler']) ? $values['rules_Content_use_created_handler'] : false,
                                                 false,
-                                                array('togglesOn' => array($form->id . '_rules_Content_created_handler'))
+                                                ['togglesOn' => [$form->id . '_rules_Content_created_handler']]
                                             )
                                         );
 
@@ -1870,11 +1675,11 @@ class _Content
                                                 'rules_Content_created_handler',
                                                 isset($values['rules_Content_created_handler']) ? $values['rules_Content_created_handler'] : "//<?php\n\n/* custom processing of \$createdContent... */\n\n",
                                                 false,
-                                                array('mode' => 'php')
+                                                ['mode' => 'php']
                                             )
                                         );
                                     },
-                                ),
+                                ],
                                 'callback' => function ($item, $author, $content, $values, $arg_map) use (
                                     $contentItemClass,
                                     $self
@@ -1911,66 +1716,57 @@ class _Content
 
                                     return "content comment created";
                                 },
-                                'arguments' => array
-                                (
-                                    'item' => array
-                                    (
+                                'arguments' => [
+                                    'item' => [
                                         'required' => true,
-                                        'argtypes' => array
-                                        (
-                                            'object' => array
-                                            (
+                                        'argtypes' => [
+                                            'object' => [
                                                 'description' => $contentTitle . " to post comment to",
                                                 'class' => '\\' . ltrim($contentItemClass, '\\'),
-                                            ),
-                                        ),
+                                            ],
+                                        ],
                                         'configuration' => \IPS\rules\Application::configPreset(
                                             'item',
                                             'rules_choose_item',
                                             true,
-                                            array('class' => $contentItemClass)
+                                            ['class' => $contentItemClass]
                                         ),
-                                    ),
-                                    'author' => array
-                                    (
+                                    ],
+                                    'author' => [
                                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                                         'configuration' => \IPS\rules\Application::configPreset(
                                             'member',
                                             'rules_choose_member'
                                         ),
                                         'required' => true,
-                                    ),
-                                    'content' => array
-                                    (
+                                    ],
+                                    'content' => [
                                         'default' => 'manual',
                                         'required' => true,
-                                        'argtypes' => array
-                                        (
-                                            'string' => array
-                                            (
+                                        'argtypes' => [
+                                            'string' => [
                                                 'description' => 'The content body',
-                                            ),
-                                        ),
-                                        'configuration' => array
-                                        (
+                                            ],
+                                        ],
+                                        'configuration' => [
                                             'form' => function ($form, $values) {
                                                 $form->add(
                                                     new \IPS\Helpers\Form\Editor(
                                                         'rules_Content_content_body',
                                                         isset($values['rules_Content_content_body']) ? $values['rules_Content_content_body'] : null,
                                                         true,
-                                                        array('app' => 'rules', 'key' => 'Generic')
+                                                        ['app' => 'rules', 'key' => 'Generic']
                                                     )
                                                 );
-                                                return array($form->id . '_rules_Content_content_body');
+                                                return [$form->id . '_rules_Content_content_body'];
                                             },
                                             'getArg' => function ($values) {
                                                 return $values['rules_Content_content_body'];
                                             },
-                                        ),
-                                    ),
-                                ),
-                            );
+                                        ],
+                                    ],
+                                ],
+                            ];
                         }
                     }
                 }
@@ -2279,7 +2075,7 @@ class _Content
 
                 $_tags = array_filter(
                     array_unique(
-                        array_merge((array)$content->tags(), array('prefix' => $content->prefix()), (array)$tags)
+                        array_merge((array)$content->tags(), ['prefix' => $content->prefix()], (array)$tags)
                     )
                 );
                 $content->setTags($_tags);
@@ -2289,7 +2085,7 @@ class _Content
             case 'remove':
 
                 $_tags = array_filter(
-                    array_unique(array_merge((array)$content->tags(), array('prefix' => $content->prefix())))
+                    array_unique(array_merge((array)$content->tags(), ['prefix' => $content->prefix()]))
                 );
                 foreach ((array)$tags as $tag) {
                     if (($i = array_search($tag, $_tags)) !== false) {

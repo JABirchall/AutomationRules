@@ -31,10 +31,9 @@ class _Notification
      */
     public function getConfiguration($member)
     {
-        return array
-        (
-            'rules_notifications' => array('default' => array('inline'), 'disabled' => array('email')),
-        );
+        return [
+            'rules_notifications' => ['default' => ['inline'], 'disabled' => ['email']],
+        ];
     }
 
     /**
@@ -63,12 +62,12 @@ class _Notification
             }
         }
 
-        return array(
+        return [
             'title' => $data['title'],
             'url' => $url,
             'content' => $content,
             'author' => $author,
-        );
+        ];
     }
 
     /**

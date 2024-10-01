@@ -31,7 +31,7 @@ class _RulesMember
      */
     public function actionButtons($member)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -47,7 +47,7 @@ class _RulesMember
         foreach (
             \IPS\Db::i()->select(
                 '*', 'rules_data',
-                array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $member::rulesDataClass())
+                ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $member::rulesDataClass()]
             ) as $row
         ) {
             $data_field = \IPS\rules\Data::constructFromData($row);
@@ -63,7 +63,7 @@ class _RulesMember
             \IPS\rules\Log\Custom::roots(
                 'view',
                 null,
-                array(array('custom_log_class=? AND custom_log_enabled=1', '-IPS-Member'))
+                [['custom_log_class=? AND custom_log_enabled=1', '-IPS-Member']]
             ) as $log
         ) {
             $tab_title = 'custom_log_' . $log->id;
@@ -86,7 +86,7 @@ class _RulesMember
         foreach (
             \IPS\Db::i()->select(
                 '*', 'rules_data',
-                array('data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $member::rulesDataClass())
+                ['data_class=? AND data_use_mode IN ( \'public\', \'admin\' )', $member::rulesDataClass()]
             ) as $row
         ) {
             if (isset ($values['rules_data_' . $row['data_column_name']])) {

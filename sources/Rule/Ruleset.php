@@ -44,7 +44,7 @@ class _Ruleset extends \IPS\Node\Model
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array();
+    protected static $databaseIdFields = [];
 
     /**
      * @brief    [Node] Node Title
@@ -166,42 +166,38 @@ class _Ruleset extends \IPS\Node\Model
         $buttons = parent::getButtons($url, $subnode);
 
         unset($buttons['copy']);
-        $buttons['export'] = array
-        (
+        $buttons['export'] = [
             'icon' => 'download',
             'title' => 'rules_export_rule_set',
-            'link' => $url->setQueryString(array('controller' => 'rulesets', 'do' => 'export', 'ruleset' => $this->id)),
-        );
+            'link' => $url->setQueryString(['controller' => 'rulesets', 'do' => 'export', 'ruleset' => $this->id]),
+        ];
 
-        $buttons['overview'] = array
-        (
+        $buttons['overview'] = [
             'icon' => 'list',
             'title' => 'rules_view_overview',
             'link' => $url->setQueryString(
-                array('controller' => 'rulesets', 'do' => 'viewOverview', 'ruleset' => $this->id)
+                ['controller' => 'rulesets', 'do' => 'viewOverview', 'ruleset' => $this->id]
             ),
-            'data' => array('ipsDialog' => '', 'ipsDialog-title' => 'Ruleset Overview'),
-        );
+            'data' => ['ipsDialog' => '', 'ipsDialog-title' => 'Ruleset Overview'],
+        ];
 
-        $buttons['debug_disable'] = array
-        (
+        $buttons['debug_disable'] = [
             'icon' => 'bug',
             'title' => 'Disable Debugging',
             'id' => "{$this->id}-debug-disable",
             'link' => $url->setQueryString(
-                array('controller' => 'rulesets', 'do' => 'debugDisable', 'setid' => $this->id)
+                ['controller' => 'rulesets', 'do' => 'debugDisable', 'setid' => $this->id]
             ),
-        );
+        ];
 
-        $buttons['debug_enable'] = array
-        (
+        $buttons['debug_enable'] = [
             'icon' => 'bug',
             'title' => 'Enable Debugging',
             'id' => "{$this->id}-debug-enable",
             'link' => $url->setQueryString(
-                array('controller' => 'rulesets', 'do' => 'debugEnable', 'setid' => $this->id)
+                ['controller' => 'rulesets', 'do' => 'debugEnable', 'setid' => $this->id]
             ),
-        );
+        ];
 
         return $buttons;
     }

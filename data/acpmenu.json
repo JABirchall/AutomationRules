@@ -1,40 +1,40 @@
 {
-    "rules": {
-        "rulesets": {
-            "tab": "core",
-            "controller": "rulesets",
-            "do": "",
-            "restriction": "rules_manage"
-        },
-        "custom": {
-            "tab": "core",
-            "controller": "custom",
-            "do": "",
-            "restriction": "rules_manage"
-        },
-        "data": {
-            "tab": "core",
-            "controller": "data",
-            "do": "",
-            "restriction": "rules_manage"
-        },
-        "customlogs": {
-            "tab": "core",
-            "controller": "customlogs",
-            "do": "",
-            "restriction": "rules_manage"
-        },
-        "schedule": {
-            "tab": "core",
-            "controller": "schedule",
-            "do": "",
-            "restriction": "rules_manage"
-        },
-        "logs": {
-            "tab": "core",
-            "controller": "logs",
-            "do": "",
-            "restriction": "logs_manage"
-        }
+  "rules": {
+    "rulesets": {
+      "tab": "core",
+      "controller": "rulesets",
+      "do": "",
+      "restriction": "rules_manage"
+    },
+    "custom": {
+      "tab": "core",
+      "controller": "custom",
+      "do": "",
+      "restriction": "rules_manage"
+    },
+    "data": {
+      "tab": "core",
+      "controller": "data",
+      "do": "",
+      "restriction": "rules_manage"
+    },
+    "customlogs": {
+      "tab": "core",
+      "controller": "customlogs",
+      "do": "",
+      "restriction": "rules_manage"
+    },
+    "schedule": {
+      "tab": "core",
+      "controller": "schedule",
+      "do": "",
+      "restriction": "rules_manage"
+    },
+    "logs": {
+      "tab": "core",
+      "controller": "logs",
+      "do": "",
+      "restriction": "logs_manage"
     }
+  }
 }

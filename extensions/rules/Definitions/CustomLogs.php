@@ -35,23 +35,20 @@ class _CustomLogs
     public function events()
     {
         $lang = \IPS\Member::loggedIn()->language();
-        $events = array();
+        $events = [];
 
         foreach (\IPS\rules\Log\Custom::roots(null) as $log) {
-            $arguments = array
-            (
-                'entity' => array
-                (
+            $arguments = [
+                'entity' => [
                     'argtype' => 'object',
                     'class' => str_replace('-', '\\', $log->class),
                     'nullable' => false,
-                ),
-                'message' => array
-                (
+                ],
+                'message' => [
                     'argtype' => 'string',
                     'nullable' => false,
-                ),
-            );
+                ],
+            ];
             $lang->words['rules_CustomLogs_event_custom_log_' . $log->key . '_entity'] = $lang->get(
                 'rules_custom_log_entity'
             );
@@ -70,19 +67,17 @@ class _CustomLogs
                 }
 
                 $lang->words['rules_CustomLogs_event_custom_log_' . $log->key . '_' . $argument->varname] = $argument->description;
-                $arguments[$argument->varname] = array
-                (
+                $arguments[$argument->varname] = [
                     'argtype' => $argument->type,
                     'class' => $argClass ?: null,
                     'nullable' => !$argument->required,
-                );
+                ];
             }
 
             $lang->words['rules_CustomLogs_event_custom_log_' . $log->key] = 'Entry Logged: ' . $log->title;
-            $events['custom_log_' . $log->key] = array
-            (
+            $events['custom_log_' . $log->key] = [
                 'arguments' => $arguments,
-            );
+            ];
         }
 
         return $events;
@@ -98,8 +93,7 @@ class _CustomLogs
      */
     public function conditions()
     {
-        $conditions = array
-        ();
+        $conditions = [];
 
         return $conditions;
     }
@@ -112,7 +106,7 @@ class _CustomLogs
     public function actions()
     {
         $lang = \IPS\Member::loggedIn()->language();
-        $actions = array();
+        $actions = [];
 
         foreach (\IPS\rules\Log\Custom::roots(null) as $log) {
             $entityConfig = null;
@@ -126,7 +120,7 @@ class _CustomLogs
                         'node',
                         $objectClass::$nodeTitle,
                         true,
-                        array('class' => $objectClass)
+                        ['class' => $objectClass]
                     );
                 } else {
                     if (is_subclass_of($objectClass, '\IPS\Content\Item')) {
@@ -134,54 +128,48 @@ class _CustomLogs
                             'item',
                             $objectClass::$title,
                             true,
-                            array('class' => $objectClass)
+                            ['class' => $objectClass]
                         );
                     }
                 }
             }
 
-            $arguments = array
-            (
-                'entity' => array
-                (
-                    'argtypes' => array
-                    (
-                        'object' => array
-                        (
+            $arguments = [
+                'entity' => [
+                    'argtypes' => [
+                        'object' => [
                             'class' => $objectClass,
                             'description' => $objectClass . ' object',
-                        ),
-                    ),
+                        ],
+                    ],
                     'required' => true,
                     'configuration' => $entityConfig,
-                ),
-                'message' => array
-                (
-                    'argtypes' => array('string'),
+                ],
+                'message' => [
+                    'argtypes' => ['string'],
                     'required' => true,
-                    'configuration' => array
-                    (
+                    'configuration' => [
                         'form' => function ($form, $values) {
                             $form->add(
                                 new \IPS\Helpers\Form\Text(
                                     'rules_custom_log_message',
                                     isset($values['rules_custom_log_message']) ? $values['rules_custom_log_message'] : '',
                                     true,
-                                    array(),
+                                    [],
                                     null,
                                     null,
                                     null,
                                     'rules_custom_log_message'
                                 )
                             );
-                            return array('rules_custom_log_message');
+                            return ['rules_custom_log_message'];
                         },
                         'getArg' => function ($values) {
                             return isset($values['rules_custom_log_message']) ? $values['rules_custom_log_message'] : '';
-                        }
-                    )
-                ),
-            );
+                        },
+                    ],
+                ],
+            ];
             $lang->words['rules_CustomLogs_actions_custom_log_' . $log->key . '_entity'] = $lang->get(
                 'rules_custom_log_entity'
             );
@@ -189,7 +177,7 @@ class _CustomLogs
                 'rules_custom_log_message'
             );
 
-            $logData = array();
+            $logData = [];
             foreach ($log->children(null) as $argument) {
                 $logData[$argument->varname] = null;
                 $argClass = null;
@@ -202,19 +190,15 @@ class _CustomLogs
                 }
 
                 $lang->words['rules_CustomLogs_actions_custom_log_' . $log->key . '_' . $argument->varname] = $argument->name;
-                $arguments[$argument->varname] = array
-                (
-                    'argtypes' => array
-                    (
-                        $argument->type => array
-                        (
+                $arguments[$argument->varname] = [
+                    'argtypes' => [
+                        $argument->type => [
                             'description' => $argument->description,
                             'class' => $argClass ?: null,
-                        ),
-                    ),
+                        ],
+                    ],
                     'required' => (bool)$argument->required,
-                    'configuration' => array
-                    (
+                    'configuration' => [
                         'form' => function ($form, $values) use ($argument, $lang) {
                             $form_name = 'custom_argument_' . $argument->id;
                             $form_value = isset($values['custom_argument_' . $argument->id]) ? \IPS\rules\Application::restoreArg(
@@ -231,7 +215,7 @@ class _CustomLogs
                                         $form_name,
                                         $form_value,
                                         $argument->required,
-                                        array('min' => null),
+                                        ['min' => null],
                                         null,
                                         null,
                                         null,
@@ -243,7 +227,7 @@ class _CustomLogs
                                         $form_name,
                                         $form_value,
                                         $argument->required,
-                                        array('min' => null, 'decimals' => true),
+                                        ['min' => null, 'decimals' => true],
                                         null,
                                         null,
                                         null,
@@ -255,7 +239,7 @@ class _CustomLogs
                                         $form_name,
                                         $form_value,
                                         $argument->required,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
@@ -267,7 +251,7 @@ class _CustomLogs
                                         $form_name,
                                         $form_value,
                                         $argument->required,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
@@ -288,11 +272,11 @@ class _CustomLogs
                                             $form_name,
                                             $form_value,
                                             $argument->required,
-                                            array(
+                                            [
                                                 'class' => $objectClass,
                                                 'multiple' => false,
-                                                'permissionCheck' => 'view'
-                                            ),
+                                                'permissionCheck' => 'view',
+                                            ],
                                             null,
                                             null,
                                             null,
@@ -306,7 +290,7 @@ class _CustomLogs
                                                 $form_name,
                                                 $form_value,
                                                 $argument->required,
-                                                array('multiple' => 1, 'class' => $objectClass),
+                                                ['multiple' => 1, 'class' => $objectClass],
                                                 null,
                                                 null,
                                                 null,
@@ -320,7 +304,7 @@ class _CustomLogs
                                                     $form_name,
                                                     $form_value,
                                                     $argument->required,
-                                                    array('multiple' => 1),
+                                                    ['multiple' => 1],
                                                     null,
                                                     null,
                                                     null,
@@ -334,7 +318,7 @@ class _CustomLogs
                                                         $form_name,
                                                         $form_value,
                                                         $argument->required,
-                                                        array('time' => true),
+                                                        ['time' => true],
                                                         null,
                                                         null,
                                                         null,
@@ -347,7 +331,7 @@ class _CustomLogs
                                                             $form_name,
                                                             $form_value,
                                                             $argument->required,
-                                                            array(),
+                                                            [],
                                                             null,
                                                             null,
                                                             null,
@@ -375,11 +359,11 @@ class _CustomLogs
                                             $form_name,
                                             $form_value,
                                             $argument->required,
-                                            array(
+                                            [
                                                 'class' => $objectClass,
                                                 'multiple' => true,
-                                                'permissionCheck' => 'view'
-                                            ),
+                                                'permissionCheck' => 'view',
+                                            ],
                                             null,
                                             null,
                                             null,
@@ -392,7 +376,7 @@ class _CustomLogs
                                                 $form_name,
                                                 $form_value,
                                                 $argument->required,
-                                                array('multiple' => null, 'class' => $objectClass),
+                                                ['multiple' => null, 'class' => $objectClass],
                                                 null,
                                                 null,
                                                 null,
@@ -405,7 +389,7 @@ class _CustomLogs
                                                     $form_name,
                                                     $form_value,
                                                     $argument->required,
-                                                    array('multiple' => null),
+                                                    ['multiple' => null],
                                                     null,
                                                     null,
                                                     null,
@@ -418,7 +402,7 @@ class _CustomLogs
                                                         $form_name,
                                                         $form_value,
                                                         $argument->required,
-                                                        array('stackFieldType' => 'Date', 'time' => false),
+                                                        ['stackFieldType' => 'Date', 'time' => false],
                                                         null,
                                                         null,
                                                         null,
@@ -431,7 +415,7 @@ class _CustomLogs
                                                             $form_name,
                                                             $form_value,
                                                             $argument->required,
-                                                            array('stackFieldType' => 'Url'),
+                                                            ['stackFieldType' => 'Url'],
                                                             null,
                                                             null,
                                                             null,
@@ -444,7 +428,7 @@ class _CustomLogs
                                                                 $form_name,
                                                                 $form_value,
                                                                 $argument->required,
-                                                                array(),
+                                                                [],
                                                                 null,
                                                                 null,
                                                                 null,
@@ -462,7 +446,7 @@ class _CustomLogs
 
                             if ($form_input) {
                                 $form->add($form_input);
-                                return array($form_name);
+                                return [$form_name];
                             }
                         },
                         'saveValues' => function (&$values) use ($argument) {
@@ -473,13 +457,12 @@ class _CustomLogs
                             $form_name = 'custom_argument_' . $argument->id;
                             return \IPS\rules\Application::restoreArg(json_decode($values[$form_name], true));
                         },
-                    ),
-                );
+                    ],
+                ];
             }
 
             $lang->words['rules_CustomLogs_actions_custom_log_' . $log->key] = 'Create log entry: ' . $log->title;
-            $actions['custom_log_' . $log->key] = array
-            (
+            $actions['custom_log_' . $log->key] = [
                 'callback' => function () use ($log, $logData) {
                     $args = func_get_args();
 
@@ -496,7 +479,7 @@ class _CustomLogs
                     if ($log->createEntry($entity, $message, $logData)) {
                         /* Trigger other rules */
                         $event = \IPS\rules\Event::load('rules', 'CustomLogs', 'custom_log_' . $log->key);
-                        call_user_func_array(array($event, 'trigger'), func_get_args());
+                        call_user_func_array([$event, 'trigger'], func_get_args());
 
                         return "Entry logged to: {$log->title}";
                     } else {
@@ -504,7 +487,7 @@ class _CustomLogs
                     }
                 },
                 'arguments' => $arguments,
-            );
+            ];
         }
 
         return $actions;

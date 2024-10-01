@@ -1,6 +1,6 @@
 [
-    {
-        "key": "rules_debug",
-        "default": "0"
-    }
+  {
+    "key": "rules_debug",
+    "default": "0"
+  }
 ]

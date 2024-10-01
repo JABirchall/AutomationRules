@@ -32,45 +32,36 @@ class _System
      */
     public function events()
     {
-        $events = array
-        (
-            'record_updated' => array
-            (
-                'arguments' => array
-                (
-                    'record' => array('argtype' => 'object', 'class' => '\IPS\Patterns\ActiveRecord'),
-                    'changed' => array('argtype' => 'array'),
-                    'new' => array('argtype' => 'bool'),
-                ),
-            ),
-            'record_copied' => array
-            (
-                'arguments' => array
-                (
-                    'old_record' => array('argtype' => 'object', 'class' => '\IPS\Patterns\ActiveRecord'),
-                    'new_record' => array('argtype' => 'object', 'class' => '\IPS\Patterns\ActiveRecord'),
-                ),
-            ),
-            'record_deleted' => array
-            (
-                'arguments' => array
-                (
-                    'record' => array('argtype' => 'object', 'class' => '\IPS\Patterns\ActiveRecord'),
-                ),
-            ),
-            'browser_output' => array
-            (
-                'arguments' => array
-                (
-                    'output' => array('argtype' => 'string'),
-                    'status' => array('argtype' => 'int'),
-                    'type' => array('argtype' => 'string'),
-                    'headers' => array('argtype' => 'array'),
-                    'docache' => array('argtype' => 'bool'),
-                    'iscache' => array('argtype' => 'bool'),
-                ),
-            ),
-        );
+        $events = [
+            'record_updated' => [
+                'arguments' => [
+                    'record' => ['argtype' => 'object', 'class' => '\IPS\Patterns\ActiveRecord'],
+                    'changed' => ['argtype' => 'array'],
+                    'new' => ['argtype' => 'bool'],
+                ],
+            ],
+            'record_copied' => [
+                'arguments' => [
+                    'old_record' => ['argtype' => 'object', 'class' => '\IPS\Patterns\ActiveRecord'],
+                    'new_record' => ['argtype' => 'object', 'class' => '\IPS\Patterns\ActiveRecord'],
+                ],
+            ],
+            'record_deleted' => [
+                'arguments' => [
+                    'record' => ['argtype' => 'object', 'class' => '\IPS\Patterns\ActiveRecord'],
+                ],
+            ],
+            'browser_output' => [
+                'arguments' => [
+                    'output' => ['argtype' => 'string'],
+                    'status' => ['argtype' => 'int'],
+                    'type' => ['argtype' => 'string'],
+                    'headers' => ['argtype' => 'array'],
+                    'docache' => ['argtype' => 'bool'],
+                    'iscache' => ['argtype' => 'bool'],
+                ],
+            ],
+        ];
 
         return $events;
     }
@@ -80,29 +71,26 @@ class _System
      */
     public function conditions()
     {
-        $conditions = array
-        (
-            'compare_numbers' => array
-            (
-                'callback' => array($this, 'compareNumbers'),
-                'configuration' => array
-                (
+        $conditions = [
+            'compare_numbers' => [
+                'callback' => [$this, 'compareNumbers'],
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
-                        $compare_options = array(
+                        $compare_options = [
                             '>' => 'Number 1 is greater than Number 2',
                             '<' => 'Number 1 is less than Number 2',
                             '==' => 'Number 1 is equal to Number 2',
                             '!=' => 'Number 1 is not equal to Number 2',
                             '>=' => 'Number 1 is greater than or equal to Number 2',
-                            '<=' => 'Number 1 is less than or equal to Number 2'
-                        );
+                            '<=' => 'Number 1 is less than or equal to Number 2',
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Comparisons_type',
                                 isset($values['rules_Comparisons_type']) ? $values['rules_Comparisons_type'] : null,
                                 true,
-                                array('options' => $compare_options),
+                                ['options' => $compare_options],
                                 null,
                                 null,
                                 null,
@@ -110,33 +98,29 @@ class _System
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'number1' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'int' => array('description' => 'a value to use as number 1'),
-                            'float' => array('description' => 'a value to use as number 1'),
-                        ),
+                ],
+                'arguments' => [
+                    'number1' => [
+                        'argtypes' => [
+                            'int' => ['description' => 'a value to use as number 1'],
+                            'float' => ['description' => 'a value to use as number 1'],
+                        ],
                         'required' => true,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Comparisons_number1',
                                         isset($values['rules_Comparisons_number1']) ? $values['rules_Comparisons_number1'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Comparisons_number1'
                                     )
                                 );
-                                return array('rules_Comparisons_number1');
+                                return ['rules_Comparisons_number1'];
                             },
                             'saveValues' => function (&$values, $condition) {
                                 settype($values['rules_Comparisons_number1'], 'float');
@@ -144,33 +128,30 @@ class _System
                             'getArg' => function ($values, $condition) {
                                 return $values['rules_Comparisons_number1'];
                             },
-                        ),
-                    ),
-                    'number2' => array
-                    (
+                        ],
+                    ],
+                    'number2' => [
                         'default' => 'manual',
-                        'argtypes' => array
-                        (
-                            'int' => array('description' => 'a value to use as number 2'),
-                            'float' => array('description' => 'a value to use as number 2'),
-                        ),
+                        'argtypes' => [
+                            'int' => ['description' => 'a value to use as number 2'],
+                            'float' => ['description' => 'a value to use as number 2'],
+                        ],
                         'required' => true,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Comparisons_number2',
                                         isset($values['rules_Comparisons_number2']) ? $values['rules_Comparisons_number2'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Comparisons_number2'
                                     )
                                 );
-                                return array('rules_Comparisons_number2');
+                                return ['rules_Comparisons_number2'];
                             },
                             'saveValues' => function (&$values, $condition) {
                                 settype($values['rules_Comparisons_number2'], 'float');
@@ -178,29 +159,27 @@ class _System
                             'getArg' => function ($values, $condition) {
                                 return $values['rules_Comparisons_number2'];
                             },
-                        ),
-                    ),
-                ),
-            ),
-            'compare_strings' => array
-            (
-                'callback' => array($this, 'compareStrings'),
-                'configuration' => array
-                (
+                        ],
+                    ],
+                ],
+            ],
+            'compare_strings' => [
+                'callback' => [$this, 'compareStrings'],
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
-                        $compare_options = array(
+                        $compare_options = [
                             'contains' => 'String 1 contains String 2',
                             'startswith' => 'String 1 starts with String 2',
                             'endswith' => 'String 1 ends with String 2',
                             'equals' => 'String 1 is the same as String 2',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Comparisons_type',
                                 isset($values['rules_Comparisons_type']) ? $values['rules_Comparisons_type'] : null,
                                 true,
-                                array('options' => $compare_options),
+                                ['options' => $compare_options],
                                 null,
                                 null,
                                 null,
@@ -208,92 +187,82 @@ class _System
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'string1' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'string' => array('description' => 'the value to use as string 1'),
-                        ),
+                ],
+                'arguments' => [
+                    'string1' => [
+                        'argtypes' => [
+                            'string' => ['description' => 'the value to use as string 1'],
+                        ],
                         'required' => true,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Comparisons_string1',
                                         isset($values['rules_Comparisons_string1']) ? $values['rules_Comparisons_string1'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Comparisons_string1'
                                     )
                                 );
-                                return array('rules_Comparisons_string1');
+                                return ['rules_Comparisons_string1'];
                             },
                             'getArg' => function ($values, $condition) {
                                 return $values['rules_Comparisons_string1'];
                             },
-                        ),
-                    ),
-                    'string2' => array
-                    (
+                        ],
+                    ],
+                    'string2' => [
                         'default' => 'manual',
-                        'argtypes' => array
-                        (
-                            'string' => array('description' => 'the value to use as string 2'),
-                        ),
+                        'argtypes' => [
+                            'string' => ['description' => 'the value to use as string 2'],
+                        ],
                         'required' => true,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Comparisons_string2',
                                         isset($values['rules_Comparisons_string2']) ? $values['rules_Comparisons_string2'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Comparisons_string2'
                                     )
                                 );
-                                return array('rules_Comparisons_string2');
+                                return ['rules_Comparisons_string2'];
                             },
                             'getArg' => function ($values, $condition) {
                                 return $values['rules_Comparisons_string2'];
                             },
-                        ),
-                    ),
-                ),
-            ),
-            'compare_truth' => array
-            (
-                'callback' => array($this, 'compareTruth'),
-                'configuration' => array
-                (
+                        ],
+                    ],
+                ],
+            ],
+            'compare_truth' => [
+                'callback' => [$this, 'compareTruth'],
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
-                        $compare_options = array
-                        (
+                        $compare_options = [
                             'true' => 'Value is TRUE',
                             'false' => 'Value is FALSE',
                             'truthy' => 'Value is TRUE or equivalent to TRUE (any non-empty string/array, number not 0)',
                             'falsey' => 'Value is FALSE or equivalent to FALSE (including NULL, 0, empty string/array)',
                             'null' => 'Value is NULL',
                             'notnull' => 'Value is NOT NULL',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Comparisons_type',
                                 isset($values['rules_Comparisons_type']) ? $values['rules_Comparisons_type'] : null,
                                 true,
-                                array('options' => $compare_options),
+                                ['options' => $compare_options],
                                 null,
                                 null,
                                 null,
@@ -301,49 +270,42 @@ class _System
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'value' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'mixed' => array('description' => 'the value to compare'),
-                        ),
+                ],
+                'arguments' => [
+                    'value' => [
+                        'argtypes' => [
+                            'mixed' => ['description' => 'the value to compare'],
+                        ],
                         'required' => false,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Comparisons_value',
                                         isset($values['rules_Comparisons_value']) ? $values['rules_Comparisons_value'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Comparisons_value'
                                     )
                                 );
-                                return array('rules_Comparisons_value');
+                                return ['rules_Comparisons_value'];
                             },
                             'getArg' => function ($values, $condition) {
                                 return $values['rules_Comparisons_value'];
                             },
-                        ),
-                    ),
-                ),
-            ),
-            'compare_type' => array
-            (
-                'callback' => array($this, 'compareType'),
+                        ],
+                    ],
+                ],
+            ],
+            'compare_type' => [
+                'callback' => [$this, 'compareType'],
 
-                'configuration' => array
-                (
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
-                        $compare_options = array
-                        (
+                        $compare_options = [
                             'boolean' => 'Value is a Boolean (TRUE/FALSE)',
                             'string' => 'Value is a String',
                             'integer' => 'Value is a Integer',
@@ -351,14 +313,14 @@ class _System
                             'array' => 'Value is an Array',
                             'object' => 'Value is an Object',
                             'NULL' => 'Value is NULL',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Comparisons_type',
                                 isset($values['rules_Comparisons_type']) ? $values['rules_Comparisons_type'] : null,
                                 true,
-                                array('options' => $compare_options),
+                                ['options' => $compare_options],
                                 null,
                                 null,
                                 null,
@@ -366,62 +328,55 @@ class _System
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'value' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'mixed' => array('description' => 'the value to compare type'),
-                        ),
+                ],
+                'arguments' => [
+                    'value' => [
+                        'argtypes' => [
+                            'mixed' => ['description' => 'the value to compare type'],
+                        ],
                         'required' => true,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Comparisons_value',
                                         isset($values['rules_Comparisons_value']) ? $values['rules_Comparisons_value'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Comparisons_value'
                                     )
                                 );
-                                return array('rules_Comparisons_value');
+                                return ['rules_Comparisons_value'];
                             },
                             'getArg' => function ($values, $condition) {
                                 return $values['rules_Comparisons_value'];
                             },
-                        ),
-                    ),
-                ),
-            ),
-            'compare_array' => array
-            (
-                'callback' => array($this, 'compareArray'),
+                        ],
+                    ],
+                ],
+            ],
+            'compare_array' => [
+                'callback' => [$this, 'compareArray'],
 
-                'configuration' => array
-                (
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
-                        $compare_options = array
-                        (
+                        $compare_options = [
                             'lengthgreater' => 'Array length is greater than',
                             'lengthless' => 'Array length is less than',
                             'lengthequal' => 'Array length is equal to',
                             'containskey' => 'Array contains a specific key',
                             'containsvalue' => 'Array contains a specific value',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Comparisons_type',
                                 isset($values['rules_Comparisons_type']) ? $values['rules_Comparisons_type'] : null,
                                 true,
-                                array('options' => $compare_options),
+                                ['options' => $compare_options],
                                 null,
                                 null,
                                 null,
@@ -429,80 +384,70 @@ class _System
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'array' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'array' => array('description' => 'an array to compare'),
-                        ),
+                ],
+                'arguments' => [
+                    'array' => [
+                        'argtypes' => [
+                            'array' => ['description' => 'an array to compare'],
+                        ],
                         'required' => true,
-                    ),
-                    'value' => array
-                    (
+                    ],
+                    'value' => [
                         'default' => 'manual',
-                        'argtypes' => array
-                        (
-                            'mixed' => array('description' => 'a value to compare array with'),
-                        ),
+                        'argtypes' => [
+                            'mixed' => ['description' => 'a value to compare array with'],
+                        ],
                         'required' => true,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Comparisons_value',
                                         isset($values['rules_Comparisons_value']) ? $values['rules_Comparisons_value'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_Comparisons_value'
                                     )
                                 );
-                                return array('rules_Comparisons_value');
+                                return ['rules_Comparisons_value'];
                             },
                             'getArg' => function ($values, $condition) {
                                 return $values['rules_Comparisons_value'];
                             },
-                        ),
-                    ),
-                ),
-            ),
-            'compare_dates' => array
-            (
-                'callback' => array($this, 'compareDates'),
-                'configuration' => array
-                (
+                        ],
+                    ],
+                ],
+            ],
+            'compare_dates' => [
+                'callback' => [$this, 'compareDates'],
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
-                        $date_compare_options = array
-                        (
+                        $date_compare_options = [
                             '<' => 'Date 1 is before Date 2',
                             '>' => 'Date 1 is after Date 2',
                             '=' => 'Date 1 and Date 2 are on the same day',
                             '?' => 'Date 1 and Date 2 are within a certain amount of time of each other',
-                        );
+                        ];
 
-                        $date_toggles = array
-                        (
-                            '?' => array(
+                        $date_toggles = [
+                            '?' => [
                                 'rules_Content_attribute_compare_minutes',
                                 'rules_Content_attribute_compare_hours',
                                 'rules_Content_attribute_compare_days',
                                 'rules_Content_attribute_compare_months',
-                                'rules_Content_attribute_compare_years'
-                            ),
-                        );
+                                'rules_Content_attribute_compare_years',
+                            ],
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Comparisons_type',
                                 isset($values['rules_Comparisons_type']) ? $values['rules_Comparisons_type'] : null,
                                 true,
-                                array('options' => $date_compare_options, 'toggles' => $date_toggles),
+                                ['options' => $date_compare_options, 'toggles' => $date_toggles],
                                 null,
                                 null,
                                 null,
@@ -514,7 +459,7 @@ class _System
                                 'rules_Content_attribute_compare_minutes',
                                 isset($values['rules_Content_attribute_compare_minutes']) ? $values['rules_Content_attribute_compare_minutes'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -526,7 +471,7 @@ class _System
                                 'rules_Content_attribute_compare_hours',
                                 isset($values['rules_Content_attribute_compare_hours']) ? $values['rules_Content_attribute_compare_hours'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -538,7 +483,7 @@ class _System
                                 'rules_Content_attribute_compare_days',
                                 isset($values['rules_Content_attribute_compare_days']) ? $values['rules_Content_attribute_compare_days'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -550,7 +495,7 @@ class _System
                                 'rules_Content_attribute_compare_months',
                                 isset($values['rules_Content_attribute_compare_months']) ? $values['rules_Content_attribute_compare_months'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -562,7 +507,7 @@ class _System
                                 'rules_Content_attribute_compare_years',
                                 isset($values['rules_Content_attribute_compare_years']) ? $values['rules_Content_attribute_compare_years'] : 0,
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -570,53 +515,48 @@ class _System
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'date1' => array
-                    (
+                ],
+                'arguments' => [
+                    'date1' => [
                         'argtypes' => \IPS\rules\Application::argPreset('date'),
                         'configuration' => \IPS\rules\Application::configPreset(
                             'date',
                             'rules_Comparisons_date1',
                             true,
-                            array('time' => true)
+                            ['time' => true]
                         ),
                         'required' => true,
-                    ),
-                    'date2' => array
-                    (
+                    ],
+                    'date2' => [
                         'default' => 'manual',
                         'argtypes' => \IPS\rules\Application::argPreset('date'),
                         'configuration' => \IPS\rules\Application::configPreset(
                             'date',
                             'rules_Comparisons_date2',
                             true,
-                            array('time' => true)
+                            ['time' => true]
                         ),
                         'required' => true,
-                    ),
-                ),
-            ),
-            'compare_objects' => array
-            (
-                'callback' => array($this, 'compareObjects'),
+                    ],
+                ],
+            ],
+            'compare_objects' => [
+                'callback' => [$this, 'compareObjects'],
 
-                'configuration' => array
-                (
+                'configuration' => [
                     'form' => function ($form, $values, $condition) {
-                        $compare_options = array(
+                        $compare_options = [
                             'isclass' => 'Object has the same class as Value',
                             'issubclass' => 'Object is a subclass of Value',
                             'equal' => 'Object and Value are the same object',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_Comparisons_type',
                                 isset($values['rules_Comparisons_type']) ? $values['rules_Comparisons_type'] : null,
                                 true,
-                                array('options' => $compare_options),
+                                ['options' => $compare_options],
                                 null,
                                 null,
                                 null,
@@ -624,36 +564,30 @@ class _System
                             )
                         );
                     },
-                ),
+                ],
 
-                'arguments' => array
-                (
-                    'object' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'object' => array('description' => 'the object to compare'),
-                        ),
+                'arguments' => [
+                    'object' => [
+                        'argtypes' => [
+                            'object' => ['description' => 'the object to compare'],
+                        ],
                         'required' => true,
-                    ),
-                    'value' => array
-                    (
+                    ],
+                    'value' => [
                         'default' => 'manual',
-                        'argtypes' => array
-                        (
-                            'string' => array('description' => 'a classname to compare'),
-                            'object' => array('description' => 'an object to compare'),
-                        ),
+                        'argtypes' => [
+                            'string' => ['description' => 'a classname to compare'],
+                            'object' => ['description' => 'an object to compare'],
+                        ],
                         'required' => true,
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $condition) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_Comparisons_value',
                                         isset($values['rules_Comparisons_value']) ? $values['rules_Comparisons_value'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
@@ -662,19 +596,17 @@ class _System
                                 );
                                 \IPS\Member::loggedIn()->language(
                                 )->words['rules_Comparisons_value_desc'] = "Enter an object classname";
-                                return array('rules_Comparisons_value');
+                                return ['rules_Comparisons_value'];
                             },
                             'getArg' => function ($values, $condition) {
                                 return $values['rules_Comparisons_value'];
                             },
-                        ),
-                    ),
-                ),
-            ),
-            'execute_php' => array
-            (
-                'configuration' => array
-                (
+                        ],
+                    ],
+                ],
+            ],
+            'execute_php' => [
+                'configuration' => [
                     'form' => function (&$form, $values, $operation) {
                         \IPS\Member::loggedIn()->language(
                         )->words['rules_System_custom_phpcode_desc'] = \IPS\Member::loggedIn()->language()->get(
@@ -685,7 +617,7 @@ class _System
                                 'rules_System_custom_phpcode',
                                 isset($values['rules_System_custom_phpcode']) ? $values['rules_System_custom_phpcode'] : "//<?php\n\nreturn TRUE;",
                                 false,
-                                array('mode' => 'php'),
+                                ['mode' => 'php'],
                                 null,
                                 null,
                                 null,
@@ -693,85 +625,75 @@ class _System
                             )
                         );
                     },
-                ),
-                'callback' => array($this, 'executePHP'),
-            ),
-            'scheduled_action' => array
-            (
-                'callback' => array($this, 'checkActionSchedule'),
-                'configuration' => array
-                (
+                ],
+                'callback' => [$this, 'executePHP'],
+            ],
+            'scheduled_action' => [
+                'callback' => [$this, 'checkActionSchedule'],
+                'configuration' => [
                     'form' => function ($form, $values) {
-                        $schedule_options = array
-                        (
+                        $schedule_options = [
                             'exact' => 'Exact',
                             'contains' => 'Contains',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_System_schedule_mode',
                                 isset($values['rules_System_schedule_mode']) ? $values['rules_System_schedule_mode'] : 'exact',
                                 true,
-                                array('options' => $schedule_options)
+                                ['options' => $schedule_options]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'key' => array
-                    (
+                ],
+                'arguments' => [
+                    'key' => [
                         'default' => 'manual',
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $action) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_System_schedule_key',
                                         isset($values['rules_System_schedule_key']) ? $values['rules_System_schedule_key'] : null,
                                         false,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_System_schedule_key'
                                     )
                                 );
-                                return array('rules_System_schedule_key');
+                                return ['rules_System_schedule_key'];
                             },
                             'getArg' => function ($values, $action) {
                                 return $values['rules_System_schedule_key'];
                             },
-                        ),
-                        'argtypes' => array
-                        (
-                            'string' => array
-                            (
+                        ],
+                        'argtypes' => [
+                            'string' => [
                                 'description' => "Unschedule actions assigned to this keyphrase",
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            'board_status' => array
-            (
-                'configuration' => array
-                (
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'board_status' => [
+                'configuration' => [
                     'form' => function ($form, $values, $operation) {
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_System_board_online_status',
                                 isset($values['rules_System_board_online_status']) ? $values['rules_System_board_online_status'] : null,
                                 true,
-                                array('options' => array('online' => 'Online', 'offline' => 'Offline'))
+                                ['options' => ['online' => 'Online', 'offline' => 'Offline']]
                             )
                         );
                     },
-                ),
-                'callback' => array($this, 'checkBoardStatus'),
-            ),
-        );
+                ],
+                'callback' => [$this, 'checkBoardStatus'],
+            ],
+        ];
 
         return $conditions;
     }
@@ -783,29 +705,26 @@ class _System
      */
     public function actions()
     {
-        $actions = array
-        (
-            'set_api_response' => array
-            (
-                'callback' => array($this, 'setApiResponse'),
-                'configuration' => array
-                (
+        $actions = [
+            'set_api_response' => [
+                'callback' => [$this, 'setApiResponse'],
+                'configuration' => [
                     'form' => function (&$form, $values, $operation) {
-                        $response_types = array(
+                        $response_types = [
                             'int' => 'int',
                             'string' => 'string',
                             'float' => 'float',
                             'datetime' => 'datetime',
                             'bool' => 'bool',
                             'object' => 'object',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Text(
                                 'rules_api_response_key',
                                 $values['rules_api_response_key'],
                                 true,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -817,7 +736,7 @@ class _System
                                 'rules_api_response_description',
                                 $values['rules_api_response_description'],
                                 false,
-                                array(),
+                                [],
                                 null,
                                 null,
                                 null,
@@ -829,53 +748,46 @@ class _System
                                 'rules_api_response_type',
                                 $values['rules_api_response_type'],
                                 true,
-                                array('options' => $response_types)
+                                ['options' => $response_types]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'value' => array
-                    (
-                        'argtypes' => array('mixed'),
-                        'configuration' => array
-                        (
+                ],
+                'arguments' => [
+                    'value' => [
+                        'argtypes' => ['mixed'],
+                        'configuration' => [
                             'form' => function ($form, $values) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_System_api_response_value',
                                         isset($values['rules_System_api_response_value']) ? $values['rules_System_api_response_value'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_System_api_response_value'
                                     )
                                 );
-                                return array('rules_System_api_response_value');
+                                return ['rules_System_api_response_value'];
                             },
                             'getArg' => function ($values) {
                                 return $values['rules_System_api_response_value'];
                             },
-                        ),
-                    ),
-                ),
-            ),
-            'send_email' => array
-            (
-                'callback' => array($this, 'sendEmail'),
-                'arguments' => array
-                (
-                    'recipients' => array
-                    (
+                        ],
+                    ],
+                ],
+            ],
+            'send_email' => [
+                'callback' => [$this, 'sendEmail'],
+                'arguments' => [
+                    'recipients' => [
                         'argtypes' => \IPS\rules\Application::argPreset('members'),
                         'configuration' => \IPS\rules\Application::configPreset('members', 'rules_choose_members'),
                         'required' => true,
-                    ),
-                    'bcc_recipients' => array
-                    (
+                    ],
+                    'bcc_recipients' => [
                         'default' => 'manual',
                         'argtypes' => \IPS\rules\Application::argPreset('members'),
                         'configuration' => \IPS\rules\Application::configPreset(
@@ -884,85 +796,76 @@ class _System
                             false
                         ),
                         'required' => false,
-                    ),
-                    'subject' => array
-                    (
+                    ],
+                    'subject' => [
                         'default' => 'manual',
-                        'argtypes' => array('string'),
-                        'configuration' => array
-                        (
+                        'argtypes' => ['string'],
+                        'configuration' => [
                             'form' => function ($form, $values) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_System_message_subject',
                                         isset($values['rules_System_message_subject']) ? $values['rules_System_message_subject'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_System_message_subject'
                                     )
                                 );
-                                return array('rules_System_message_subject');
+                                return ['rules_System_message_subject'];
                             },
                             'getArg' => function ($values) {
                                 return $values['rules_System_message_subject'];
                             },
-                        ),
+                        ],
                         'required' => true,
-                    ),
-                    'message' => array
-                    (
+                    ],
+                    'message' => [
                         'default' => 'manual',
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $action) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Editor(
                                         'rules_System_email_message',
                                         isset($values['rules_System_email_message']) ? $values['rules_System_email_message'] : null,
                                         false,
-                                        array('app' => 'rules', 'key' => 'Generic')
+                                        ['app' => 'rules', 'key' => 'Generic']
                                     )
                                 );
-                                return array($form->id . '_rules_System_email_message');
+                                return [$form->id . '_rules_System_email_message'];
                             },
                             'saveValues' => function (&$values, $action) {
                             },
                             'getArg' => function ($values, $action) {
                                 return $values['rules_System_email_message'];
                             },
-                        ),
-                        'argtypes' => array
-                        (
-                            'string' => array
-                            (
+                        ],
+                        'argtypes' => [
+                            'string' => [
                                 'description' => 'The formatted message to send. HTML is allowed.',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'create_conversation' => array
-            (
-                'callback' => array($this, 'createConversation'),
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'create_conversation' => [
+                'callback' => [$this, 'createConversation'],
+                'configuration' => [
                     'form' => function (&$form, $values, $operation) {
-                        $participation_modes = array
-                        (
+                        $participation_modes = [
                             0 => 'rules_participation_all',
                             1 => 'rules_participation_individual',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_participation_mode',
                                 isset($values['rules_participation_mode']) ? (int)$values['rules_participation_mode'] : 0,
                                 true,
-                                array('options' => $participation_modes),
+                                ['options' => $participation_modes],
                                 null,
                                 null,
                                 null,
@@ -977,254 +880,219 @@ class _System
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'creator' => array
-                    (
+                ],
+                'arguments' => [
+                    'creator' => [
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member'),
                         'required' => true,
-                    ),
-                    'participants' => array
-                    (
+                    ],
+                    'participants' => [
                         'argtypes' => \IPS\rules\Application::argPreset('members'),
                         'configuration' => \IPS\rules\Application::configPreset('members', 'rules_choose_members'),
                         'required' => true,
-                    ),
-                    'subject' => array
-                    (
+                    ],
+                    'subject' => [
                         'default' => 'manual',
-                        'argtypes' => array('string'),
-                        'configuration' => array
-                        (
+                        'argtypes' => ['string'],
+                        'configuration' => [
                             'form' => function ($form, $values) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_System_message_subject',
                                         isset($values['rules_System_message_subject']) ? $values['rules_System_message_subject'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_System_message_subject'
                                     )
                                 );
-                                return array('rules_System_message_subject');
+                                return ['rules_System_message_subject'];
                             },
                             'getArg' => function ($values) {
                                 return $values['rules_System_message_subject'];
                             },
-                        ),
+                        ],
                         'required' => true,
-                    ),
-                    'message' => array
-                    (
+                    ],
+                    'message' => [
                         'default' => 'manual',
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $action) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Editor(
                                         'rules_System_message_body',
                                         isset($values['rules_System_message_body']) ? $values['rules_System_message_body'] : null,
                                         true,
-                                        array('app' => 'rules', 'key' => 'Generic')
+                                        ['app' => 'rules', 'key' => 'Generic']
                                     )
                                 );
-                                return array($form->id . '_rules_System_message_body');
+                                return [$form->id . '_rules_System_message_body'];
                             },
                             'saveValues' => function (&$values, $action) {
                             },
                             'getArg' => function ($values, $action) {
                                 return $values['rules_System_message_body'];
                             },
-                        ),
-                        'argtypes' => array
-                        (
-                            'string' => array
-                            (
+                        ],
+                        'argtypes' => [
+                            'string' => [
                                 'description' => 'The message content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => true,
-                    ),
-                ),
-            ),
-            'create_notification' => array
-            (
-                'callback' => array($this, 'createInlineNotifications'),
-                'arguments' => array
-                (
-                    'recipients' => array
-                    (
+                    ],
+                ],
+            ],
+            'create_notification' => [
+                'callback' => [$this, 'createInlineNotifications'],
+                'arguments' => [
+                    'recipients' => [
                         'argtypes' => \IPS\rules\Application::argPreset('members'),
                         'configuration' => \IPS\rules\Application::configPreset('members', 'rules_choose_members'),
                         'required' => true,
-                    ),
-                    'title' => array
-                    (
+                    ],
+                    'title' => [
                         'default' => 'manual',
-                        'argtypes' => array('string' => array('description' => 'Notification title')),
-                        'configuration' => array
-                        (
+                        'argtypes' => ['string' => ['description' => 'Notification title']],
+                        'configuration' => [
                             'form' => function ($form, $values) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_System_message_subject',
                                         isset($values['rules_System_message_subject']) ? $values['rules_System_message_subject'] : null,
                                         true,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_System_message_subject'
                                     )
                                 );
-                                return array('rules_System_message_subject');
+                                return ['rules_System_message_subject'];
                             },
                             'getArg' => function ($values) {
                                 return $values['rules_System_message_subject'];
                             },
-                        ),
+                        ],
                         'required' => true,
-                    ),
-                    'url' => array
-                    (
+                    ],
+                    'url' => [
                         'argtypes' => \IPS\rules\Application::argPreset('url'),
                         'configuration' => \IPS\rules\Application::configPreset('url', 'rules_System_url', false),
                         'required' => false,
-                    ),
-                    'content' => array
-                    (
+                    ],
+                    'content' => [
                         'default' => 'manual',
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $action) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Editor(
                                         'rules_System_message_body',
                                         isset($values['rules_System_message_body']) ? $values['rules_System_message_body'] : null,
                                         true,
-                                        array('app' => 'rules', 'key' => 'Generic')
+                                        ['app' => 'rules', 'key' => 'Generic']
                                     )
                                 );
-                                return array($form->id . '_rules_System_message_body');
+                                return [$form->id . '_rules_System_message_body'];
                             },
                             'saveValues' => function (&$values, $action) {
                             },
                             'getArg' => function ($values, $action) {
                                 return $values['rules_System_message_body'];
                             },
-                        ),
-                        'argtypes' => array
-                        (
-                            'string' => array
-                            (
+                        ],
+                        'argtypes' => [
+                            'string' => [
                                 'description' => 'The message content',
-                            ),
-                        ),
+                            ],
+                        ],
                         'required' => false,
-                    ),
-                    'author' => array
-                    (
+                    ],
+                    'author' => [
                         'default' => 'manual',
                         'argtypes' => \IPS\rules\Application::argPreset('member'),
                         'configuration' => \IPS\rules\Application::configPreset('member', 'rules_choose_member', false),
                         'required' => false,
-                    ),
-                ),
-            ),
-            'display_message' => array
-            (
-                'callback' => array($this, 'displayMessage'),
-                'arguments' => array
-                (
-                    'message' => array
-                    (
+                    ],
+                ],
+            ],
+            'display_message' => [
+                'callback' => [$this, 'displayMessage'],
+                'arguments' => [
+                    'message' => [
                         'default' => 'manual',
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $action) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_System_inline_message',
                                         isset($values['rules_System_inline_message']) ? $values['rules_System_inline_message'] : null,
                                         false,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_System_inline_message'
                                     )
                                 );
-                                return array('rules_System_inline_message');
+                                return ['rules_System_inline_message'];
                             },
                             'getArg' => function ($values, $action) {
                                 return $values['rules_System_inline_message'];
                             },
-                        ),
+                        ],
                         'required' => true,
-                        'argtypes' => array
-                        (
-                            'string' => array
-                            (
+                        'argtypes' => [
+                            'string' => [
                                 'description' => "Message to display to user",
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            'url_redirect' => array
-            (
-                'callback' => array($this, 'urlRedirect'),
-                'arguments' => array
-                (
-                    'url' => array
-                    (
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'url_redirect' => [
+                'callback' => [$this, 'urlRedirect'],
+                'arguments' => [
+                    'url' => [
                         'argtypes' => \IPS\rules\Application::argPreset('url'),
                         'configuration' => \IPS\rules\Application::configPreset('url', 'rules_System_url', true),
                         'required' => true,
-                    ),
-                    'message' => array
-                    (
-                        'argtypes' => array
-                        (
-                            'string' => array
-                            (
+                    ],
+                    'message' => [
+                        'argtypes' => [
+                            'string' => [
                                 'description' => "Message to display after redirect",
-                            ),
-                        ),
-                        'configuration' => array
-                        (
+                            ],
+                        ],
+                        'configuration' => [
                             'form' => function ($form, $values, $action) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_System_redirect_message',
                                         isset($values['rules_System_redirect_message']) ? $values['rules_System_redirect_message'] : null,
                                         false,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_System_redirect_message'
                                     )
                                 );
-                                return array('rules_System_redirect_message');
+                                return ['rules_System_redirect_message'];
                             },
                             'getArg' => function ($values, $action) {
                                 return $values['rules_System_redirect_message'];
                             },
-                        ),
+                        ],
                         'required' => false,
-                    ),
-                ),
-            ),
-            'execute_php' => array
-            (
-                'configuration' => array
-                (
+                    ],
+                ],
+            ],
+            'execute_php' => [
+                'configuration' => [
                     'form' => function (&$form, $values, $operation) {
                         \IPS\Member::loggedIn()->language(
                         )->words['rules_System_custom_phpcode_desc'] = \IPS\Member::loggedIn()->language()->get(
@@ -1235,7 +1103,7 @@ class _System
                                 'rules_System_custom_phpcode',
                                 isset($values['rules_System_custom_phpcode']) ? $values['rules_System_custom_phpcode'] : "//<?php\n\nreturn \"action complete\";",
                                 false,
-                                array('mode' => 'php'),
+                                ['mode' => 'php'],
                                 null,
                                 null,
                                 null,
@@ -1243,68 +1111,60 @@ class _System
                             )
                         );
                     },
-                ),
-                'callback' => array($this, 'executePHP'),
-            ),
-            'unschedule_action' => array
-            (
-                'callback' => array($this, 'unscheduleAction'),
-                'configuration' => array
-                (
+                ],
+                'callback' => [$this, 'executePHP'],
+            ],
+            'unschedule_action' => [
+                'callback' => [$this, 'unscheduleAction'],
+                'configuration' => [
                     'form' => function ($form, $values) {
-                        $unschedule_options = array
-                        (
+                        $unschedule_options = [
                             'exact' => 'Exact',
                             'contains' => 'Contains',
-                        );
+                        ];
 
                         $form->add(
                             new \IPS\Helpers\Form\Radio(
                                 'rules_System_unschedule_mode',
                                 isset($values['rules_System_unschedule_mode']) ? $values['rules_System_unschedule_mode'] : 'exact',
                                 true,
-                                array('options' => $unschedule_options)
+                                ['options' => $unschedule_options]
                             )
                         );
                     },
-                ),
-                'arguments' => array
-                (
-                    'key' => array
-                    (
+                ],
+                'arguments' => [
+                    'key' => [
                         'default' => 'manual',
-                        'configuration' => array
-                        (
+                        'configuration' => [
                             'form' => function ($form, $values, $action) {
                                 $form->add(
                                     new \IPS\Helpers\Form\Text(
                                         'rules_System_unschedule_key',
                                         isset($values['rules_System_unschedule_key']) ? $values['rules_System_unschedule_key'] : null,
                                         false,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
                                         'rules_System_unschedule_key'
                                     )
                                 );
-                                return array('rules_System_unschedule_key');
+                                return ['rules_System_unschedule_key'];
                             },
                             'getArg' => function ($values, $action) {
                                 return $values['rules_System_unschedule_key'];
                             },
-                        ),
-                        'argtypes' => array
-                        (
-                            'string' => array
-                            (
+                        ],
+                        'argtypes' => [
+                            'string' => [
                                 'description' => "Unschedule actions assigned to this keyphrase",
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        );
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
         return $actions;
     }
@@ -1332,25 +1192,25 @@ class _System
     public function sendEmail($recipients, $bcc_recipients, $subject, $message, $values)
     {
         if (!is_array($recipients)) {
-            $recipients = array($recipients);
+            $recipients = [$recipients];
         }
 
         if (!is_array($bcc_recipients)) {
-            $bcc_recipients = array($bcc_recipients);
+            $bcc_recipients = [$bcc_recipients];
         }
 
         if (empty ($recipients)) {
             return "no recipients";
         }
 
-        $to = array();
+        $to = [];
         foreach ($recipients as $recipient) {
             if ($recipient->email) {
                 $to[] = $recipient;
             }
         }
 
-        $bcc = array();
+        $bcc = [];
         foreach ($bcc_recipients as $recipient) {
             if ($recipient->email) {
                 $bcc[] = $recipient;
@@ -1358,7 +1218,7 @@ class _System
         }
 
         $email = \IPS\Email::buildFromContent($subject, $message, null, 'transactional');
-        $email->send($to, array(), $bcc);
+        $email->send($to, [], $bcc);
 
         return "email sent";
     }
@@ -1377,7 +1237,7 @@ class _System
         }
 
         if (!is_array($participants)) {
-            $participants = array($participants);
+            $participants = [$participants];
         }
 
         if ($values['rules_participation_mode'] == 1) {
@@ -1442,7 +1302,7 @@ class _System
         }
 
         if (!is_array($recipients)) {
-            $recipients = array($recipients);
+            $recipients = [$recipients];
         }
 
         if ($author instanceof \IPS\Member) {
@@ -1465,22 +1325,21 @@ class _System
                 $notification = \IPS\Notification\Inline::constructFromData(
                     \IPS\Db::i()->select(
                         '*', 'core_notifications',
-                        array(
+                        [
                             'notification_key=? AND item_class=? AND item_id=? AND member=? AND read_time IS NULL',
                             'rules_notification',
                             get_class($action),
                             $action->id,
-                            $recipient->member_id
-                        )
+                            $recipient->member_id,
+                        ]
                     )->first()
                 );
-                $notification->member_data = array
-                (
+                $notification->member_data = [
                     'title' => $title,
                     'url' => (string)$url,
                     'content' => $content,
                     'author' => $author,
-                );
+                ];
                 $notification->updated_time = time();
                 $notification->save();
 
@@ -1496,13 +1355,12 @@ class _System
             $notification->item = $action;
             $notification->notification_app = \IPS\Application::load('rules');
             $notification->notification_key = 'rules_notifications';
-            $notification->member_data = array
-            (
+            $notification->member_data = [
                 'title' => $title,
                 'url' => (string)$url,
                 'content' => $content,
                 'author' => $author,
-            );
+            ];
             $notification->save();
         }
 
@@ -1533,11 +1391,11 @@ class _System
 
                     if ($count = \IPS\Db::i()->select(
                         'COUNT(*)', 'rules_scheduled_actions',
-                        array('schedule_unique_key LIKE ?', '%' . trim($unique_key) . '%')
+                        ['schedule_unique_key LIKE ?', '%' . trim($unique_key) . '%']
                     )->first()) {
                         \IPS\Db::i()->delete(
                             'rules_scheduled_actions',
-                            array('schedule_unique_key LIKE ?', '%' . trim($unique_key) . '%')
+                            ['schedule_unique_key LIKE ?', '%' . trim($unique_key) . '%']
                         );
                         return "{$count} scheduled actions deleted";
                     } else {
@@ -1549,15 +1407,15 @@ class _System
 
                     if ($count = \IPS\Db::i()->select(
                         'COUNT(*)', 'rules_scheduled_actions',
-                        array('schedule_unique_key=?', trim($unique_key))
+                        ['schedule_unique_key=?', trim($unique_key)]
                     )->first()) {
                         $schedule_id = \IPS\Db::i()->select(
                             'schedule_id', 'rules_scheduled_actions',
-                            array('schedule_unique_key=?', trim($unique_key))
+                            ['schedule_unique_key=?', trim($unique_key)]
                         )->first();
                         \IPS\Db::i()->delete(
                             'rules_scheduled_actions',
-                            array('schedule_unique_key=?', trim($unique_key))
+                            ['schedule_unique_key=?', trim($unique_key)]
                         );
                         return "{$count} scheduled action deleted (ID#{$schedule_id})";
                     } else {
@@ -1601,7 +1459,7 @@ class _System
 
                     if ($count = \IPS\Db::i()->select(
                         'COUNT(*)', 'rules_scheduled_actions',
-                        array('schedule_unique_key LIKE ?', '%' . trim($unique_key) . '%')
+                        ['schedule_unique_key LIKE ?', '%' . trim($unique_key) . '%']
                     )->first()) {
                         return true;
                     }
@@ -1612,7 +1470,7 @@ class _System
 
                     if ($count = \IPS\Db::i()->select(
                         'COUNT(*)', 'rules_scheduled_actions',
-                        array('schedule_unique_key=?', trim($unique_key))
+                        ['schedule_unique_key=?', trim($unique_key)]
                     )->first()) {
                         return true;
                     }

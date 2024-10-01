@@ -17,7 +17,7 @@ class rules_hook_ipsDownloadsFile extends _HOOK_CLASS_
                 \IPS\rules\Log\Custom::roots(
                     'view',
                     null,
-                    array(array('custom_log_class=? AND custom_log_enabled=1', $this::rulesDataClass()))
+                    [['custom_log_class=? AND custom_log_enabled=1', $this::rulesDataClass()]]
                 ) as $log
             ) {
                 if ($log->display_empty or $log->logCount($this)) {
@@ -49,7 +49,7 @@ class rules_hook_ipsDownloadsFile extends _HOOK_CLASS_
                 \IPS\rules\Log\Custom::roots(
                     'view',
                     null,
-                    array(array('custom_log_class=? AND custom_log_enabled=1', $this::rulesDataClass()))
+                    [['custom_log_class=? AND custom_log_enabled=1', $this::rulesDataClass()]]
                 ) as $log
             ) {
                 if ($tab == 'custom_log_' . $log->id) {

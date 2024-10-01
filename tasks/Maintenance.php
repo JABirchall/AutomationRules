@@ -40,8 +40,8 @@ class _Maintenance extends \IPS\Task
          * Delete old logs
          */
         if (\IPS\Db::i()->select('COUNT(*)', 'rules_logs')->first() > 10000) {
-            $cutoff = \IPS\Db::i()->select('id', 'rules_logs', null, 'id DESC', array(10000, 1))->first();
-            \IPS\Db::i()->delete('rules_logs', array('id<=?', $cutoff));
+            $cutoff = \IPS\Db::i()->select('id', 'rules_logs', null, 'id DESC', [10000, 1])->first();
+            \IPS\Db::i()->delete('rules_logs', ['id<=?', $cutoff]);
         }
     }
 

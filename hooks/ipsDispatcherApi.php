@@ -18,11 +18,11 @@ class rules_hook_ipsDispatcherApi extends _HOOK_CLASS_
         try {
             /* Attempt to authorize a GitHub Signature */
             if (isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
-                list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2) + array('', '');
+                list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2) + ['', ''];
                 if (!in_array($algo, hash_algos())) {
                     /* Output */
                     \IPS\Output::i()->sendOutput(
-                        json_encode(array('errorCode' => 'EX2S291/8', 'errorMessage' => 'HASHING UNAVAILABLE'),
+                        json_encode(['errorCode' => 'EX2S291/8', 'errorMessage' => 'HASHING UNAVAILABLE'],
                             JSON_PRETTY_PRINT),
                         500,
                         'application/json'

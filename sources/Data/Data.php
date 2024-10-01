@@ -50,7 +50,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
     /**
      * @brief    [ActiveRecord] Database ID Fields
      */
-    protected static $databaseIdFields = array('data_column_name', 'data_key');
+    protected static $databaseIdFields = ['data_column_name', 'data_key'];
 
     /**
      * @brief    [Node] Parent ID Database Column
@@ -80,10 +80,10 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
     /**
      * @brief    The map of permission columns
      */
-    public static $permissionMap = array(
+    public static $permissionMap = [
         'view' => 'view',
         'edit' => 2,
-    );
+    ];
 
     /**
      * @brief    [Node] Prefix string that is automatically prepended to permission matrix language strings
@@ -98,7 +98,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
     /**
      * @brief    Original Data
      */
-    public $originalData = array();
+    public $originalData = [];
 
     /**
      *  Disable Copy Button
@@ -163,7 +163,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
     {
         $typeTitle = null;
 
-        if (in_array($this->type, array('array', 'object'))) {
+        if (in_array($this->type, ['array', 'object'])) {
             if ($this->type_class) {
                 $typeClass = str_replace('-', '\\', $this->type_class);
                 if ($typeClass == '\IPS\Member') {
@@ -255,17 +255,17 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
             switch ($this->use_mode) {
                 case 'public':
 
-                    return array(
+                    return [
                         0 => 'ipsBadge ipsBadge_positive',
                         1 => 'Public',
-                    );
+                    ];
 
                 case 'admin':
 
-                    return array(
+                    return [
                         0 => 'ipsBadge ipsBadge_warning',
                         1 => 'Administrative',
-                    );
+                    ];
             }
         }
 
@@ -282,11 +282,11 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
     {
         $self = $this;
         $lang = \IPS\Member::loggedIn()->language();
-        $configuration = json_decode($this->configuration, true) ?: array();
+        $configuration = json_decode($this->configuration, true) ?: [];
         $wrap_chosen_prefix = "<div data-controller='rules.admin.ui.chosen'>";
         $wrap_chosen_suffix = "</div>";
 
-        $form->add(new \IPS\Helpers\Form\Text('data_name', $this->name, true, array()));
+        $form->add(new \IPS\Helpers\Form\Text('data_name', $this->name, true, []));
         $form->add(new \IPS\Helpers\Form\Text('data_description', $this->description, false));
 
         if ($this->id) {
@@ -295,7 +295,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'data_column_name',
                     $this->column_name,
                     true,
-                    array(),
+                    [],
                     function ($val) use ($self) {
                         $val = mb_strtolower($val);
                         $val = str_replace(' ', '_', $val);
@@ -313,7 +313,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
 
                         if (\IPS\Db::i()->select(
                             'COUNT(*)', 'rules_data',
-                            array('data_column_name=? AND data_class=? AND data_id!=?', $val, $data_class, $this_id)
+                            ['data_column_name=? AND data_class=? AND data_id!=?', $val, $data_class, $this_id]
                         )->first()) {
                             throw new \InvalidArgumentException('data_column_not_unique');
                         }
@@ -322,8 +322,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
             );
         }
 
-        $data_types = array
-        (
+        $data_types = [
             'object' => 'Object',
             'int' => 'Integer',
             'float' => 'Decimal / Float',
@@ -331,35 +330,32 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
             'bool' => 'TRUE / FALSE',
             'array' => 'Array (multiple values)',
             'mixed' => 'Any Value',
-        );
+        ];
 
-        $data_toggles = array
-        (
-            'object' => array(
+        $data_toggles = [
+            'object' => [
                 'data_use_mode',
                 'data_type_class',
                 'data_text_mode_unavailable',
-                'data_value_default_unusable'
-            ),
-            'int' => array('data_use_mode', 'data_text_mode_unavailable', 'data_value_default_usable'),
-            'float' => array('data_use_mode', 'data_text_mode_unavailable', 'data_value_default_usable'),
-            'string' => array('data_use_mode', 'data_text_mode', 'data_text_mode_wrap', 'data_value_default_usable'),
-            'bool' => array('data_use_mode', 'data_text_mode_unavailable', 'data_value_default_usable'),
-            'array' => array(
+                'data_value_default_unusable',
+            ],
+            'int' => ['data_use_mode', 'data_text_mode_unavailable', 'data_value_default_usable'],
+            'float' => ['data_use_mode', 'data_text_mode_unavailable', 'data_value_default_usable'],
+            'string' => ['data_use_mode', 'data_text_mode', 'data_text_mode_wrap', 'data_value_default_usable'],
+            'bool' => ['data_use_mode', 'data_text_mode_unavailable', 'data_value_default_usable'],
+            'array' => [
                 'data_use_mode',
                 'data_type_class',
                 'data_text_mode_unavailable',
-                'data_value_default_unusable'
-            ),
-        );
+                'data_value_default_unusable',
+            ],
+        ];
 
         /**
          * Basic Object Classes
          */
-        $object_classes = array
-        (
-            'General' => array
-            (
+        $object_classes = [
+            'General' => [
                 '' => 'Arbitrary',
                 '-IPS-Member' => 'Member ( IPS\Member )',
                 '-IPS-DateTime' => 'A Date/Time ( IPS\DateTime )',
@@ -370,11 +366,11 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 '-IPS-Content-Review' => 'Content Review ( IPS\Content\Review )',
                 '-IPS-Node-Model' => 'Node ( IPS\Node\Model )',
                 '-IPS-Patterns-ActiveRecord' => 'Active Record ( IPS\Patterns\ActiveRecord )',
-            ),
-        );
+            ],
+        ];
 
-        $object_classes_toggles = array();
-        $object_classes_containers = array();
+        $object_classes_toggles = [];
+        $object_classes_containers = [];
 
         $core_key = $lang->get('__app_core');
 
@@ -383,7 +379,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
          */
         foreach (\IPS\Application::allExtensions('core', 'ContentRouter') as $router) {
             $appname = '';
-            $_object_classes = array();
+            $_object_classes = [];
             foreach ($router->classes as $contentItemClass) {
                 if (is_subclass_of($contentItemClass, '\IPS\Content\Item')) {
                     /* Set Appname */
@@ -421,7 +417,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                 )]
                             ) ? $configuration['containers-' . str_replace('\\', '-', $nodeClass)] : 0,
                             false,
-                            array('class' => $nodeClass, 'multiple' => true, 'subnodes' => false, 'zeroVal' => 'All'),
+                            ['class' => $nodeClass, 'multiple' => true, 'subnodes' => false, 'zeroVal' => 'All'],
                             null,
                             null,
                             null,
@@ -431,12 +427,12 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             '\\',
                             '-',
                             $contentItemClass
-                        )] = array('containers-' . str_replace('\\', '-', $nodeClass));
+                        )] = ['containers-' . str_replace('\\', '-', $nodeClass)];
                         $object_classes_toggles['-' . str_replace(
                             '\\',
                             '-',
                             $nodeClass
-                        )] = array('containers-' . str_replace('\\', '-', $nodeClass));
+                        )] = ['containers-' . str_replace('\\', '-', $nodeClass)];
                     }
 
                     /* Add comment class */
@@ -452,7 +448,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                 '\\',
                                 '-',
                                 $commentClass
-                            )] = array('containers-' . str_replace('\\', '-', $nodeClass));
+                            )] = ['containers-' . str_replace('\\', '-', $nodeClass)];
                         }
                     }
 
@@ -469,7 +465,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                 '\\',
                                 '-',
                                 $reviewClass
-                            )] = array('containers-' . str_replace('\\', '-', $nodeClass));
+                            )] = ['containers-' . str_replace('\\', '-', $nodeClass)];
                         }
                     }
                 }
@@ -481,13 +477,11 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
             );
         }
 
-        $data_classes = array
-        (
-            $core_key => array
-            (
+        $data_classes = [
+            $core_key => [
                 '-IPS-Member' => 'Member ( IPS\Member )',
-            ),
-        );
+            ],
+        ];
 
         $data_classes = array_replace_recursive($data_classes, $object_classes);
         unset($data_classes['General']);
@@ -497,31 +491,27 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
             (
                 \IPS\Db::i()->checkForTable($this::getTableName($this->class)) and
                 \IPS\Db::i()->checkForColumn($this::getTableName($this->class), 'data_' . $this->column_name) and
-                \IPS\Db::i()->select('COUNT(*)', $this::getTableName($this->class), array($column_name . ' > \'\' ')
+                \IPS\Db::i()->select('COUNT(*)', $this::getTableName($this->class), [$column_name . ' > \'\' ']
                 )->first()
             );
 
-        $data_display_options = array
-        (
+        $data_display_options = [
             'automatic' => 'Automatic',
             'manual' => 'Manual',
-        );
+        ];
 
-        $data_use_options = array
-        (
+        $data_use_options = [
             'internal' => 'Internal Use Only',
             'public' => 'Public Use',
             'admin' => 'Administrative Use',
-        );
+        ];
 
-        $data_use_toggles = array
-        (
-            'public' => array('data_tab', 'data_required', 'data_text_mode', 'data_value_default'),
-            'admin' => array('data_tab', 'data_required', 'data_text_mode', 'data_value_default'),
-        );
+        $data_use_toggles = [
+            'public' => ['data_tab', 'data_required', 'data_text_mode', 'data_value_default'],
+            'admin' => ['data_tab', 'data_required', 'data_text_mode', 'data_value_default'],
+        ];
 
-        $data_text_modes = array
-        (
+        $data_text_modes = [
             TEXT => 'Text Field',
             TEXTAREA => 'Text Area',
             EDITOR => 'Content Editor',
@@ -530,20 +520,19 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
             PASSWORD => 'Password Input',
             SELECT => 'Select Box',
             RADIO => 'Radio Buttons',
-        );
+        ];
 
-        $data_text_mode_toggles = array
-        (
-            SELECT => array('data_value_options'),
-            RADIO => array('data_value_options'),
-        );
+        $data_text_mode_toggles = [
+            SELECT => ['data_value_options'],
+            RADIO => ['data_value_options'],
+        ];
 
         $form->add(
             new \IPS\Helpers\Form\Select(
                 'data_class',
                 $this->class ?: '-IPS-Member',
                 false,
-                array('options' => $data_classes, 'disabled' => $field_locked, 'toggles' => $object_classes_toggles),
+                ['options' => $data_classes, 'disabled' => $field_locked, 'toggles' => $object_classes_toggles],
                 null,
                 $wrap_chosen_prefix,
                 $wrap_chosen_suffix,
@@ -560,7 +549,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'data_type',
                 $this->type ?: 'int',
                 true,
-                array('options' => $data_types, 'toggles' => $data_toggles, 'disabled' => $field_locked),
+                ['options' => $data_types, 'toggles' => $data_toggles, 'disabled' => $field_locked],
                 null,
                 $wrap_chosen_prefix,
                 $wrap_chosen_suffix
@@ -571,11 +560,11 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'data_type_class',
                 $this->type_class ?: '',
                 false,
-                array(
+                [
                     'options' => $object_classes,
-                    'toggles' => array('custom' => array('data_custom_class')),
-                    'disabled' => $field_locked
-                ),
+                    'toggles' => ['custom' => ['data_custom_class']],
+                    'disabled' => $field_locked,
+                ],
                 null,
                 $wrap_chosen_prefix,
                 $wrap_chosen_suffix,
@@ -588,7 +577,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'data_display_mode',
                 $this->display_mode ?: 'automatic',
                 true,
-                array('options' => $data_display_options),
+                ['options' => $data_display_options],
                 null,
                 null,
                 null,
@@ -600,7 +589,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'data_use_mode',
                 $this->use_mode ?: 'internal',
                 true,
-                array('options' => $data_use_options, 'toggles' => $data_use_toggles),
+                ['options' => $data_use_options, 'toggles' => $data_use_toggles],
                 null,
                 null,
                 null,
@@ -612,7 +601,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'data_required',
                 $this->required ?: 0,
                 true,
-                array(),
+                [],
                 null,
                 null,
                 null,
@@ -624,7 +613,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'data_text_mode',
                 $this->text_mode ?: 1,
                 true,
-                array('options' => $data_text_modes, 'toggles' => $data_text_mode_toggles),
+                ['options' => $data_text_modes, 'toggles' => $data_text_mode_toggles],
                 null,
                 "<div id='data_text_mode_wrap'>",
                 "</div><span id='data_text_mode_unavailable' class='ipsMessage ipsMessage_success'>Automatically Configured</span>",
@@ -636,7 +625,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'data_value_options',
                 json_decode($this->value_options, true),
                 false,
-                array('stackFieldType' => 'KeyValue'),
+                ['stackFieldType' => 'KeyValue'],
                 null,
                 null,
                 null,
@@ -648,7 +637,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 'data_value_default',
                 $this->value_default,
                 false,
-                array(),
+                [],
                 null,
                 "<div id='data_value_default_usable'>",
                 "</div><span id='data_value_default_unusable' class='ipsMessage ipsMessage_warning'>Unsupported</span>",
@@ -665,7 +654,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
      * @param object $hostObj The item hosting the data ( member/node/content )
      * @param array $values An array of default values to use if there is no host object
      */
-    public function formElements($hostObj = null, $values = array())
+    public function formElements($hostObj = null, $values = [])
     {
         $lang = \IPS\Member::loggedIn()->language();
         $form_name = 'rules_data_' . $this->column_name;
@@ -678,7 +667,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
         $lang->words[$form_name] = $this->name;
         $lang->words[$form_name . '_desc'] = $this->description;
 
-        $formElements = array();
+        $formElements = [];
 
         switch ($this->type) {
             case 'int':
@@ -687,7 +676,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                     $form_name,
                     $form_value,
                     $this->required,
-                    array('min' => null),
+                    ['min' => null],
                     null,
                     null,
                     null,
@@ -701,7 +690,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                     $form_name,
                     $form_value,
                     $this->required,
-                    array('min' => null, 'decimals' => true),
+                    ['min' => null, 'decimals' => true],
                     null,
                     null,
                     null,
@@ -718,7 +707,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array('app' => 'rules', 'key' => 'Generic')
+                            ['app' => 'rules', 'key' => 'Generic']
                         );
                         break;
 
@@ -728,7 +717,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array(),
+                            [],
                             null,
                             null,
                             null,
@@ -742,7 +731,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             new \IPS\Http\Url($form_value),
                             $this->required,
-                            array(),
+                            [],
                             null,
                             null,
                             null,
@@ -756,7 +745,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array(),
+                            [],
                             null,
                             null,
                             null,
@@ -770,7 +759,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array(),
+                            [],
                             null,
                             null,
                             null,
@@ -780,7 +769,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
 
                     case SELECT:
 
-                        $options = array();
+                        $options = [];
                         if (is_array($value_options = json_decode($this->value_options, true))) {
                             foreach ($value_options as $option) {
                                 $options[$option['key']] = $option['value'];
@@ -790,7 +779,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array('options' => $options),
+                            ['options' => $options],
                             null,
                             null,
                             null,
@@ -800,7 +789,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
 
                     case RADIO:
 
-                        $options = array();
+                        $options = [];
                         if (is_array($value_options = json_decode($this->value_options, true))) {
                             foreach ($value_options as $option) {
                                 $options[$option['key']] = $option['value'];
@@ -810,7 +799,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array('options' => $options),
+                            ['options' => $options],
                             null,
                             null,
                             null,
@@ -825,7 +814,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array(),
+                            [],
                             null,
                             null,
                             null,
@@ -841,7 +830,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                     $form_name,
                     $form_value,
                     $this->required,
-                    array(),
+                    [],
                     null,
                     null,
                     null,
@@ -859,7 +848,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                         $form_name,
                         $form_value,
                         $this->required,
-                        array('class' => $objectClass, 'multiple' => false, 'permissionCheck' => 'view'),
+                        ['class' => $objectClass, 'multiple' => false, 'permissionCheck' => 'view'],
                         null,
                         null,
                         null,
@@ -872,7 +861,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array('multiple' => 1, 'class' => $objectClass),
+                            ['multiple' => 1, 'class' => $objectClass],
                             null,
                             null,
                             null,
@@ -885,7 +874,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                 $form_name,
                                 $form_value,
                                 $this->required,
-                                array('multiple' => 1),
+                                ['multiple' => 1],
                                 null,
                                 null,
                                 null,
@@ -898,7 +887,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                     $form_name,
                                     $form_value,
                                     $this->required,
-                                    array('time' => true),
+                                    ['time' => true],
                                     null,
                                     null,
                                     null,
@@ -911,7 +900,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                         $form_name,
                                         $form_value,
                                         $this->required,
-                                        array(),
+                                        [],
                                         null,
                                         null,
                                         null,
@@ -935,7 +924,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                         $form_name,
                         $form_value,
                         $this->required,
-                        array('class' => $objectClass, 'multiple' => true, 'permissionCheck' => 'view'),
+                        ['class' => $objectClass, 'multiple' => true, 'permissionCheck' => 'view'],
                         null,
                         null,
                         null,
@@ -948,7 +937,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                             $form_name,
                             $form_value,
                             $this->required,
-                            array('multiple' => null, 'class' => $objectClass),
+                            ['multiple' => null, 'class' => $objectClass],
                             null,
                             null,
                             null,
@@ -961,7 +950,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                 $form_name,
                                 $form_value,
                                 $this->required,
-                                array('multiple' => null),
+                                ['multiple' => null],
                                 null,
                                 null,
                                 null,
@@ -974,7 +963,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                     $form_name,
                                     $form_value,
                                     $this->required,
-                                    array('stackFieldType' => 'Date', 'time' => false),
+                                    ['stackFieldType' => 'Date', 'time' => false],
                                     null,
                                     null,
                                     null,
@@ -987,7 +976,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                         $form_name,
                                         $form_value,
                                         $this->required,
-                                        array('stackFieldType' => 'Url'),
+                                        ['stackFieldType' => 'Url'],
                                         null,
                                         null,
                                         null,
@@ -1000,7 +989,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                                             $form_name,
                                             $form_value,
                                             $this->required,
-                                            array(),
+                                            [],
                                             null,
                                             null,
                                             null,
@@ -1059,7 +1048,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
         $values['data_column_name'] = mb_strtolower(
             isset($values['data_column_name']) ? $values['data_column_name'] : ''
         );
-        $configuration = array();
+        $configuration = [];
 
         foreach ($values as $key => $value) {
             /**
@@ -1082,7 +1071,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
         $values['data_value_options'] = json_encode($values['data_value_options']);
 
         /* Default values are unsupported for some field types */
-        if (in_array($values['data_type'], array('object', 'array'))) {
+        if (in_array($values['data_type'], ['object', 'array'])) {
             $values['data_value_default'] = null;
         }
 
@@ -1115,12 +1104,12 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
             $num = '';
             while (\IPS\Db::i()->select(
                 'COUNT(*)', 'rules_data',
-                array(
+                [
                     'data_column_name=? AND data_class=? AND data_id!=?',
                     $keyname . $num,
                     $this->class,
-                    (int)$this->id
-                )
+                    (int)$this->id,
+                ]
             )->first()) {
                 /* Start at 1 */
                 if ($num === '') {
@@ -1153,7 +1142,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 /* If there are no data fields left for the old class, drop the table too */
                 if (!\IPS\Db::i()->select(
                     'COUNT(*)', 'rules_data',
-                    array('data_class=? AND data_id!=?', $this->originalData['class'], $this->id)
+                    ['data_class=? AND data_id!=?', $this->originalData['class'], $this->id]
                 )->first()) {
                     try {
                         \IPS\Db::i()->dropTable($this::getTableName($this->originalData['class']));
@@ -1264,15 +1253,14 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                 $field_length = null;
         }
 
-        return array
-        (
+        return [
             'name' => 'data_' . $column_name,
             'type' => $field_type,
             'length' => $field_length,
             'decimals' => $field_decimals,
             'allow_null' => true,
             'default' => null,
-        );
+        ];
     }
 
     /**
@@ -1282,13 +1270,10 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
     {
         $table_name = static::getTableName($class);
 
-        return array
-        (
+        return [
             'name' => $table_name,
-            'columns' => array
-            (
-                'entity_id' => array
-                (
+            'columns' => [
+                'entity_id' => [
                     'name' => 'entity_id',
                     'type' => 'int',
                     'allow_null' => false,
@@ -1299,21 +1284,19 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
                     'default' => null,
                     'length' => 20,
                     'unsigned' => false,
-                    'values' => array(),
+                    'values' => [],
                     'zerofill' => false,
-                ),
-            ),
-            'indexes' => array
-            (
-                'PRIMARY' => array
-                (
+                ],
+            ],
+            'indexes' => [
+                'PRIMARY' => [
                     'type' => 'primary',
                     'name' => 'PRIMARY',
-                    'length' => array(null),
-                    'columns' => array('entity_id'),
-                ),
-            ),
-        );
+                    'length' => [null],
+                    'columns' => ['entity_id'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -1356,7 +1339,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
          * Arrays
          */
         if (is_array($data)) {
-            $values = array();
+            $values = [];
             foreach ($data as $value) {
                 $display = static::dataDisplayValue($value);
                 if ($display !== null) {
@@ -1451,7 +1434,7 @@ class _Data extends \IPS\Node\Model implements \IPS\Node\Permissions
         }
 
         /* If there are no data fields left, drop the table too */
-        if (!\IPS\Db::i()->select('COUNT(*)', 'rules_data', array('data_class=?', $this->class))->first()) {
+        if (!\IPS\Db::i()->select('COUNT(*)', 'rules_data', ['data_class=?', $this->class])->first()) {
             try {
                 \IPS\Db::i()->dropTable($this::getTableName($this->class));
             } catch (\IPS\Db\Exception $e) {
