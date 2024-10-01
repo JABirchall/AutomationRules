@@ -1,0 +1,82 @@
+{
+    "ipsMember": {
+        "type": "C",
+        "class": "\\IPS\\Member"
+    },
+    "ipsPatternsActiveRecord": {
+        "type": "C",
+        "class": "\\IPS\\Patterns\\ActiveRecord"
+    },
+    "ipsOutput": {
+        "type": "C",
+        "class": "\\IPS\\Output"
+    },
+    "ipsContent": {
+        "type": "C",
+        "class": "\\IPS\\Content"
+    },
+    "ipsContentItem": {
+        "type": "C",
+        "class": "\\IPS\\Content\\Item"
+    },
+    "ipsCoreWarningsWarning": {
+        "type": "C",
+        "class": "\\IPS\\core\\Warnings\\Warning"
+    },
+    "ipsContentController": {
+        "type": "C",
+        "class": "\\IPS\\Content\\Controller"
+    },
+    "ipsNodeModel": {
+        "type": "C",
+        "class": "\\IPS\\Node\\Model"
+    },
+    "ipsNodeController": {
+        "type": "C",
+        "class": "\\IPS\\Node\\Controller"
+    },
+    "modCoreMembersProfile": {
+        "type": "C",
+        "class": "\\IPS\\core\\modules\\front\\members\\profile"
+    },
+    "ipsCmsRecords": {
+        "type": "C",
+        "class": "\\IPS\\cms\\Records"
+    },
+    "ipsHelpersFormAbstract": {
+        "type": "C",
+        "class": "\\IPS\\Helpers\\Form\\FormAbstract"
+    },
+    "themCoreFrontProfile": {
+        "type": "S",
+        "class": "\\IPS\\Theme\\class_core_front_profile"
+    },
+    "themeForumsFrontTopics": {
+        "type": "S",
+        "class": "\\IPS\\Theme\\class_forums_front_topics"
+    },
+    "ipsDownloadsFile": {
+        "type": "C",
+        "class": "\\IPS\\downloads\\File"
+    },
+    "themeCalendarFrontView": {
+        "type": "S",
+        "class": "\\IPS\\Theme\\class_calendar_front_view"
+    },
+    "ipsGalleryImage": {
+        "type": "C",
+        "class": "\\IPS\\gallery\\Image"
+    },
+    "ipsApp": {
+        "type": "C",
+        "class": "\\IPS\\core\\tasks\\updatecheck"
+    },
+    "ipsApiController": {
+        "type": "C",
+        "class": "\\IPS\\Api\\Controller"
+    },
+    "ipsDispatcherApi": {
+        "type": "C",
+        "class": "\\IPS\\Dispatcher\\Api"
+    }
+}

@@ -1,0 +1,64 @@
+{
+    "1": {
+        "method": "addColumn",
+        "params": [
+            "rules_scheduled_actions",
+            {
+                "name": "schedule_custom_id",
+                "type": "VARCHAR",
+                "length": 11,
+                "decimals": null,
+                "values": [],
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            }
+        ]
+    },
+    "2": {
+        "method": "changeColumn",
+        "params": [
+            "rules_scheduled_actions",
+            "schedule_queued",
+            {
+                "name": "schedule_queued",
+                "type": "INT",
+                "length": 11,
+                "decimals": null,
+                "values": [],
+                "allow_null": false,
+                "default": "0",
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            }
+        ]
+    },
+    "3": {
+        "method": "changeColumn",
+        "params": [
+            "rules_scheduled_actions",
+            "schedule_custom_id",
+            {
+                "name": "schedule_custom_id",
+                "type": "VARCHAR",
+                "length": 11,
+                "decimals": null,
+                "values": [],
+                "allow_null": true,
+                "default": "0",
+                "comment": "",
+                "unsigned": false,
+                "zerofill": false,
+                "auto_increment": false,
+                "binary": false
+            }
+        ]
+    }
+}
