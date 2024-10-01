@@ -435,9 +435,7 @@ class _rulesets extends \IPS\Node\Controller
 
                 /* Do it */
                 if ($parentColumn) {
-                    $node->$parentColumn = ($parent === 'null') ? 0 : is_numeric(
-                        $parent
-                    ) ? $parent : $nodeClass::$databaseColumnParentRootValue;
+                    $node->$parentColumn = (($parent === 'null') ? 0 : is_numeric($parent)) ? $parent : $nodeClass::$databaseColumnParentRootValue;
                 }
                 $node->$orderColumn = $position;
                 $node->save();

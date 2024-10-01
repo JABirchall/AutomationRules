@@ -21,7 +21,8 @@ class rules_hook_ipsOutput extends _HOOK_CLASS_
         $httpHeaders = [],
         $cacheThisPage = true,
         $pageIsCached = false,
-        $parseFileObjects = true
+        $parseFileObjects = true,
+        $parseEmoji = true
     ) {
         try {
             \IPS\rules\Event::load('rules', 'System', 'browser_output')->trigger(
