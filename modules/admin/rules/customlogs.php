@@ -20,6 +20,11 @@ class _customlogs extends \IPS\Node\Controller
     protected $nodeClass = '\IPS\rules\Log\Custom';
 
     /**
+     * Enable CSRF protection
+     */
+    public static $csrfProtected = true;
+
+    /**
      * @brief    If true, root cannot be turned into sub-items, and other items cannot be turned into roots
      */
     protected $protectRoots = true;

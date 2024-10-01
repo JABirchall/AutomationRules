@@ -20,6 +20,11 @@ class _actions extends \IPS\Node\Controller
     protected $nodeClass = '\IPS\rules\Action';
 
     /**
+     * Enable CSRF protection
+     */
+    public static $csrfProtected = true;
+
+    /**
      * @brief    Associated Rule
      */
     protected $rule = null;

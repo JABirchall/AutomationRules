@@ -24,6 +24,11 @@ class _conditions extends \IPS\Node\Controller
     protected $nodeClass = '\IPS\rules\Condition';
 
     /**
+     * Enable CSRF protection
+     */
+    public static $csrfProtected = true;
+
+    /**
      * @brief    Associated Rule
      */
     protected $rule = null;

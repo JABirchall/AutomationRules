@@ -20,6 +20,11 @@ class _rules extends \IPS\Node\Controller
     protected $nodeClass = '\IPS\rules\Rule';
 
     /**
+     * Enable CSRF protection
+     */
+    public static $csrfProtected = true;
+
+    /**
      * @brief    If true, root cannot be turned into sub-items, and other items cannot be turned into roots
      */
     protected $protectRoots = true;
@@ -38,6 +43,7 @@ class _rules extends \IPS\Node\Controller
      * Description can contain HTML?
      */
     public $_descriptionHtml = true;
+
 
     /**
      * Constructor

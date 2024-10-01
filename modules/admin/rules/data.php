@@ -20,6 +20,11 @@ class _data extends \IPS\Node\Controller
     protected $nodeClass = '\IPS\rules\Data';
 
     /**
+     * Enable CSRF protection
+     */
+    public static $csrfProtected = true;
+
+    /**
      * Title can contain HTML?
      */
     public $_titleHtml = true;
